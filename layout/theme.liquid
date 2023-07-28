@@ -8,19 +8,28 @@
 -%}
 
 <!doctype html>
-<html class='no-js' lang='{{ request.locale.iso_code }}' dir='{{ language_direction }}'>
+<html
+  class='no-js'
+  lang='{{ request.locale.iso_code }}'
+  dir='{{ language_direction }}'>
+  {% if template contains 'collection' %}
+    {{ 'https://cdn.shopify.com/s/files/1/0382/4185/files/ajaxinate.js?937' | script_tag }}
+  {% endif %}
   <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width,initial-scale=1'>
     <meta name='theme-color' content='{{ settings.colors_default_background }}'>
     <link rel="stylesheet" href="https://use.typekit.net/rzj7jrm.css">
-    
-<link rel="stylesheet" href="https://use.typekit.net/kob6awn.css">
+
+    <link rel="stylesheet" href="https://use.typekit.net/kob6awn.css">
 
 
     {%- if settings.favicon != blank -%}
-      <link rel='icon' type='image/png' href='{{ settings.favicon | image_url: width: 32, height: 32 }}'>
+      <link
+        rel='icon'
+        type='image/png'
+        href='{{ settings.favicon | image_url: width: 32, height: 32 }}'>
     {%- else -%}
       <link rel='icon' href='data:,'>
     {%- endif -%}
@@ -28,7 +37,10 @@
     <link rel='preconnect' href='https://cdn.shopify.com'>
 
     {%- unless settings.type_headings_font.system? and settings.type_body_font.system? -%}
-      <link rel='preconnect' href='https://fonts.shopifycdn.com' crossorigin>
+      <link
+        rel='preconnect'
+        href='https://fonts.shopifycdn.com'
+        crossorigin>
     {%- endunless -%}
 
     <title>
@@ -36,9 +48,12 @@
         {{ shop.name }}
       {%- else -%}
         {{ page_title }}
-        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+        {%- if current_tags %}
+          &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %}
+          &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %}
+          &ndash; {{ shop.name }}{% endunless -%}
       {%- endif -%}
     </title>
 
@@ -48,8 +63,14 @@
 
     {% render 'meta-tags' %}
 
-    <link rel='preload' as='script' href='{{ 'theme.js' | asset_url }}'>
-    <link rel='preload' as='style' href='{{ 'theme.css' | asset_url }}'>
+    <link
+      rel='preload'
+      as='script'
+      href='{{ 'theme.js' | asset_url }}'>
+    <link
+      rel='preload'
+      as='style'
+      href='{{ 'theme.css' | asset_url }}'>
 
     {% render 'css-variables' %}
     {% render 'js-variables' %}
@@ -57,11 +78,21 @@
     {{ 'theme.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_headings_font.system? -%}
-      <link rel='preload' as='font' href='{{ settings.type_headings_font | font_url }}' type='font/woff2' crossorigin>
+      <link
+        rel='preload'
+        as='font'
+        href='{{ settings.type_headings_font | font_url }}'
+        type='font/woff2'
+        crossorigin>
     {%- endunless -%}
 
     {%- unless settings.type_body_font.system? -%}
-      <link rel='preload' as='font' href='{{ settings.type_body_font | font_url }}' type='font/woff2' crossorigin>
+      <link
+        rel='preload'
+        as='font'
+        href='{{ settings.type_body_font | font_url }}'
+        type='font/woff2'
+        crossorigin>
     {%- endunless -%}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-M9PnnIeoU5f-aeBFk9ZSyWX9Nitsm-Q&callback=initMap&v=weekly" defer></script>
     <script>
@@ -91,7 +122,10 @@
       endif
     -%}
 
-    <main id='MainContent' class='template-{{ template.name }}' role='main'>
+    <main
+      id='MainContent'
+      class='template-{{ template.name }}'
+      role='main'>
       {{ content_for_layout }}
     </main>
 
@@ -114,5 +148,7 @@
     <script src='{{ 'vendor.js' | asset_url }}' defer></script>
     <script src='{{ 'theme.js' | asset_url }}' defer></script>
     <script src='{{ 'custom.js' | asset_url }}' defer></script>
-  <script src="{{ 'seedgrow-whatsapp-init.js' | asset_url }}" defer="defer"></script><script src="{{ 'seedgrow-whatsapp-lib.js' | asset_url }}" defer="defer"></script></body>
+    <script src="{{ 'seedgrow-whatsapp-init.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'seedgrow-whatsapp-lib.js' | asset_url }}" defer="defer"></script>
+  </body>
 </html>

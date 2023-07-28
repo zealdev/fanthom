@@ -72,9 +72,9 @@
       "remove": "Remover",
       "remove_title": "Remover {{ title }}",
       "express_options": "Opções expressas disponíveis no checkout",
-      "taxes_and_shipping_policy_at_checkout_html": "Impostos e <a href=\"{{ link }}\">frete</a> calculados no checkout",
+      "taxes_and_shipping_policy_at_checkout_html": "Impostos e <a href=\"{{ link }}\">frete<\/a> calculados no checkout",
       "taxes_included_but_shipping_at_checkout": "Imposto incluído e frete calculado no checkout",
-      "taxes_included_and_shipping_policy_html": "Taxas incluídas. <a href=\"{{ link }}\">Frete</a> calculados no checkout",
+      "taxes_included_and_shipping_policy_html": "Taxas incluídas. <a href=\"{{ link }}\">Frete<\/a> calculados no checkout",
       "taxes_and_shipping_at_checkout": "Impostos e frete calculados no checkout",
       "progress_bar": {
         "free_shipping": "Você tem direito ao frete grátis!",
@@ -189,7 +189,7 @@
         "incoming_stock": "Reabastecimento em {{ next_incoming_date }}"
       },
       "include_taxes": "Tributo incluído.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Frete</a> calculado no checkout.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Frete<\/a> calculado no checkout.",
       "media": {
         "image_zoom": "Abrir mídia na janela modal",
         "load_image": "Carregar imagem no visualizador da galeria"
@@ -200,9 +200,9 @@
         "view_store_info": "Ver informações da loja",
         "check_other_stores": "Verifique a disponibilidade em outras lojas",
         "pick_up_available": "Recolha disponível",
-        "pick_up_available_at_html": "Retirada disponível em <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_available_at_html": "Retirada disponível em <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "pick_up_unavailable": "Retirada atualmente indisponível",
-        "pick_up_unavailable_at_html": "Retirada atualmente indisponível em <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Retirada atualmente indisponível em <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "unavailable": "Não foi possível carregar a disponibilidade de retirada",
         "refresh": "Atualizar"
       },
@@ -299,7 +299,7 @@
       "address1": "Endereço 1",
       "address2": "Endereço 2",
       "city": "Cidade",
-      "country": "País/região",
+      "country": "País\/região",
       "province": "Província",
       "zip": "Código postal",
       "estimate": "estimar",

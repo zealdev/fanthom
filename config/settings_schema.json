@@ -4,15 +4,15 @@
     "theme_name": "Upscale",
     "theme_version": "2.0.0",
     "theme_author": "Loess",
-    "theme_documentation_url": "https://loess.ticksy.com/articles/",
-    "theme_support_url": "https://loess.ticksy.com/"
+    "theme_documentation_url": "https:\/\/loess.ticksy.com\/articles\/",
+    "theme_support_url": "https:\/\/loess.ticksy.com\/"
   },
   {
     "name": "Colors",
     "settings": [
       {
         "type": "paragraph",
-        "content": "When you customize your theme, you are provided with color scheme options that are based on the colors below. Following the contrast guidelines below will ensure good legibility in every color scheme option. Learn more about [color schemes](https://loess.ticksy.com/article/18637)."
+        "content": "When you customize your theme, you are provided with color scheme options that are based on the colors below. Following the contrast guidelines below will ensure good legibility in every color scheme option. Learn more about [color schemes](https:\/\/loess.ticksy.com\/article\/18637)."
       },
       {
         "type": "header",
@@ -133,7 +133,7 @@
         "id": "type_headings_font",
         "default": "libre_baskerville_n4",
         "label": "Font",
-        "info": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https://help.shopify.com/en/manual/online-store/os/store-speed/improving-speed#fonts)"
+        "info": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https:\/\/help.shopify.com\/en\/manual\/online-store\/os\/store-speed\/improving-speed#fonts)"
       },
       {
         "type": "checkbox",
@@ -178,7 +178,7 @@
         "id": "type_body_font",
         "default": "avenir_next_n4",
         "label": "Font",
-        "info": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https://help.shopify.com/en/manual/online-store/os/store-speed/improving-speed#fonts)"
+        "info": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https:\/\/help.shopify.com\/en\/manual\/online-store\/os\/store-speed\/improving-speed#fonts)"
       },
       {
         "type": "range",
@@ -508,7 +508,7 @@
         "id": "product_card_show_product_rating",
         "label": "Show product rating",
         "default": true,
-        "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/en/manual/products/product-reviews)."
+        "info": "To display a rating, add a product rating app. [Learn more](https:\/\/help.shopify.com\/en\/manual\/products\/product-reviews)."
       },
       {
         "type": "header",
@@ -553,7 +553,7 @@
         "id": "product_card_button_inverse_colors",
         "label": "Inverse button colors",
         "default": false,
-        "info": "Only applicable when “Quick view / quick add” is set to “on hover”"
+        "info": "Only applicable when “Quick view \/ quick add” is set to “on hover”"
       },
       {
         "type": "header",
@@ -714,7 +714,7 @@
           }
         ],
         "default": "accent-1",
-        "info": "Edit your product metafields to display a custom badge. [Learn more](https://loess.ticksy.com/article/18635/)"
+        "info": "Edit your product metafields to display a custom badge. [Learn more](https:\/\/loess.ticksy.com\/article\/18635\/)"
       },
       {
         "type": "checkbox",
@@ -744,7 +744,7 @@
         "id": "color_swatch_configuration",
         "label": "Configuration",
         "placeholder": "Red:#cc342f\nBlack:black-leather.jpg",
-        "info": "Each color combination must be on its own line. You can map color option values to either a hexadecimal value or an image file. [Learn more](https://loess.ticksy.com/article/18636/)"
+        "info": "Each color combination must be on its own line. You can map color option values to either a hexadecimal value or an image file. [Learn more](https:\/\/loess.ticksy.com\/article\/18636\/)"
       }
     ]
   },
@@ -786,7 +786,7 @@
         "id": "cart_show_product_recommendations",
         "label": "Show product recommendations in cart drawer",
         "default": true,
-        "info": "Dynamic recommendations are based on items in your cart. They change and improve with time. [Learn more](https://shopify.dev/themes/product-merchandising/recommendations)"
+        "info": "Dynamic recommendations are based on items in your cart. They change and improve with time. [Learn more](https:\/\/shopify.dev\/themes\/product-merchandising\/recommendations)"
       },
       {
         "type": "text",
@@ -803,7 +803,7 @@
         "id": "cart_show_free_shipping_bar",
         "label": "Show free shipping progress bar",
         "default": false,
-        "info": "Make sure that you have properly configured your [shipping rates](https://help.shopify.com/en/manual/shipping/understanding-shipping/shipping-rates)"
+        "info": "Make sure that you have properly configured your [shipping rates](https:\/\/help.shopify.com\/en\/manual\/shipping\/understanding-shipping\/shipping-rates)"
       },
       {
         "type": "text",
@@ -870,7 +870,7 @@
         "id": "search_enable_predictive_search",
         "label": "Enable predictive search",
         "default": true,
-        "info": "Live search results as a search query is entered. [Learn more](https://shopify.dev/themes/navigation-search/search/predictive-search)."
+        "info": "Live search results as a search query is entered. [Learn more](https:\/\/shopify.dev\/themes\/navigation-search\/search\/predictive-search)."
       },
       {
         "type": "select",
@@ -1005,61 +1005,61 @@
         "type": "text",
         "id": "social_twitter_link",
         "label": "Twitter",
-        "info": "https://twitter.com/shopify"
+        "info": "https:\/\/twitter.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_facebook_link",
         "label": "Facebook",
-        "info": "https://facebook.com/shopify"
+        "info": "https:\/\/facebook.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_pinterest_link",
         "label": "Pinterest",
-        "info": "https://pinterest.com/shopify"
+        "info": "https:\/\/pinterest.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_instagram_link",
         "label": "Instagram",
-        "info": "https://instagram.com/shopify"
+        "info": "https:\/\/instagram.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_linkedin_link",
         "label": "LinkedIn",
-        "info": "https://www.linkedin.com/in/shopify"
+        "info": "https:\/\/www.linkedin.com\/in\/shopify"
       },
       {
         "type": "text",
         "id": "social_tiktok_link",
         "label": "TikTok",
-        "info": "https://tiktok.com/@shopify"
+        "info": "https:\/\/tiktok.com\/@shopify"
       },
       {
         "type": "text",
         "id": "social_tumblr_link",
         "label": "Tumblr",
-        "info": "https://shopify.tumblr.com"
+        "info": "https:\/\/shopify.tumblr.com"
       },
       {
         "type": "text",
         "id": "social_snapchat_link",
         "label": "Snapchat",
-        "info": "https://snapchat.com/add/shopify"
+        "info": "https:\/\/snapchat.com\/add\/shopify"
       },
       {
         "type": "text",
         "id": "social_youtube_link",
         "label": "YouTube",
-        "info": "https://www.youtube.com/shopify"
+        "info": "https:\/\/www.youtube.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_vimeo_link",
         "label": "Vimeo",
-        "info": "https://vimeo.com/shopify"
+        "info": "https:\/\/vimeo.com\/shopify"
       }
     ]
   },

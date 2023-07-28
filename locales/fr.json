@@ -72,9 +72,9 @@
       "remove": "Retirer",
       "remove_title": "Retirer {{ title }}",
       "express_options": "Options express disponibles à la caisse",
-      "taxes_and_shipping_policy_at_checkout_html": "Taxes et <a href=\"{{ link }}\">frais de livraison</a> calculés la caisse",
+      "taxes_and_shipping_policy_at_checkout_html": "Taxes et <a href=\"{{ link }}\">frais de livraison<\/a> calculés la caisse",
       "taxes_included_but_shipping_at_checkout": "Taxes incluses et frais de livraison calculés à la caisse",
-      "taxes_included_and_shipping_policy_html": "Taxes incluses. <a href=\"{{ link }}\">Frais de livraison</a> calculés à la caisse.",
+      "taxes_included_and_shipping_policy_html": "Taxes incluses. <a href=\"{{ link }}\">Frais de livraison<\/a> calculés à la caisse.",
       "taxes_and_shipping_at_checkout": "Taxes et frais de livraison calculés à la caisse",
       "progress_bar": {
         "free_shipping": "Vous êtes éligible à la livraison gratuite!",
@@ -189,7 +189,7 @@
         "incoming_stock": "Réapprovisionnement le {{ next_incoming_date }}"
       },
       "include_taxes": "Taxes incluses.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Frais d'expédition</a> calculés à l'étape de paiement.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Frais d'expédition<\/a> calculés à l'étape de paiement.",
       "media": {
         "image_zoom": "Ouvrir le média dans une fenêtre modale",
         "load_image": "Charger l'image dans la galerie"
@@ -200,9 +200,9 @@
         "view_store_info": "Voir les informations de la boutique",
         "check_other_stores": "Vérifier la disponibilité dans d'autres boutique",
         "pick_up_available": "Ramassage disponible",
-        "pick_up_available_at_html": "Ramassage disponible au <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_available_at_html": "Ramassage disponible au <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "pick_up_unavailable": "Ramassage actuellement indisponible",
-        "pick_up_unavailable_at_html": "Ramassage actuellement indisponible au <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Ramassage actuellement indisponible au <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "unavailable": "Impossible de charger la disponibilité du ramassage",
         "refresh": "Actualiser"
       },
@@ -299,7 +299,7 @@
       "address1": "Adresse 1",
       "address2": "Adresse 2",
       "city": "Ville",
-      "country": "Pays/Région",
+      "country": "Pays\/Région",
       "province": "Province",
       "zip": "Code postal",
       "estimate": "Estimé",

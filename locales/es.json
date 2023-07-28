@@ -72,9 +72,9 @@
       "remove": "Remover",
       "remove_title": "Remover {{ title }}",
       "express_options": "Opciones exprés disponibles al finalizar la compra",
-      "taxes_and_shipping_policy_at_checkout_html": "Impuestos y <a href=\"{{ link }}\">gastos de envío</a> calculados al finalizar la compra",
+      "taxes_and_shipping_policy_at_checkout_html": "Impuestos y <a href=\"{{ link }}\">gastos de envío<\/a> calculados al finalizar la compra",
       "taxes_included_but_shipping_at_checkout": "Impuestos incluidos y envío calculado al finalizar la compra",
-      "taxes_included_and_shipping_policy_html": "Impuestos incluidos. <a href=\"{{ link }}\">Envío</a> calculado al finalizar la compra",
+      "taxes_included_and_shipping_policy_html": "Impuestos incluidos. <a href=\"{{ link }}\">Envío<\/a> calculado al finalizar la compra",
       "taxes_and_shipping_at_checkout": "Impuestos y gastos de envío calculados al finalizar la compra",
       "progress_bar": {
         "free_shipping": "¡Usted es elegible para el envío gratis!",
@@ -189,7 +189,7 @@
         "incoming_stock": "Reabastecimiento el {{ next_incoming_date }}"
       },
       "include_taxes": "Impuesto incluido.",
-      "shipping_policy_html": "Los <a href=\"{{ link }}\">gastos de envío</a> se calculan en la pantalla de pago.",
+      "shipping_policy_html": "Los <a href=\"{{ link }}\">gastos de envío<\/a> se calculan en la pantalla de pago.",
       "media": {
         "image_zoom": "Abrir elemento multimedia en una ventana modal",
         "load_image": "Cargar la imagen en la vista de la galería"
@@ -200,9 +200,9 @@
         "view_store_info": "Ver información de la tienda",
         "check_other_stores": "Consultar disponibilidad en otras tiendas",
         "pick_up_available": "Recogida disponible",
-        "pick_up_available_at_html": "Recogida disponible en <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_available_at_html": "Recogida disponible en <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "pick_up_unavailable": "Recogida actualmente no disponible",
-        "pick_up_unavailable_at_html": "Recogida actualmente no disponible en <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Recogida actualmente no disponible en <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "unavailable": "No se pudo cargar la disponibilidad de recogida",
         "refresh": "Actualizar"
       },
@@ -299,9 +299,9 @@
       "address1": "Dirección 1",
       "address2": "Dirección 2",
       "city": "Ciudad",
-      "country": "País/región",
+      "country": "País\/región",
       "province": "Provincia",
-      "zip": "Código postal/ZIP",
+      "zip": "Código postal\/ZIP",
       "estimate": "Estimar",
       "phone": "Teléfono",
       "set_default": "Establecer como dirección predeterminada",

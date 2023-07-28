@@ -72,9 +72,9 @@
       "remove": "削除する",
       "remove_title": "削除する {{ title }}",
       "express_options": "会計時に簡単注文をご利用いただけます",
-      "taxes_and_shipping_policy_at_checkout_html": "消費税と <a href=\"{{ link }}\">送料</a> は会計時に計算されます",
+      "taxes_and_shipping_policy_at_checkout_html": "消費税と <a href=\"{{ link }}\">送料<\/a> は会計時に計算されます",
       "taxes_included_but_shipping_at_checkout": "内税、配送料は会計時に計算されます",
-      "taxes_included_and_shipping_policy_html": "内税。 <a href=\"{{ link }}\">送料</a> 会計時に計算されます。",
+      "taxes_included_and_shipping_policy_html": "内税。 <a href=\"{{ link }}\">送料<\/a> 会計時に計算されます。",
       "taxes_and_shipping_at_checkout": "会計時に計算される消費税と配送料",
       "progress_bar": {
         "free_shipping": "お客様は送料無料の対象です！",
@@ -90,7 +90,7 @@
     "gift_card": {
       "title": "ギフトカード",
       "your_gift_card": "ギフトカード",
-      "remaining_amount": "残金: {{ balance }} (/{{ initial_value }})",
+      "remaining_amount": "残金: {{ balance }} (\/{{ initial_value }})",
       "use_this_code": "会計時にこのコードを使用して、ギフトカードに引き換える",
       "expires_on": "有効期限 {{ date }}",
       "expired_on": "{{ date }}でギフト カードの有効期限が切れています",
@@ -189,7 +189,7 @@
         "incoming_stock": "再入荷日 {{ next_incoming_date }}"
       },
       "include_taxes": "税込み。",
-      "shipping_policy_html": "<a href=\"{{ link }}\">配送料</a>はチェックアウト時に計算されます。",
+      "shipping_policy_html": "<a href=\"{{ link }}\">配送料<\/a>はチェックアウト時に計算されます。",
       "media": {
         "image_zoom": "モーダルでメディア を開く",
         "load_image": "ギャラリービューに画像 を読み込む"
@@ -200,9 +200,9 @@
         "view_store_info": "店舗情報を見る",
         "check_other_stores": "他店での在庫確認",
         "pick_up_available": "送迎あり",
-        "pick_up_available_at_html": "で利用可能なピックアップ <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_available_at_html": "で利用可能なピックアップ <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "pick_up_unavailable": "ピックアップは現在利用できません",
-        "pick_up_unavailable_at_html": "ピックアップは現在利用できません <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "ピックアップは現在利用できません <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "unavailable": "受け取りの空き状況を読み込めませんでした",
         "refresh": "リフレッシュ"
       },
@@ -299,7 +299,7 @@
       "address1": "住所1",
       "address2": "住所2",
       "city": "市町村",
-      "country": "国/地域",
+      "country": "国\/地域",
       "province": "都道府県",
       "zip": "郵便番号",
       "estimate": "見積もり",

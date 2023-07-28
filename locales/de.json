@@ -72,9 +72,9 @@
       "remove": "Entfernen",
       "remove_title": "Entfernen {{ title }}",
       "express_options": "Express-Optionen an der Kasse verfügbar",
-      "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versandkosten</a> werden an der Kasse berechnet",
+      "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versandkosten<\/a> werden an der Kasse berechnet",
       "taxes_included_but_shipping_at_checkout": "Inklusive Steuern. Versandkosten werden an der Kasse berechnet",
-      "taxes_included_and_shipping_policy_html": "Steuern inklusive. <a href=\"{{ link }}\">Versandkosten</a> werden an der Kasse berechnet.",
+      "taxes_included_and_shipping_policy_html": "Steuern inklusive. <a href=\"{{ link }}\">Versandkosten<\/a> werden an der Kasse berechnet.",
       "taxes_and_shipping_at_checkout": "Steuern und Versandkosten werden an der Kasse berechnet",
       "progress_bar": {
         "free_shipping": "Sie haben Anspruch auf kostenlosen Versand!",
@@ -189,7 +189,7 @@
         "incoming_stock": "Erhältlich ab {{ next_incoming_date }}"
       },
       "include_taxes": "inkl. MwSt.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Versand</a> wird beim Checkout berechnet",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Versand<\/a> wird beim Checkout berechnet",
       "media": {
         "image_zoom": "Medien in Modal öffnen",
         "load_image": "Bild in Galerieansicht laden"
@@ -200,9 +200,9 @@
         "view_store_info": "Shop-Informationen anzeigen",
         "check_other_stores": "Überprüfen Sie die Verfügbarkeit in anderen Shops",
         "pick_up_available": "Abholung möglich",
-        "pick_up_available_at_html": "Abholung möglich in <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_available_at_html": "Abholung möglich in <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "pick_up_unavailable": "Abholung derzeit nicht möglich",
-        "pick_up_unavailable_at_html": "Abholung derzeit nicht möglich in <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Abholung derzeit nicht möglich in <span class=\"color-foreground\">{{ location_name }}<\/span>",
         "unavailable": "Abholverfügbarkeit konnte nicht geladen werden",
         "refresh": "Aktualisierung"
       },
@@ -299,7 +299,7 @@
       "address1": "Adresse 1",
       "address2": "Adresse 2",
       "city": "Stadt",
-      "country": "Land/Region",
+      "country": "Land\/Region",
       "province": "Provinz",
       "zip": "Postleitzahl",
       "estimate": "Schätzen",
