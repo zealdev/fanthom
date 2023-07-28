@@ -1,2 +1,2 @@
-# fanthom
+# fathom
 Fanthom watches
