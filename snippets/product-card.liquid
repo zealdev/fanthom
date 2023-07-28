@@ -1,0 +1,197 @@
+{%- liquid
+  assign product = section.settings.product | default: product
+  assign color_label_list = 'products.option.color' | t | replace: ', ', ',' | downcase | split: ','
+  assign quick_view_enabled = false
+
+  if settings.product_card_quick_view != 'disabled' and cart_drawer == nil
+    assign quick_view_enabled = true
+  endif
+
+  if product.url contains '?'
+    assign product_url_has_query = true
+  else
+    assign product_url_has_query = false
+  endif
+-%}
+
+<loess-product-card class="card">
+  <div class="card__image-wrapper {% if section.settings.enable_second_image_on_hover and product.media.size > 1 %}card__image-wrapper--multiple{% endif %} {% if settings.product_card_enable_image_lift %}card__image-wrapper--lift-on-hover{% endif %}">
+    <div class="card-badges card-badges--{{ settings.product_card_badge_position }}">
+      {%- if product.available == false -%}
+        <span class="card-badges__badge card-badges__badge--sold-out {% if settings.product_sold_out_badge_custom_colors == false %}color color-{{ settings.product_sold_out_badge_color }}{% endif %} small-text">
+          {{ 'products.product.sold_out' | t }}
+        </span>
+      {%- elsif product.price < product.compare_at_price and product.available and settings.product_show_sale_badge -%}
+        <span class="card-badges__badge card-badges__badge--sale {% if settings.product_sale_badge_custom_colors == false %}color color-{{ settings.product_sale_badge_color }}{% endif %} small-text">
+          {%- if settings.product_sale_badge_type == 'label' -%}
+            {{ 'products.product.sale' | t }}
+          {%- else -%}
+            {%- if settings.product_sale_badge_type == 'percentage' -%}
+              {%- assign savings = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round | append: '%' -%}
+            {%- else -%}
+              {%- assign savings = product.compare_at_price | minus: product.price | money -%}
+            {%- endif -%}
+
+            {{ 'product_cards.save' | t: savings: savings }}
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+
+      {%- if product.metafields.custom.custom_badge != blank -%}
+        <span class="card-badges__badge card-badges__badge--custom {% if settings.product_custom_badge_custom_colors == false %}color color-{{ settings.product_custom_badge_color }}{% endif %} small-text">
+          {{ product.metafields.custom.custom_badge }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    {%- if quick_view_enabled -%}
+      {%- if settings.product_card_quick_view == 'icon' or settings.product_card_quick_view == 'icon-hover' -%}
+        <button is="loess-button" class="card__quick-view-icon {% if settings.product_card_quick_view == 'icon-hover' %}card__quick-view-icon--hover{% endif %} {% if settings.product_card_badge_position == 'top-right' %}card__quick-view-icon--bottom{% endif %} button button--plain block color color-{% if settings.product_card_button_inverse_colors %}inverse{% else %}default{% endif %}" aria-label="{{ 'products.product.quick_view' | t }}" aria-controls="ProductCardQuickView-{{ section.id }}-{{ product.id }}" aria-expanded="false">
+          {% render 'icon' with 'quick-view' %}
+        </button>
+      {%- endif -%}
+    {%- endif -%}
+
+    <a href="{% if settings.product_show_breadcrumbs %}{{ product.url | within: collection }}{% else %}{{ product.url }}{% endif %}" class="card__image card__image--{{ section.settings.image_container_ratio | default: 'square' }} {% if settings.product_card_enable_image_zoom %}card__image--zoom-on-hover{% endif %} {% if section.settings.fit_image_to_container %}card__image--alternate-hover{% endif %} {% if settings.product_card_show_soft_background %}card__image--background{% endif %} border-radius" {% if section.settings.image_container_ratio == 'auto' %}style="--aspect-ratio: {{ 1 | divided_by: product.featured_media.aspect_ratio | times: 100 }}%;"{% endif %}>
+      {%- if product.featured_media != blank -%}
+        {{ product.featured_media | image_url: width: 1000 | image_tag: is: 'loess-image', class: 'card__primary-image', reveal: true, loading: 'lazy', data-media-id: product.featured_media.id }}
+      {%- endif -%}
+
+      {%- liquid
+        if settings.product_card_color_swatch_type != 'disabled'
+          for color_label in color_label_list
+            if product.options_by_name[color_label] != blank
+              for color_option in product.options_by_name[color_label].values
+                for variant in product.variants
+                  if variant.options contains color_option
+                    unless variant.featured_media == product.featured_media
+                      if variant.featured_media != blank
+                        echo variant.featured_media | image_url: width: 1000 | image_tag: class: 'card__primary-image', data-media-id: variant.featured_media.id, loading: 'lazy', hidden: 'true'
+                      endif
+                    endunless
+                  endif
+                endfor
+              endfor
+            endif
+          endfor
+        endif
+
+        if section.settings.enable_second_image_on_hover and product.media.size > 1
+          assign media = product.media[product.featured_media.position] | default: product.media[1]
+          echo media | image_url: width: 1000 | image_tag: class: 'card__secondary-image', loading: 'lazy'
+        endif
+      -%}
+    </a>
+
+    {%- if quick_view_enabled and settings.product_card_quick_view == 'button-hover' -%}
+      <div class="card__top-button">
+        <button is="loess-button" class="button {% if settings.product_card_button_outline_style %}button--secondary{% else %}button--primary block{% endif %} color color-{% if settings.product_card_button_inverse_colors %}inverse{% else %}default{% endif %}" aria-controls="ProductCardQuickView-{{ section.id }}-{{ product.id }}" aria-expanded="false">
+          {{ 'products.product.quick_view' | t }}
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="card__metadata {% if settings.product_card_center_metadata %}card__metadata--centered{% endif %}">
+    {%- if settings.product_show_vendor and product.vendor != blank -%}
+      <span class="small-text">
+        {{ product.vendor }}
+      </span>
+    {%- endif -%}
+
+    <a href="{% if settings.product_show_breadcrumbs %}{{ product.url | within: collection }}{% else %}{{ product.url }}{% endif %}" class="card__title caption">
+      {{ product.title }}
+    </a>
+
+    {% render 'product-price', product: product %}
+
+    {%- if settings.product_card_show_product_rating and product.metafields.reviews.rating.value != blank -%}
+      <span class="card__reviews stars {% if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false %}stars--color-default{% else %}color-accent{% endif %}" style="--star-rating: {{ product.metafields.reviews.rating.value.rating }}"></span>
+    {%- endif -%}
+
+
+    {%- if settings.product_card_color_swatch_type != 'disabled' -%}
+      {%- for color_label in color_label_list -%}
+        {%- if product.options_by_name[color_label] != blank -%}
+          {%- assign product_option = product.options_by_name[color_label] -%}
+
+          {%- if settings.product_card_color_swatch_type == 'count' -%}
+            <span class="card-swatches card-swatches--count small-caption">
+              {{ 'product_cards.colors_available_count' | t: count: product_option.values.size }}
+            </span>
+          {%- elsif settings.product_card_color_swatch_type == 'swatch' -%}
+            <ul class="card-swatches" role="list">
+              {%- assign variant_option = 'option' | append: product_option.position -%}
+              {%- assign color_swatch_configuration = settings.color_swatch_configuration | newline_to_br | split: '<br />' -%}
+
+              {%- for value in product_option.values -%}
+                {%- assign variant_for_value = product.variants | where: variant_option, value | first -%}
+
+                {%- if variant_for_value.featured_media != blank -%}
+                  <li>
+                    <button class="card-swatches__button {% if product_option.selected_value == value %}card-swatches__button--active{% endif %}" style="{% render 'color-swatch', color_swatch_configuration: color_swatch_configuration, value: value %}" data-variant-id="{{ variant_for_value.id }}" {% if variant_for_value.featured_media %}data-media-id="{{ variant_for_value.featured_media.id }}{% endif %}">
+                      <span class="sr-only">{{ 'products.product.color_swatch' | t }}: {{ value }}</span>
+                    </button>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- else -%}
+            {%- assign color_swatch_count = 0 -%}
+            {%- assign difference_count = 0 -%}
+
+            <ul class="card-swatches" role="list">
+              {%- assign variant_option = 'option' | append: product_option.position -%}
+              {%- assign color_swatch_configuration = settings.color_swatch_configuration | newline_to_br | split: '<br />' -%}
+
+              {%- for value in product_option.values -%}
+                {%- assign color_swatch_count = color_swatch_count | plus: 1 -%}
+                {%- assign variant_for_value = product.variants | where: variant_option, value | first -%}
+
+                {%- if forloop.index <= 4 -%}
+                  {%- if variant_for_value.featured_media != blank -%}
+                    <li>
+                      <button class="card-swatches__button {% if product_option.selected_value == value %}card-swatches__button--active{% endif %}" style="{% render 'color-swatch', color_swatch_configuration: color_swatch_configuration, value: value %}" data-variant-id="{{ variant_for_value.id }}" {% if variant_for_value.featured_media %}data-media-id="{{ variant_for_value.featured_media.id }}{% endif %}">
+                        <span class="sr-only">{{ 'products.product.color_swatch' | t }}: {{ value }}</span>
+                      </button>
+                    </li>
+
+                    {%- assign difference_count = difference_count | plus: 1 -%}
+                  {%- endif -%}
+                {%- elsif forloop.last == true -%}
+                  <li>
+                    <span class="small-text">
+                      + {{ color_swatch_count | minus: difference_count }}
+                    </span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if quick_view_enabled and settings.product_card_quick_view == 'button' -%}
+      <button is="loess-button" class="card__bottom-button button {% if settings.product_card_button_outline_style %}button--secondary{% else %}button--primary{% endif %} button--full-width" aria-controls="ProductCardQuickView-{{ section.id }}-{{ product.id }}" aria-expanded="false" aria-label="{{ 'products.product.quick_view' | t }}">
+        {{ 'products.product.quick_view' | t }}
+      </button>
+    {%- endif -%}
+  </div>
+
+  {%- if quick_view_enabled -%}
+    <loess-modal-product id="ProductCardQuickView-{{ section.id }}-{{ product.id }}" class="product-modal modal" href="{{ product.url }}{% if product_url_has_query %}&{% else %}?{% endif %}view=quick-view">
+      <div class="modal__inner modal__inner--fullscreen modal__inner--fullscreen-quick-view block color color-default border-radius">
+        <button class="modal__close-button {% if settings.styles_elements_corners != 'square' %}modal__close-button--padded{% endif %} modal__close-button--sticky button button--icon button--plain" aria-label="{{ 'general.close' | t }}" close>
+          {% render 'icon' with 'icon-close-small' %}
+        </button>
+
+        <div class="modal__inner-dynamic-content"></div>
+
+        <svg class="modal__spinner spinner" viewBox="0 0 24 24">
+          <circle class="spinner__value" cx="12" cy="12" r="10" />
+        </svg>
+      </div>
+    </loess-modal-product>
+  {%- endif -%}
+</loess-product-card>

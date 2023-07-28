@@ -1,0 +1,646 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --border-color: var(--color-{{ section.settings.border_color }});
+    --border-thickness: {{ section.settings.border_thickness }}px;
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+    --banner-height-increase: {{ section.settings.height }}px;
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- if section.settings.soft_background -%}
+  <div class="color-soft-background">
+{%- endif -%}
+
+  <div class="promo-banner-wrapper section-vertical-spacer container">
+    <div class="promo-banner-border {% if section.settings.fixed_width %}promo-banner-large-contained{% endif %} border-radius">
+      <div class="promo-banner block {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient color-gradient--fixed">
+        {%- for block in section.blocks -%}
+          <div {{ block.shopify_attributes }}>
+            {%- case block.type -%}
+              {%- when '@app' -%}
+                {% render block %}
+
+              {%- when 'image' -%}
+                {%- capture placeholder_image -%}
+                  {%- cycle 1, 2 -%}
+                {%- endcapture -%}
+
+                <div class="promo-banner__image">
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+                  {%- else -%}
+                    {{ 'lifestyle-' | append: placeholder_image | placeholder_svg_tag }}
+                  {%- endif -%}
+                </div>
+
+              {%- when 'collection' or 'product_list' -%}
+                {%- assign products = block.settings.products | default: block.settings.collection.products -%}
+                {%- assign max_products = block.settings.max_products | default: products.size | default: 4 -%}
+
+                {%- if block.settings.inherit_color_scheme == false and block.settings.custom_colors -%}
+                  {%- style -%}
+                    #PromoBannerBlock-{{ section.id }}-{{ block.id }} {
+                      --color-background: {{ block.settings.color_background.red }}, {{ block.settings.color_background.green }}, {{ block.settings.color_background.blue }};
+                      --color-gradient: {% if block.settings.color_gradient != blank %}{{ block.settings.color_gradient }}{% else %}{{ block.settings.color_background }}{% endif %};
+                    }
+                  {%- endstyle -%}
+                {%- endif -%}
+
+                <div id="PromoBannerBlock-{{ section.id }}-{{ block.id }}" class="promo-banner__collection {% if block.settings.inherit_color_scheme == false %}block {% if block.settings.custom_colors %}color-custom{% else %}color color-{{ block.settings.color_scheme }}{% endif %}{% endif %} color-gradient color-gradient--fixed">
+                  {%- for product in products limit: max_products -%}
+                    <div class="promo-banner__collection-background">
+                      {{ product.featured_image | image_url: width: 1000 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+                    </div>
+                  {%- else -%}
+                    {%- for i in (1..max_products) -%}
+                      {%- capture placeholder_image -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+
+                      <div class="promo-banner__collection-background">
+                        {{ 'product-' | append: placeholder_image | placeholder_svg_tag }}
+                      </div>
+                    {%- endfor -%}
+                  {%- endfor -%}
+                </div>
+
+              {%- when 'text' -%}
+                <div class="promo-banner__text-wrapper">
+                  <div class="promo-banner__text {% if block.settings.inline %}promo-banner__text--inline{% endif %}">
+                    {%- if block.settings.subheading != blank -%}
+                      <span class="{{ block.settings.subheading_style }}">
+                        {{ block.settings.subheading | escape }}
+                      </span>
+                    {%- endif -%}
+
+                    {%- if block.settings.heading != blank -%}
+                      <h2 class="{{ block.settings.heading_style }}">
+                        {{ block.settings.heading | escape }}
+                      </h2>
+                    {%- endif -%}
+
+                    {%- if block.settings.subtext != blank -%}
+                      <span class="{{ block.settings.subtext_style }} color-accent">
+                        {{ block.settings.subtext | escape }}
+                      </span>
+                    {%- endif -%}
+
+                    {%- if block.settings.button != blank -%}
+                      <button class="button button--primary button--center tap" tabindex="-1">
+                        {{ block.settings.button | escape }}
+                      </button>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+              {%- when 'video' -%}
+                <loess-video class="promo-banner__video" {% if block.settings.video != blank %}type="{{ block.settings.video.type }}"{% endif %}>
+                  {%- if block.settings.video != blank -%}
+                    <template>
+                      {%- if block.settings.video.type == 'youtube' -%}
+                        <iframe src="https://www.youtube.com/embed/{{ block.settings.video.id }}?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&playlist={{ block.settings.video.id }}&version=3&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" allow="autoplay; encrypted-media"></iframe>
+                      {%- elsif block.settings.video.type == 'vimeo' -%}
+                        <iframe src="https://player.vimeo.com/video/{{ block.settings.video.id }}?autoplay=1&autopause=1&color={{ settings.colors_default_text | remove_first: '#' }}&background=1&transparent=0&controls=0&loop=1&muted=1&portrait=0&title=0&byline=0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+                      {%- endif -%}
+                    </template>
+                  {%- endif -%}
+
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+                  {%- else -%}
+                    {{ 'lifestyle-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </loess-video>
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+
+        {%- if section.settings.link != blank -%}
+          <a href="{{ section.settings.link }}" class="promo-banner__link"></a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+{%- if section.settings.soft_background -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "tag": "section",
+  "class": "shopify-section--promo-banner",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "fixed_width",
+      "label": "Fixed width on large screens",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Banner link"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Banner height increase",
+      "unit": "px",
+      "min": 0,
+      "max": 250,
+      "step": 10,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "label": "Border thickness",
+      "unit": "px",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "soft_background",
+      "label": "Enable soft background",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Subdued"
+        },
+        {
+          "value": "default-text",
+          "label": "Default text"
+        },
+        {
+          "value": "default-background",
+          "label": "Default Background"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "soft-background",
+      "info": "Applicable when “Border thickness” is greater than 0px"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "range",
+          "id": "max_products",
+          "label": "Number of products to show",
+          "min": 3,
+          "max": 6,
+          "step": 1,
+          "default": 6
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "checkbox",
+          "id": "inherit_color_scheme",
+          "label": "Inherit color scheme from section",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "color_scheme",
+          "label": "Color scheme",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "inverse",
+              "label": "Inverse"
+            },
+            {
+              "value": "accent-1",
+              "label": "Accent 1"
+            },
+            {
+              "value": "accent-2",
+              "label": "Accent 2"
+            },
+            {
+              "value": "accent-3",
+              "label": "Accent 3"
+            }
+          ],
+          "default": "default",
+          "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_colors",
+          "label": "Override with custom colors",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "color_background",
+          "label": "Custom background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color_background",
+          "id": "color_gradient",
+          "label": "Custom background gradient",
+          "info": "Optional. Overrides “Custom background color”."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "product_list",
+      "name": "Product list",
+      "settings": [
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "limit": 6
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "checkbox",
+          "id": "inherit_color_scheme",
+          "label": "Inherit color scheme from section",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "color_scheme",
+          "label": "Color scheme",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "inverse",
+              "label": "Inverse"
+            },
+            {
+              "value": "accent-1",
+              "label": "Accent 1"
+            },
+            {
+              "value": "accent-2",
+              "label": "Accent 2"
+            },
+            {
+              "value": "accent-3",
+              "label": "Accent 3"
+            }
+          ],
+          "default": "default",
+          "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_colors",
+          "label": "Override with custom colors",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "color_background",
+          "label": "Custom background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color_background",
+          "id": "color_gradient",
+          "label": "Custom background gradient",
+          "info": "Optional. Overrides “Custom background color”."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "inline",
+          "label": "Inline text on large screens",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "up to"
+        },
+        {
+          "type": "select",
+          "id": "subheading_style",
+          "label": "Subheading style",
+          "options": [
+            {
+              "value": "small-text",
+              "label": "Small text"
+            },
+            {
+              "value": "small-subtext",
+              "label": "Subtext"
+            },
+            {
+              "value": "large-subtext",
+              "label": "Large subtext"
+            },
+            {
+              "value": "small-caption",
+              "label": "Caption"
+            },
+            {
+              "value": "caption",
+              "label": "Large caption"
+            },
+            {
+              "value": "small-body-text",
+              "label": "Small body"
+            },
+            {
+              "value": "body-text",
+              "label": "Body"
+            },
+            {
+              "value": "large-body-text",
+              "label": "Large body"
+            }
+          ],
+          "default": "small-text"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "50% off"
+        },
+        {
+          "type": "select",
+          "id": "heading_style",
+          "label": "Heading style",
+          "options": [
+            {
+              "value": "h3",
+              "label": "Small"
+            },
+            {
+              "value": "h2",
+              "label": "Medium"
+            },
+            {
+              "value": "h1",
+              "label": "Large"
+            },
+            {
+              "value": "h0",
+              "label": "Extra large"
+            }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "on selected items"
+        },
+        {
+          "type": "select",
+          "id": "subtext_style",
+          "label": "Subtext style",
+          "options": [
+            {
+              "value": "small-text",
+              "label": "Small text"
+            },
+            {
+              "value": "small-subtext",
+              "label": "Subtext"
+            },
+            {
+              "value": "large-subtext",
+              "label": "Large subtext"
+            },
+            {
+              "value": "small-caption",
+              "label": "Caption"
+            },
+            {
+              "value": "caption",
+              "label": "Large caption"
+            },
+            {
+              "value": "small-body-text",
+              "label": "Small body"
+            },
+            {
+              "value": "body-text",
+              "label": "Body"
+            },
+            {
+              "value": "large-body-text",
+              "label": "Large body"
+            }
+          ],
+          "default": "small-subtext"
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button",
+          "info": "Add a link by editing the “Banner link” in the section's settings"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video",
+          "label": "Video",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ],
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "The image is used on some devices when videos don't auto play"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo banner",
+      "blocks": [
+        {
+          "type": "text"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

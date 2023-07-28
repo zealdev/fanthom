@@ -1,0 +1,209 @@
+{%- liquid
+  assign menu = section.settings.sidebar_menu | default: section.settings.menu
+
+  assign first_level_menu_items = ''
+  assign second_level_menu_items = ''
+
+  if menu.levels > 1
+    for block in section.blocks
+      unless block.settings.menu_item contains ' > '
+        assign first_level_menu_items = first_level_menu_items | append: block.settings.menu_item
+      else
+        assign second_level_menu_items = second_level_menu_items | append: block.settings.menu_item
+      endunless
+    endfor
+  endif
+-%}
+
+<loess-drawer id="SideBarMenu" class="drawer block color color-{{ section.settings.sidebar_color }}" position="left">
+  <header class="drawer__header">
+    <button class="button button--plain button--icon tap" aria-label="{{ 'sections.header.close_sidebar' | t }}" close>
+      {% render 'icon' with 'close' %}
+    </button>
+    <div class="drawer__header-icons">
+      <button is="loess-button" class="drawer__login-button button button--plain tap hide-tablet-and-up" aria-label="{{ 'sections.header.email_popup' | t }}" aria-expanded="false" aria-controls="PopupIconToggle" data-popup-icon="email">
+        <span class="small-caption">
+          {{ 'sections.newsletter.subscribe' | t }}
+        </span>
+        {%- render 'icon' with 'email' -%}
+      </button>
+
+      <button is="loess-button" class="drawer__login-button button button--plain tap hide-tablet-and-up" aria-label="{{ 'sections.header.email_popup' | t }}" aria-expanded="false" aria-controls="PopupIconToggle" data-popup-icon="notice">
+        <span class="small-caption">
+          {{ 'sections.newsletter.notice' | t }}
+        </span>
+        {%- render 'icon' with 'notice' -%}
+      </button>
+
+      {%- if shop.customer_accounts_enabled -%}
+        <div class="hide-tablet-and-up">
+          <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="drawer__login-button tap">
+            <span class="small-caption">
+              {%- liquid
+                if customer
+                  echo 'Account'
+                else
+                  echo 'Log in'
+                endif
+              -%}
+            </span>
+            {%- render 'icon' with 'account' -%}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </header>
+
+  <div class="drawer__inner">
+    <div class="drawer__content">
+      {%- if menu.links.size > 0 -%}
+        <nav>
+          <ul class="drawer-menu caption" role="list">
+            {%- for link in menu.links -%}
+              <li>
+                {%- if link.links != blank -%}
+                  <button is="loess-button" href="{{ link.url }}" class="menu-dropdown__link button button--plain tap" {% if link.current %}aria-current="page"{% endif %} aria-controls="SidebarMenu-{{ forloop.index }}" aria-expanded="false">
+                    {{ link.title | escape }}
+                    <span>
+                      {% render 'icon' with 'caret' %}
+                    </span>
+                  </button>
+                {%- else -%}
+                  <a href="{{ link.url }}" class="menu-dropdown__link tap" {% if link.current %}aria-current="page"{% endif %}>
+                    {{ link.title | escape }}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+
+        {%- for link in menu.links -%}
+          {%- if link.links != blank -%}
+            <loess-drawer id="SidebarMenu-{{ forloop.index }}" class="drawer drawer--inner" position="right">
+              <nav>
+                <button class="drawer-menu__back-button button button--plain button--icon tap" aria-label="{{ 'sections.header.go_back_main_menu' | t }}" close>
+                  {% render 'icon' with 'caret' %}
+                  <span class="small-caption">{{ 'sections.header.back' | t }}</span>
+                </button>
+
+                <ul class="drawer-menu caption" role="list">
+                  {%- for childlink in link.links -%}
+                    <li>
+                      {%- if second_level_menu_items != '' -%}
+                        {%- for block in section.blocks -%}
+                          {%- assign split_menu_item = block.settings.menu_item | split: ' > ' -%}
+
+                          {%- if second_level_menu_items contains split_menu_item[1] and split_menu_item[0] == link.title and split_menu_item[1] == childlink.title and block.settings.show_in_sidebar_menu -%}
+                            <a href="{{ childlink.url }}" class="drawer-image">
+                              {{ block.settings.image | image_url: width: 800 | image_tag: class: 'border-radius', loading: 'lazy' }}
+                            </a>
+
+                            {%- assign second_level_menu_items = second_level_menu_items | remove_first: block.settings.menu_item -%}
+                          {%- else -%}
+                            {%- continue -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- endif -%}
+
+                      {%- if childlink.links != blank -%}
+                        <button is="loess-button" href="{{ childlink.url }}" class="menu-dropdown__link menu-dropdown__link--panel button button--plain button--icon tap" {% if childlink.current %}aria-current="page"{% endif %} aria-controls="SidebarMenu-{{ forloop.parentloop.index }}-{{ forloop.index }}" aria-expanded="false">
+                          {{ childlink.title | escape }}
+                          <span>
+                            {% render 'icon' with 'caret' %}
+                          </span>
+                        </button>
+
+                        <loess-collapsible-panel id="SidebarMenu-{{ forloop.parentloop.index }}-{{ forloop.index }}" class="collapsible-panel">
+                          <ul class="drawer-menu drawer-menu--panel small-caption" role="list">
+                            {%- for grandchildlink in childlink.links -%}
+                              <li>
+                                <a href="{{ grandchildlink.url }}" class="menu-dropdown__link tap" {% if grandchildlink.current %}aria-current="page"{% endif %}>
+                                  {{ grandchildlink.title | escape }}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        </loess-collapsible-panel>
+                      {%- else -%}
+                        <a href="{{ childlink.url }}" class="menu-dropdown__link tap" {% if childlink.current %}aria-current="page"{% endif %}>
+                          {{ childlink.title | escape }}
+                        </a>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+
+                {%- if first_level_menu_items != '' and first_level_menu_items contains link.title -%}
+                  <div class="drawer-images">
+                    {%- for block in section.blocks -%}
+                      {%- if first_level_menu_items contains block.settings.menu_item and block.settings.menu_item == link.title and block.settings.show_in_sidebar_menu -%}
+                        {%- if block.settings.link != blank -%}
+                          <a href="{{ block.settings.link }}" class="small-caption">
+                        {%- else -%}
+                          <div>
+                        {%- endif -%}
+
+                        <div class="menu-mega-image__image border-radius">
+                          {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy' }}
+                        </div>
+
+                        <div class="menu-mega-image__heading small-caption">
+                          {%- if block.settings.title != '' -%}
+                            {{ block.settings.title | escape }}
+
+                            {%- if block.settings.link != blank -%}
+                              <span>
+                                {% render 'icon' with 'arrow-small' %}
+                              </span>
+                            {%- endif -%}
+                          {%- endif -%}
+                        </div>
+
+                        {%- if block.settings.link != blank -%}
+                          </a>
+                        {%- else -%}
+                          </div>
+                        {%- endif -%}
+
+                        {%- assign first_level_menu_items = first_level_menu_items | remove_first: block.settings.menu_item -%}
+                      {%- else -%}
+                        {%- continue -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </nav>
+            </loess-drawer>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- liquid
+      if localization.available_languages.size > 1
+        assign language_selector = true
+      endif
+
+      if localization.available_countries.size > 1
+        assign country_selector = true
+      endif
+    -%}
+
+    <footer class="drawer-footer hide-tablet-and-up">
+      <div class="drawer-footer__inner drawer-footer__inner--background">
+        {%- if language_selector or country_selector -%}
+          <div class="drawer-footer__selectors">
+            {%- if language_selector -%}
+              {% render 'language-selector', id: 'Sidebar', above_button: true %}
+            {%- endif -%}
+            {%- if country_selector -%}
+              {% render 'country-selector', id: 'Sidebar', above_button: true %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {% render 'social-media', centered: true %}
+      </div>
+    </footer>
+  </div>
+</loess-drawer>

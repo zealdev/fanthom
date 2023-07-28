@@ -1,0 +1,163 @@
+{%- comment -%}
+  The password and gift card templates share the same header code since 95% of the
+  layout is the same. Conditions are used to differentiate between each.
+{%- endcomment -%}
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --logo-width: {{ section.settings.logo_width_mobile }}px;
+  }
+
+  @media screen and (min-width: 751px) {
+    #shopify-section-{{ section.id }} {
+      --logo-width: {{ section.settings.logo_width }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class='container'>
+  <div class='header-alternate {% if template.name == 'password' %}header-alternate--password{% endif %}'>
+    {%- if section.settings.logo != blank -%}
+      <span class='sr-only'>{{ shop.name | escape }}</span>
+
+      {%- assign logo_size = section.settings.logo_width | times: 2 -%}
+      {{
+        section.settings.logo
+        | image_url: width: logo_size
+        | image_tag: alt: section.settings.logo.alt, class: 'header-alternate__logo', loading: 'lazy'
+      }}
+    {%- else -%}
+      {%- if template.name == 'password' -%}
+        <h1 class='h3'>{{ shop.name | escape }}</h1>
+      {%- else -%}
+        <span class='h3'>{{ shop.name | escape }}</span>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if template.name == 'password' -%}
+      {%- form 'storefront_password' -%}
+        <button
+          is='loess-button'
+          type='button'
+          class='button button--plain tap'
+          aria-controls='PasswordModal'
+          aria-expanded='{% if form.errors %}true{% else %}false{% endif %}'
+          target-focus='PasswordLoginInput'
+        >
+          {{ 'sections.password.enter_using_password' | t }}
+          {% render 'icon' with 'lock' %}
+        </button>
+
+        <loess-modal
+          id='PasswordModal'
+          class='main-password__modal modal'
+          {% if form.errors %}
+            open
+          {% endif %}
+        >
+          <div class='modal__inner block color color-default border-radius'>
+            <button
+              type='button'
+              class='modal__close-button {% if settings.styles_elements_corners != 'square' %}modal__close-button--padded{% endif %} button button--icon button--plain'
+              aria-label='{{ 'general.close' | t }}'
+              close
+            >
+              {% render 'icon' with 'icon-close-small' %}
+            </button>
+
+            <div class='main-password__modal-content'>
+              <div class='small-subtext rte'>{{ 'sections.password.enter_store_using_password' | t }}:</div>
+
+              <div>
+                {%- if form.errors -%}
+                  <div id='PasswordLoginFormError' role='status'>
+                    <span class='sr-only'>{{ 'forms.error' | t }}</span>
+                    <span class='form-message small-text'>
+                      {% render 'icon' with 'red-exclamation' %}
+                      <span>{{ 'sections.password.wrong_password' | t }}</span>
+                    </span>
+                  </div>
+                {%- endif -%}
+
+                <div class='input-group'>
+                  <input
+                    is='loess-input-field'
+                    id='PasswordLoginInput'
+                    type='password'
+                    class='input__field input__field--has-button'
+                    name='password'
+                    autocomplete='current-password'
+                    {% if form.errors %}
+                      aria-invalid='true'
+                      aria-describedby='PasswordLoginFormError'
+                    {% endif %}
+                  >
+                  <label for='PasswordLoginInput' class='input__label'>
+                    {{- 'sections.password.wrong_password' | t -}}
+                  </label>
+                  <button type='submit' class='button button--plain input__button' name='commit'>
+                    {% render 'icon' with 'arrow-medium' %}
+                  </button>
+                </div>
+              </div>
+
+              <span class='small-text'>
+                {{ 'sections.password.store_owner' | t }}
+                <a
+                  href='/admin'
+                  class='footer-password__login-button button button--plain button--x-small'
+                >
+                  {{- 'sections.password.log_in_here' | t }}.</a
+                >
+              </span>
+            </div>
+          </div>
+        </loess-modal>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (() => {
+    const headerHeight = document.getElementById('shopify-section-header-alternate').clientHeight;
+    document.documentElement.style.setProperty('--header-alternate-height', `${headerHeight}px`);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "shopify-section--header-alternate",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "These logo settings affect both the password and gift card templates."
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile logo width",
+      "default": 80
+    }
+  ]
+}
+{% endschema %}

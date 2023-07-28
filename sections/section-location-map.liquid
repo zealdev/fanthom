@@ -1,0 +1,57 @@
+{% schema %}
+  {
+    "name": "Location map",
+    "settings": []
+  }
+{% endschema %}
+
+<div id="map" class="c-google-map"></div>
+
+<script type="text/javascript">
+  
+  function initMap() {
+            
+    const fathom = { lat: 51.513820, lng: -0.102130 };
+    
+    const map = new google.maps.Map(document.getElementById("map"), {
+      mapId: "993fdaa9e8e6f7f7",
+      zoom: 15,
+      center: fathom,
+    });
+
+    const markerIcon = {
+        url: "https://cdn.shopify.com/s/files/1/0690/6649/0162/files/map-marker.svg?v=1680186242", // url
+        scaledSize: new google.maps.Size(50, 50)
+    };
+
+    const infoWindowContent = "<span>Fathom Watches</span><br /><span>35-37 Ludgate Hill</span><br /><span>London</span><br /><span>EC4M 7JN</span>";
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: infoWindowContent,
+      ariaLabel: "Fathom Watches",
+    });
+    
+    const marker = new google.maps.Marker({
+      position: fathom,
+      map: map,
+      icon: markerIcon
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open({
+        anchor: marker,
+        map,
+      });
+    });
+        
+  }
+    
+  window.initMap = initMap;
+  
+</script>
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

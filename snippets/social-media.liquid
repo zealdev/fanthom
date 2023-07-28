@@ -1,0 +1,88 @@
+{%- capture social_media -%}
+  {%- if settings.social_twitter_link != blank -%}
+    <li>
+      <a href='{{ settings.social_twitter_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'twitter' %}
+        <span class='sr-only'>Twitter</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_facebook_link != blank -%}
+    <li>
+      <a href='{{ settings.social_facebook_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'facebook' %}
+        <span class='sr-only'>Facebook</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_pinterest_link != blank -%}
+    <li>
+      <a href='{{ settings.social_pinterest_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'pinterest' %}
+        <span class='sr-only'>Pinterest</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_instagram_link != blank -%}
+    <li>
+      <a href='{{ settings.social_instagram_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'instagram' %}
+        <span class='sr-only'>Instagram</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_linkedin_link != blank -%}
+    <li>
+      <a href='{{ settings.social_linkedin_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'linkedin' %}
+        <span class='sr-only'>LinkedIn</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_tiktok_link != blank -%}
+    <li>
+      <a href='{{ settings.social_tiktok_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'tiktok' %}
+        <span class='sr-only'>TikTok</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_tumblr_link != blank -%}
+    <li>
+      <a href='{{ settings.social_tumblr_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'tumblr' %}
+        <span class='sr-only'>Tumblr</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_snapchat_link != blank -%}
+    <li>
+      <a href='{{ settings.social_snapchat_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'snapchat' %}
+        <span class='sr-only'>Snapchat</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_youtube_link != blank -%}
+    <li>
+      <a href='{{ settings.social_youtube_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'youtube' %}
+        <span class='sr-only'>YouTube</span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- if settings.social_vimeo_link != blank -%}
+    <li>
+      <a href='{{ settings.social_vimeo_link }}' class='social-media__link tap'>
+        {% render 'icon' with 'vimeo' %}
+        <span class='sr-only'>Vimeo</span>
+      </a>
+    </li>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if social_media != blank -%}
+  <ul class='social-media {% if centered %}social-media--centered{% endif %}' role='list'>
+    {{ social_media }}
+  </ul>
+{%- endif -%}

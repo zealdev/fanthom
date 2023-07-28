@@ -1,0 +1,650 @@
+{%- liquid
+  assign columns_mobile = section.settings.columns_mobile | times: 1
+  assign columns_large = section.settings.columns_large | times: 1
+  assign show_heading = false
+
+  if section.settings.title != blank or section.settings.text != blank or section.settings.button_label != blank
+    assign show_heading = true
+  endif
+
+  if section.settings.color_scheme == 'default' and section.settings.layout == 'fixed' and section.settings.custom_colors == false
+    assign border = true
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: {{ columns_mobile }};
+    --columns-tablet: {{ columns_mobile }};
+    --columns-large: {{ columns_large }};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.layout == 'full' -%}
+      --enable-section-margin-top: {% if show_heading %}0{% else %}1{% endif %};
+    {%- endif -%}
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+
+  {%- liquid
+    for block in section.blocks
+      for i in (1..3)
+        assign product_id = 'product_' | append: i
+
+        assign horizontal_position = 'product_' | append: i | append: '_horizontal'
+        assign vertical_position = 'product_' | append: i | append: '_vertical'
+
+        echo '#ImageHotspot-' | append: section.id | append: block.id | append: forloop.index | append: '{'
+          echo '--x-axis:' | append: block.settings[horizontal_position] | append: '%;'
+          echo '--y-axis:' | append: block.settings[vertical_position] | append: '%;'
+        echo '}'
+      endfor
+    endfor
+  -%}
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+  <div class="section {% if section.settings.layout == 'full' %}section--full-width{% endif %} overflow {% unless border %}block{% endunless %} {% if section.settings.custom_colors %}color-custom color-gradient{% else %}{% if section.settings.color_scheme != 'soft-background' %}color color-{{ section.settings.color_scheme }} color-gradient{% else %}color-soft-background{% endif %}{% endif %} {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+    {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}<div class="color-soft-background--default-color">{%- endif -%}
+      <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container">
+        {%- if show_heading -%}
+          <header class="section-heading {% if section.settings.center_heading_text %}section-heading--centered{% endif %}">
+            {%- if section.settings.title != blank -%}
+              <h2 class="section-heading__heading {{ section.settings.heading_size }}">
+                {{ section.settings.title | escape }}
+              </h2>
+            {%- endif -%}
+
+            {%- if section.settings.text != blank -%}
+              <div class="section-heading__subheading">
+                <div class="rte {{ section.settings.text_style }} color-accent">
+                  {{ section.settings.text }}
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.button_label != blank -%}
+              <a href="{{ section.settings.button_link }}" class="section-heading__link button button--plain button--icon tap">
+                {{ section.settings.button_label | escape }}
+                <span>
+                  {% render 'icon' with 'arrow-medium' %}
+                </span>
+              </a>
+            {%- endif -%}
+          </header>
+        {%- endif -%}
+
+        <ul class="image-hotspots columns" role="list">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign show_product_placeholders = false
+
+              if block.settings.product_1 == blank and block.settings.product_2 == blank and block.settings.product_3 == blank
+                assign show_product_placeholders = true
+              endif
+
+              capture placeholder_image
+                cycle 1, 2, 3, 4, 5, 6
+              endcapture
+            -%}
+
+            <li class="image-hotspot image-hotspot--{{ section.settings.image_ratio }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', class: 'border-radius', reveal: true, loading: 'lazy' }}
+              {%- else -%}
+                <div class="image-hotspot-placeholder">
+                  {{ 'collection-' | append: placeholder_image | placeholder_svg_tag }}
+                </div>
+              {%- endif -%}
+
+              {%- for i in (1..3) -%}
+                {%- capture product_placeholder -%}
+                  {%- cycle 1, 2, 3, 4, 5, 6 -%}
+                {%- endcapture -%}
+
+                {%- capture product_id -%}product_{{ i }}{%- endcapture -%}
+                {%- assign product = block.settings[product_id] -%}
+
+                {%- liquid
+                  comment
+                    Constructs the mobile popover CSS class depending on certain layout conditions.
+                    The popovers are absolutely positioned, based on the hotspot coordinates, so we need
+                    to ensure popovers are properly placed if columns are set to 1 or 2.
+                  endcomment
+
+                  assign popover_class_mobile = 'popover hotspot-popover'
+                  assign block_is_in_last_mobile_column = forloop.parentloop.index | modulo: columns_mobile
+
+                  if columns_mobile == 2
+                    if block_is_in_last_mobile_column != 0
+                      assign popover_class_mobile = popover_class_mobile | append: ' hotspot-popover--left'
+                    else
+                      assign popover_class_mobile = popover_class_mobile | append: ' hotspot-popover--right'
+                    endif
+                  endif
+
+                  assign horizontal_position = 'product_' | append: i | append: '_horizontal'
+                  assign vertical_position = 'product_' | append: i | append: '_vertical'
+
+                  comment
+                    Constructs the tablet/desktop popover CSS class depending on certain layout conditions.
+                    The logic here attempts to position each popover so that it does not exceed the viewport
+                    width by ensuring popovers are aligned towards the center of the section.
+                  endcomment
+
+                  assign popover_class_large = 'popover hotspot-popover'
+                  assign block_is_in_last_large_column = forloop.parentloop.index | modulo: columns_large
+
+                  if block.settings[vertical_position] > 50
+                    assign popover_class_large = popover_class_large | append: ' hotspot-popover--top'
+                  endif
+
+                  if block_is_in_last_large_column == 0 and block.settings[horizontal_position] > 50 or columns_large > 1 and block_is_in_last_large_column == 0
+                    assign popover_class_large = popover_class_large | append: ' hotspot-popover--left'
+                  endif
+
+                  if columns_large == 4 and forloop.parentloop.index == 3
+                    assign popover_class_large = popover_class_large | append: ' hotspot-popover--left'
+                  endif
+                -%}
+
+                {%- if show_product_placeholders -%}
+                  <div id="ImageHotspot-{{ section.id }}{{ block.id }}{{ forloop.index }}">
+                    <div class="hotspot-wrapper">
+                      <button is="loess-button" class="hotspot button button--icon tap hide-tablet-and-up" aria-expanded="false" aria-controls="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-mobile" aria-label="{{ 'sections.image_hotspots.product_details' | t: title: product.title }}">
+                        <div class="hotspot__dot"></div>
+                        <div class="hotspot__close">
+                          {% render 'icon' with 'close' %}
+                        </div>
+                      </button>
+
+                      <button is="loess-button" class="hotspot button button--icon tap hide-mobile" aria-expanded="false" aria-controls="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-tablet-and-up" aria-label="{{ 'sections.image_hotspots.product_details' | t: title: product.title }}">
+                        <div class="hotspot__dot"></div>
+                        <div class="hotspot__close">
+                          {% render 'icon' with 'close' %}
+                        </div>
+                      </button>
+
+                      {%- capture popover_content -%}
+                        <a href="#" class="hotspot-popover__inner">
+                          {{ 'product-' | append: product_placeholder | placeholder_svg_tag: 'hotspot-popover__inner-media' }}
+
+                          <div class="hotspot-popover__inner-metadata">
+                            {%- if settings.product_show_vendor -%}
+                              <span class="small-text">{{ 'products.product.vendor' | t }}</span>
+                            {%- endif -%}
+
+                            <span class="caption">{{ 'products.product.placeholder_title' | t }}</span>
+                            {% render 'product-price', product: product %}
+
+                            {%- if section.settings.show_product_rating -%}
+                              <div class="card__reviews stars" style="--star-rating: 5.0">
+                                <span class="sr-only">{{ 'general.rating' | t: rating: 5 }}</span>
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        </a>
+                      {%- endcapture -%}
+
+                      <loess-popover id="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-tablet-and-up" class="{{ popover_class_large }} border-radius hide-mobile">
+                      {{ popover_content }}
+                      </loess-popover>
+                    </div>
+
+                    <loess-popover id="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-mobile" class="{{ popover_class_mobile }} border-radius hide-tablet-and-up">
+                      {{ popover_content }}
+                    </loess-popover>
+                  </div>
+                {%- else -%}
+                  {%- if product == blank -%}
+                    {%- continue -%}
+                  {%- else -%}
+                    <div id="ImageHotspot-{{ section.id }}{{ block.id }}{{ forloop.index }}">
+                      <div class="hotspot-wrapper">
+                        <button is="loess-button" class="hotspot button button--icon tap hide-tablet-and-up" aria-expanded="false" aria-controls="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-mobile" aria-label="{{ 'sections.image_hotspots.product_details' | t: title: product.title }}">
+                          <div class="hotspot__dot"></div>
+                          <div class="hotspot__close">
+                            {% render 'icon' with 'close' %}
+                          </div>
+                        </button>
+
+                        <button is="loess-button" class="hotspot button button--icon tap hide-mobile" aria-expanded="false" aria-controls="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-tablet-and-up" aria-label="{{ 'sections.image_hotspots.product_details' | t: title: product.title }}">
+                          <div class="hotspot__dot"></div>
+                          <div class="hotspot__close">
+                            {% render 'icon' with 'close' %}
+                          </div>
+                        </button>
+
+                        {%- capture popover_content -%}
+                          <a href="{{ product.url }}" class="hotspot-popover__inner">
+                            {%- if product.featured_media != blank -%}
+                              {{ product.featured_media | image_url: width: 150 | image_tag: class: 'hotspot-popover__inner-media', loading: 'lazy' }}
+                            {%- endif -%}
+
+                            <div class="hotspot-popover__inner-metadata">
+                              {%- if settings.product_show_vendor and product.vendor != blank -%}
+                                <span class="small-text">{{ product.vendor }}</span>
+                              {%- endif -%}
+
+                              <span class="caption">
+                                {{ product.title }}
+                              </span>
+
+                              {% render 'product-price', product: product %}
+
+                              {%- if section.settings.show_product_rating and product.metafields.reviews.rating.value != blank -%}
+                                <span class="card__reviews stars" style="--star-rating: {{ product.metafields.reviews.rating.value.rating }}" aria-label="{{ 'general.rating' | t: rating: product.metafields.reviews.rating.value.rating }}"></span>
+                              {%- endif -%}
+                            </div>
+                          </a>
+                        {%- endcapture -%}
+
+                        <loess-popover id="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-tablet-and-up" class="{{ popover_class_large }} border-radius hide-mobile">
+                        {{ popover_content }}
+                        </loess-popover>
+                      </div>
+
+                      <loess-popover id="ImageHotspotPopup-{{ section.id }}-{{ block.id }}-{{ forloop.index }}-mobile" class="{{ popover_class_mobile }} border-radius hide-tablet-and-up">
+                        {{ popover_content }}
+                      </loess-popover>
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}</div>{%- endif -%}
+  </div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Image hotspots",
+  "tag": "section",
+  "class": "shopify-section--image-hotspots",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "columns_large",
+      "label": "Number of columns on large screens",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Number of columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_rating",
+      "label": "Show product rating in hotspots",
+      "default": false,
+      "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/en/manual/products/product-reviews/installation)."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading_text",
+      "label": "Center heading text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop the look"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h0",
+          "label": "Extra large"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text style",
+      "options": [
+        {
+          "value": "small-subtext",
+          "label": "Subtext"
+        },
+        {
+          "value": "large-subtext",
+          "label": "Large subtext"
+        },
+        {
+          "value": "body-text",
+          "label": "Text"
+        },
+        {
+          "value": "large-body-text",
+          "label": "Large text"
+        }
+      ],
+      "default": "large-subtext"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave the label blank to hide the button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1"
+        },
+        {
+          "type": "range",
+          "id": "product_1_horizontal",
+          "label": "Horizontal position",
+          "unit": "%",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "product_1_vertical",
+          "label": "Vertical position",
+          "unit": "%",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "default": 25
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2"
+        },
+        {
+          "type": "range",
+          "id": "product_2_horizontal",
+          "label": "Horizontal position",
+          "unit": "%",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "product_2_vertical",
+          "label": "Vertical position",
+          "unit": "%",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3"
+        },
+        {
+          "type": "range",
+          "id": "product_3_horizontal",
+          "label": "Horizontal position",
+          "unit": "%",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "default": 75
+        },
+        {
+          "type": "range",
+          "id": "product_3_vertical",
+          "label": "Vertical position",
+          "unit": "%",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "default": 75
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image hotspots",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "product_1_horizontal": 35,
+            "product_1_vertical": 40,
+            "product_2_horizontal": 40,
+            "product_2_vertical": 70,
+            "product_3_horizontal": 70,
+            "product_3_vertical": 50
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "product_1_horizontal": 25,
+            "product_1_vertical": 50,
+            "product_2_horizontal": 50,
+            "product_2_vertical": 30,
+            "product_3_horizontal": 75,
+            "product_3_vertical": 50
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "product_1_horizontal": 20,
+            "product_1_vertical": 35,
+            "product_2_horizontal": 80,
+            "product_2_vertical": 45,
+            "product_3_horizontal": 30,
+            "product_3_vertical": 70
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

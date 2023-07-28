@@ -1,0 +1,549 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --text-x-axis: {% if section.settings.center_text %}center{% else %}start{% endif %};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- liquid
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="section {% unless border %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  <div class="newsletter newsletter--{{ section.settings.layout }} {% if section.settings.image != blank %}newsletter--has-image{% endif %} {% if section.settings.text_position_mobile == 'bottom' %}newsletter--reverse-mobile{% endif %} {% if section.settings.text_position_large == 'right' %}newsletter--reverse-large{% endif %} {% if section.settings.layout == 'full' %}newsletter--full{% endif %}">
+    <div class="newsletter-text {% if section.settings.center_text == false %}newsletter-text--row{% endif %} rich-text-wrapper container">
+      {%- if section.settings.icon != 'none' or section.settings.title != blank or section.settings.text != blank %}
+        <div class="rich-text">
+          {%- if section.settings.icon != 'none' -%}
+            <loess-icon class="color-accent">
+              {%- render 'icon' with section.settings.icon -%}
+            </loess-icon>
+          {%- endif -%}
+
+          {%- if section.settings.title != blank -%}
+            <h2>{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.text != blank -%}
+            <div class="{% if section.settings.text_size == 'large' %}large-body-text{% endif %} rte">
+              {{ section.settings.text }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- form 'customer', class: 'newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.errors -%}
+          <small class="form-message small-text" id="Newsletter-error--{{ section.id }}">
+            {% render 'icon' with 'red-exclamation' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </small>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+          <h3 class="form-message small-text" id="Newsletter-success--{{ section.id }}" tabindex="-1" autofocus>
+            {% render 'icon' with 'green-check' %}
+            <span>{{ 'sections.password.thank_you' | t }}</span>
+          </h3>
+        {%- endif -%}
+
+        <div class="input-group">
+          <input
+            is="loess-input-field"
+            id="NewsletterForm--{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="input__field input__field--has-button"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}
+              autofocus
+              aria-invalid="true"
+              aria-describedby="Newsletter-error--{{ section.id }}"
+            {% elsif form.posted_successfully? %}
+              aria-describedby="Newsletter-success--{{ section.id }}"
+            {% endif %}
+            required
+          >
+          <label class="input__label" for="NewsletterForm--{{ section.id }}">
+            {{ 'sections.newsletter.email' | t }}
+          </label>
+          <button type="submit" class="button button--plain input__button" name="commit" aria-label="{{ 'sections.newsletter.subscribe' | t }}">
+            {% render 'icon' with 'arrow-medium' %}
+          </button>
+        </div>
+        {%- if section.settings.form_subtext -%}
+          <div class="input__subtext small-caption">
+            {{ section.settings.form_subtext | escape }}
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    {%- if section.settings.image != blank -%}
+      <div class="newsletter-media newsletter-media-mobile--{{ section.settings.image_height_mobile }} newsletter-media-large--{{ section.settings.image_height_large }}" parallax="{{ section.settings.enable_parallax }}">
+        {{ section.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "fixed-soft"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_text",
+      "label": "Center text",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "icon-24-7",
+          "label": "24/7"
+        },
+        {
+          "value": "icon-alert",
+          "label": "Alert"
+        },
+        {
+          "value": "icon-bikini",
+          "label": "Bikini"
+        },
+        {
+          "value": "icon-box",
+          "label": "Box"
+        },
+        {
+          "value": "icon-calendar",
+          "label": "Calendar"
+        },
+        {
+          "value": "icon-cash",
+          "label": "Cash"
+        },
+        {
+          "value": "icon-coupon",
+          "label": "Coupon"
+        },
+        {
+          "value": "icon-credit-card",
+          "label": "Credit card"
+        },
+        {
+          "value": "icon-currency-dollar",
+          "label": "Currency: Dollar"
+        },
+        {
+          "value": "icon-currency-euro",
+          "label": "Currency: Euro"
+        },
+        {
+          "value": "icon-currency-pounds",
+          "label": "Currency: Pounds"
+        },
+        {
+          "value": "icon-currency-yen",
+          "label": "Currency: Yen"
+        },
+        {
+          "value": "icon-dollar-bill",
+          "label": "Dollar bill"
+        },
+        {
+          "value": "icon-email",
+          "label": "Email"
+        },
+        {
+          "value": "icon-gift",
+          "label": "Gift"
+        },
+        {
+          "value": "icon-globe",
+          "label": "Globe"
+        },
+        {
+          "value": "icon-handshake",
+          "label": "Handshake"
+        },
+        {
+          "value": "icon-heart",
+          "label": "Heart"
+        },
+        {
+          "value": "icon-highheel",
+          "label": "Highheel"
+        },
+        {
+          "value": "icon-leaf",
+          "label": "Leaf"
+        },
+        {
+          "value": "icon-map-pin",
+          "label": "Map pin"
+        },
+        {
+          "value": "icon-megaphone",
+          "label": "Megaphone"
+        },
+        {
+          "value": "icon-open-24",
+          "label": "Open 24 hours"
+        },
+        {
+          "value": "icon-phone",
+          "label": "Phone"
+        },
+        {
+          "value": "icon-piggybank",
+          "label": "Piggybank"
+        },
+        {
+          "value": "icon-price-tag",
+          "label": "Price tag"
+        },
+        {
+          "value": "icon-promotion",
+          "label": "Promotion"
+        },
+        {
+          "value": "icon-recycle",
+          "label": "Recycle"
+        },
+        {
+          "value": "icon-returns",
+          "label": "Returns"
+        },
+        {
+          "value": "icon-ruler",
+          "label": "Ruler"
+        },
+        {
+          "value": "icon-running-shoe",
+          "label": "Running shoe"
+        },
+        {
+          "value": "icon-shield",
+          "label": "Shield"
+        },
+        {
+          "value": "icon-shirt",
+          "label": "Shirt"
+        },
+        {
+          "value": "icon-shopping-cart",
+          "label": "Shopping cart"
+        },
+        {
+          "value": "icon-stars",
+          "label": "Stars"
+        },
+        {
+          "value": "icon-store",
+          "label": "Store"
+        },
+        {
+          "value": "icon-thumbs-up",
+          "label": "Thumbs up"
+        },
+        {
+          "value": "icon-truck",
+          "label": "Truck"
+        },
+        {
+          "value": "icon-virus",
+          "label": "Virus"
+        },
+        {
+          "value": "icon-wave",
+          "label": "Wave"
+        }
+      ],
+      "default": "icon-email"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>News and promotions straight to your mailbox.</p>"
+    },
+    {
+      "type": "text",
+      "id": "form_subtext",
+      "label": "Subtext below the form",
+      "default": "Unsubscribe easily, whenever you like."
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "options": [
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Optional image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_height_large",
+      "label": "Image height on large screens",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "select",
+      "id": "image_height_mobile",
+      "label": "Image height on mobile and tablet",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "text_position_large",
+      "label": "Text position on large screens",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_position_mobile",
+      "label": "Text position on mobile and tablet",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

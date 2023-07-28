@@ -1,0 +1,153 @@
+{%- style -%}
+  {{ settings.type_headings_font | font_face: font_display: 'swap' }}
+  {{ settings.type_body_font | font_face: font_display: 'swap' }}
+
+  :root {
+    {% comment %} Font family heading {% endcomment %}
+    --font-h-family: {{ settings.type_headings_font.family }}, {{ settings.type_headings_font.fallback_families }};
+    --font-h-style: {{ settings.type_headings_font.style }};
+    --font-h-weight: {{ settings.type_headings_font.weight }};
+    --font-h-base-size: {{ settings.type_headings_base_size }};
+    --font-h-letter-spacing: {{ settings.type_headings_letter_spacing }};
+    --font-h-line-height: {{ settings.type_headings_line_height }};
+
+    {% comment %} Font family body {% endcomment %}
+    --font-b-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-b-style: {{ settings.type_body_font.style }};
+    --font-b-weight: {{ settings.type_body_font.weight }};
+    --font-b-base-size: {{ settings.type_body_base_size }};
+    --font-b-letter-spacing: {{ settings.type_body_letter_spacing }};
+    --font-b-line-height: {{ settings.type_body_line_height }};
+
+    {% comment %} Color schemes {% endcomment %}
+    --color-default-text: {{ settings.colors_default_text.red }}, {{ settings.colors_default_text.green }}, {{ settings.colors_default_text.blue }};
+    --color-gold: #c99952;
+    --color-black: #000000;
+    --color-white: #FFFFFF;
+    --color-default-background: {{ settings.colors_default_background.red }}, {{ settings.colors_default_background.green }}, {{ settings.colors_default_background.blue }};
+    --color-accent-1: {{ settings.colors_accent_1.red }}, {{ settings.colors_accent_1.green }}, {{ settings.colors_accent_1.blue }};
+    --color-accent-2: {{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }};
+    --color-accent-3: {{ settings.colors_accent_3.red }}, {{ settings.colors_accent_3.green }}, {{ settings.colors_accent_3.blue }};
+    --color-soft-background-opacity: {{ settings.colors_soft_background_opacity | times: 1.0 | divided_by: 100 }};
+    --color-soft-background: var(--color-default-text), var(--color-soft-background-opacity);
+    --color-overlay: {{ settings.colors_overlay.red }}, {{ settings.colors_overlay.green }}, {{ settings.colors_overlay.blue }};
+    --color-overlay-opacity: {{ settings.colors_overlay_opacity | times: 1.0 | divided_by: 100 }};
+    --color-gradient-text: {% if settings.gradient_text != blank %}{{ settings.gradient_text }}{% else %}{{ settings.colors_default_text }}{% endif %};
+    --color-gradient-background: {% if settings.gradient_background != blank %}{{ settings.gradient_background }}{% else %}{{ settings.colors_default_background }}{% endif %};
+    --color-gradient-accent-1: {% if settings.gradient_accent_1 != blank %}{{ settings.gradient_accent_1 }}{% else %}{{ settings.colors_accent_1 }}{% endif %};
+    --color-gradient-accent-2: {% if settings.gradient_accent_2 != blank %}{{ settings.gradient_accent_2 }}{% else %}{{ settings.colors_accent_2 }}{% endif %};
+    --color-gradient-accent-3: {% if settings.gradient_accent_3 != blank %}{{ settings.gradient_accent_3 }}{% else %}{{ settings.colors_accent_3 }}{% endif %};
+    --color-pswp-background: {{ settings.colors_default_background }};
+
+    {% comment %} Grid dimensions and values {% endcomment %}
+    --container-width: {{ settings.styles_max_width }};
+    --container-gutter: 16px;
+    --container-gap: 6px;
+
+
+    {%- if template.name != 'password' and template.name != 'gift_card' -%}
+      --header-transparent-buffer: calc(var(--header-height) * var(--enable-transparent-header));
+    {%- else -%}
+      --header-transparent-buffer: 0px;
+    {%- endif -%}
+
+    {% comment %} Element corners {% endcomment %}
+    {%- case settings.styles_elements_corners -%}
+      {%- when 'round' -%}
+        --radius: 20px;
+      {%- when 'slightly-round' -%}
+        --radius: 4px;
+      {%- else -%}
+        --radius: 0px;
+    {%- endcase -%}
+
+    {% comment %} Button corners {% endcomment %}
+    {%- case settings.styles_buttons_corners -%}
+      {%- when 'round' -%}
+        --button-radius: 50px;
+      {%- when 'slightly-round' -%}
+        --button-radius: 4px;
+      {%- else -%}
+        --button-radius: 0px;
+    {%- endcase -%}
+
+    {% comment %} Outline buttons opacity/blur {% endcomment %}
+    --button-outline-opacity: {{ settings.styles_outline_button_opacity }}%;
+    --button-outline-blur: {{ settings.styles_outline_button_blur | divided_by: 2 }}px;
+
+    {% comment %} Animations {% endcomment %}
+    --animations-multiple: {{ settings.animations_style }};
+
+    {% comment %} Product cards {% endcomment %}
+    {%- case settings.product_card_badge_corners -%}
+      {%- when 'round' -%}
+        --card-badge-radius: 20px;
+      {%- when 'slightly-round' -%}
+        --card-badge-radius: 4px;
+      {%- else -%}
+        --card-badge-radius: 0px;
+    {%- endcase -%}
+
+    {% comment %} Product badges {% endcomment %}
+    {%- if settings.product_sale_badge_custom_colors -%}
+      --sale-badge-foreground: {{ settings.product_sale_badge_label_color.red }}, {{ settings.product_sale_badge_label_color.green }}, {{ settings.product_sale_badge_label_color.blue }};
+      --sale-badge-background: {{ settings.product_sale_badge_background_color.red }}, {{ settings.product_sale_badge_background_color.green }}, {{ settings.product_sale_badge_background_color.blue }};
+    {%- endif -%}
+
+    {%- if settings.product_sold_out_badge_color -%}
+      --sold-out-badge-foreground: {{ settings.product_sold_out_badge_label_color.red }}, {{ settings.product_sold_out_badge_label_color.green }}, {{ settings.product_sold_out_badge_label_color.blue }};
+      --sold-out-badge-background: {{ settings.product_sold_out_badge_background_color.red }}, {{ settings.product_sold_out_badge_background_color.green }}, {{ settings.product_sold_out_badge_background_color.blue }};
+    {%- endif -%}
+
+    {%- if settings.product_custom_badge_custom_colors -%}
+      --custom-badge-foreground: {{ settings.product_custom_badge_label_color.red }}, {{ settings.product_custom_badge_label_color.green }}, {{ settings.product_custom_badge_label_color.blue }};
+      --custom-badge-background: {{ settings.product_custom_badge_background_color.red }}, {{ settings.product_custom_badge_background_color.green }}, {{ settings.product_custom_badge_background_color.blue }};
+    {%- endif -%}
+
+    {% comment %} Common dimensions used in select sections {% endcomment %}
+    --section-height-x-small: 100px;
+    --section-height-small: 232px;
+    --section-height-medium: 364px;
+    --section-height-large: 496px;
+    --section-height-x-large: 628px;
+    --vertical-spacer: 40px;
+
+    --form-input-height: 50px;
+
+    --box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
+
+  @media (min-width: 751px) {
+    :root {
+      --container-gutter: 40px;
+      --container-gap: 10px;
+
+      --section-height-x-small: 160px;
+      --section-height-small: 275px;
+      --section-height-medium: 390px;
+      --section-height-large: 505px;
+      --section-height-x-large: 620px;
+
+      --vertical-spacer: 50px;
+    }
+  }
+
+  @media (min-width: 991px) {
+    :root {
+      --section-height-x-small: 230px;
+      --section-height-small: 410px;
+      --section-height-medium: 590px;
+      --section-height-large: 770px;
+      --section-height-x-large: 950px;
+
+      --vertical-spacer: 70px;
+    }
+  }
+
+  {% comment %} Design requested the outer border "hugs" the inner slightly round border {% endcomment %}
+  {%- if settings.styles_buttons_corners == 'slightly-round' -%}
+    .card-swatches__button::after {
+      --custom-color-swatch-radius: 8px;
+    }
+  {%- endif -%}
+{%- endstyle -%}

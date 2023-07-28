@@ -1,0 +1,29 @@
+{%- liquid
+  assign free_shipping_thresholds = settings.cart_free_shipping_min_amount | remove: '' | split: ','
+
+  if free_shipping_thresholds.size > 1
+    for threshold in free_shipping_thresholds
+      assign threshold_parts = threshold | split: ':'
+      assign currency_code = threshold_parts | first | upcase
+
+      if currency_code == cart.currency.iso_code
+        assign free_shipping_calculated_threshold = threshold_parts | last
+        break
+      endif
+    endfor
+  else
+    assign free_shipping_calculated_threshold = free_shipping_thresholds | last
+  endif
+
+  assign threshold_in_cents = free_shipping_calculated_threshold | times: 100
+-%}
+
+{%- if cart.total_price >= threshold_in_cents -%}
+  <p>{{ 'sections.cart.progress_bar.free_shipping' | t }}</p>
+{%- else -%}
+  {%- capture remaining_amount -%}
+    {{ cart.total_price | minus: threshold_in_cents | abs | money }}
+  {%- endcapture -%}
+
+  <p>{{ 'sections.cart.progress_bar.free_shipping_remaining_html' | t: remaining_amount: remaining_amount }}</p>
+{%- endif -%}

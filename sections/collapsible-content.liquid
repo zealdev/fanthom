@@ -1,0 +1,393 @@
+{%- liquid
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+  <div class="section {% unless border %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+    {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}<div class="color-soft-background">{%- endif -%}
+
+    <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container container--capped">
+      {%- if section.settings.title != blank or section.settings.text != blank -%}
+        <header class="section-heading {% if section.settings.center_heading_text %}section-heading--centered{% else %}section-heading--capped{% endif %}">
+          {%- if section.settings.title != blank -%}
+            <h2 class="section-heading__heading {{ section.settings.heading_size }}">
+              {{ section.settings.title | escape }}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.text != blank -%}
+            <div class="section-heading__subheading">
+              <div class="rte {{ section.settings.text_style }} color-accent">
+                {{ section.settings.text }}
+              </div>
+            </div>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+
+      <div class="collapsible-content-list {% if section.settings.center_body_text %}collapsible-content-list--centered{% endif %}">
+        {%- liquid
+          assign first_block_expanded = false
+
+          if section.settings.row_style == '1st-open' or section.settings.row_style == '1st-open-each'
+            assign first_block_expanded = true
+          endif
+        -%}
+
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'category' -%}
+              {%- if block.settings.title != blank -%}
+                <div class="collapsible-content-list__category small-subtext color-accent" {{ block.shopify_attributes }}>
+                  {{ block.settings.title | escape }}
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.row_style == '1st-open-each' -%}
+                {%- assign first_block_expanded = true -%}
+              {%- endif -%}
+
+            {%- when 'row' -%}
+              <div class="collapsible-content" {{ block.shopify_attributes }}>
+                <div class="collapsible-content__title large-body-text">
+                  {{ block.settings.title | escape }}
+                  {%- if section.settings.row_style != 'non-collapsible' -%}
+                    <button is="loess-button" class="collapsible-content__button button button--icon large-body-text tap" aria-expanded="{% if first_block_expanded %}true{% else %}false{% endif %}" aria-controls="CollapsibleContent-{{ section.id }}-{{ block.id }}" aria-label="Toggle panel">
+                      {% render 'icon' with 'collapse' %}
+                      {% render 'icon' with 'expand' %}
+                    </button>
+                  {%- endif -%}
+                </div>
+                <loess-collapsible-panel id="CollapsibleContent-{{ section.id }}-{{ block.id }}" class="collapsible-content-text collapsible-panel" {% if section.settings.row_style == 'non-collapsible' or first_block_expanded %}open{% endif %}>
+                  <div class="rte">
+                    {%- if block.settings.page == blank -%}
+                      {{ block.settings.text }}
+                    {%- else -%}
+                      <div class="collapsible-content-text__page">
+                        {{ block.settings.page.content }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </loess-collapsible-panel>
+              </div>
+
+              {%- if section.settings.row_style == '1st-open' or section.settings.row_style == '1st-open-each' -%}
+                {%- assign first_block_expanded = false -%}
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}</div>{%- endif -%}
+  </div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collapsible content",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "row_style",
+      "label": "Row style",
+      "options": [
+        {
+          "value": "1st-open",
+          "label": "1st row open by default"
+        },
+        {
+          "value": "1st-open-each",
+          "label": "1st row of each category open by default"
+        },
+        {
+          "value": "collapsed",
+          "label": "All rows collapsed by default"
+        },
+        {
+          "value": "non-collapsible",
+          "label": "Non-collapsible rows"
+        }
+      ],
+      "default": "1st-open"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading_text",
+      "label": "Center heading text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collapsible content"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h0",
+          "label": "Extra large"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text style",
+      "options": [
+        {
+          "value": "small-subtext",
+          "label": "Subtext"
+        },
+        {
+          "value": "large-subtext",
+          "label": "Large subtext"
+        },
+        {
+          "value": "body-text",
+          "label": "Text"
+        },
+        {
+          "value": "large-body-text",
+          "label": "Large text"
+        }
+      ],
+      "default": "large-subtext"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_body_text",
+      "label": "Center collapsible row text",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Category"
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Collapsible row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Collapsible row"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Write any kind of text for your collapsible content. It can be an answer to a frequently asked question, a body of text that explains your store policy, or whatever else you wish!</p>"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Page (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible content",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Category 1"
+          }
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Category 2"
+          }
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

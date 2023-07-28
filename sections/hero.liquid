@@ -1,0 +1,764 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.image_background -%}
+      --overlay-opacity: {{ section.settings.overlay }}%;
+    {%- endif -%}
+
+    --auto-play-state: paused;
+    --auto-play-duration: {% if section.settings.auto_play %}{{ section.settings.auto_play_delay }}s{% else %}0s{% endif %};
+  }
+
+  {%- for block in section.blocks -%}
+    {%- if section.settings.image_background == false and block.settings.custom_colors -%}
+      #shopify-section-{{ section.id }}-Block-{{ block.id }} {
+        --color-background: {{ block.settings.color_background.red }}, {{ block.settings.color_background.green }}, {{ block.settings.color_background.blue }};
+        --color-gradient: {% if block.settings.color_gradient != blank %}{{ block.settings.color_gradient }}{% else %}{{ block.settings.color_background }}{% endif %};
+      }
+    {%- endif -%}
+
+    #shopify-section-{{ section.id }}-Text-{{ block.id }} {
+      --text-x-axis-mobile: {{ block.settings.text_position_mobile }};
+
+      {%- comment -%}Extract the values for the text position's x and y axis for large screens{%- endcomment -%}
+      {%- assign text_axis = block.settings.text_position_large | split: ' ' -%}
+      --text-y-axis-large: {{ text_axis | first }};
+      --text-x-axis-large: {{ text_axis | last }};
+
+      {%- if section.settings.image_background == false and block.settings.custom_colors -%}
+        --color-foreground: {{ block.settings.color_foreground.red }}, {{ block.settings.color_foreground.green }}, {{ block.settings.color_foreground.blue }};
+        --color-background: {{ block.settings.color_background.red }}, {{ block.settings.color_background.green }}, {{ block.settings.color_background.blue }};
+        --color-accent: {{ block.settings.color_accent.red }}, {{ block.settings.color_accent.green }}, {{ block.settings.color_accent.blue }};
+      {%- endif -%}
+    }
+  {%- endfor -%}
+
+  /* We add custom styling for when the image is set to "Adapt to first image" for both mobile and large devices */
+  {%- if section.settings.height_mobile == 'auto' or section.settings.height_large == 'auto' -%}
+    {%- if section.settings.height_mobile == 'auto' -%}
+      @media (max-width: 750px) {
+        #shopify-section-{{ section.id }} .hero-media {
+          padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
+          height: 100%;
+        }
+      }
+    {%- endif -%}
+
+    {%- if section.settings.height_large == 'auto' -%}
+      @media (min-width: 751px) {
+        #shopify-section-{{ section.id }} .hero-media {
+          padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
+        }
+      }
+    {%- endif -%}
+  {%- endif -%}
+{%- endstyle -%}
+
+{%- capture hero_controls_buttons -%}
+  <loess-slideshow-buttons class="slider-buttons">
+    <button class="slider-buttons__previous button button--secondary button--icon" aria-label="{{ 'general.slider.previous_slide' | t }}">
+      {% render 'icon' with 'arrow-minimal-previous' %}
+    </button>
+
+    <button class="slider-buttons__next button button--secondary button--icon" aria-label="{{ 'general.slider.next_slide' | t }}">
+      {% render 'icon' with 'arrow-minimal-next' %}
+    </button>
+  </loess-slideshow-buttons>
+{%- endcapture -%}
+
+{%- capture hero_controls_dots -%}
+  <div class="slider-dots" aria-hidden="true">
+    <ol role="list">
+      {%- for i in (1..section.blocks.size) -%}
+        <li {% if forloop.first == true %}active{% endif %}></li>
+      {%- endfor -%}
+    </ol>
+  </div>
+
+  {%- if section.settings.auto_play and section.blocks.size > 1 -%}
+    <loess-slideshow-progress>
+      <svg class="slider-progress-bar" aria-hidden="true">
+        <circle cx="50%" cy="50%" r="75" class="slider-progress-bar__circle slider-progress-bar__circle--animation"></circle>
+        <circle cx="50%" cy="50%" r="75" class="slider-progress-bar__circle slider-progress-bar__circle--faded"></circle>
+      </svg>
+    </loess-slideshow-progress>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if section.blocks.size > 1 -%}
+
+  {%- capture hero_controls -%}
+    {{ hero_controls_buttons }}
+    {{ hero_controls_dots }}
+  {%- endcapture -%}
+    
+{%- endif -%}
+
+{%- capture text -%}
+  {%- for block in section.blocks -%}
+    {%- liquid
+      case block.settings.text_size
+        when 'medium'
+          assign heading_size = 'h2'
+          assign text_size = 'body-text'
+        when 'large'
+          assign heading_size = 'h1'
+          assign text_size = 'body-text'
+        when 'x-large'
+          assign heading_size = 'h0'
+          assign text_size = 'large-body-text'
+      endcase
+    -%}
+
+    <loess-slideshow-text id="shopify-section-{{ section.id }}-Text-{{ block.id }}" class="hero-text media-with-text__text block {% if section.settings.image_background == false or section.settings.text_below_image_mobile %}{% if section.settings.image_background == false %}{% if block.settings.custom_colors %}color-custom{% else %}color color-{{ block.settings.color_scheme }}{% endif %} color-gradient{% endif %}{% endif %}" {% if forloop.first == false %}hidden{% endif %}>
+      <div class="rich-text-wrapper {% if section.settings.fixed_width or section.settings.image_background and section.settings.fixed_width == false %}container container--capped{% endif %}">
+        <div class="rich-text rich-text-width-{{ section.settings.text_width }}">
+          {%- if section.settings.text_below_image_mobile and section.settings.image_background == false -%}
+            <div class="hero-slider-buttons hero-slider-buttons--top hide-tablet-and-up">
+              {{ hero_controls }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.subheading != blank -%}
+            <span class="large-subtext color-accent">
+              {{ block.settings.subheading | escape }}
+            </span>
+          {%- endif -%}
+
+          {%- if block.settings.title != blank -%}
+            <h1 class="{{ heading_size }} {{ block.settings.text_color }}">
+              {{ block.settings.title | escape }}
+            </h1>
+          {%- endif -%}
+
+          {%- if block.settings.text != blank -%}
+            <div class="rte {{ text_size }} {{ block.settings.text_color }}">
+              {{ block.settings.text }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.first_button_label != blank or block.settings.second_button_label != blank -%}
+            <div class="button-group">
+              {%- if block.settings.first_button_label != blank -%}
+                <a href="{{ block.settings.first_button_link }}" class="button {% if block.settings.first_button_arrow_style %} button--plain button--icon tap color-accent{% else %}button--primary{% endif %}">
+                  {{ block.settings.first_button_label | escape }}
+
+                  {%- if block.settings.first_button_arrow_style -%}
+                    <span>
+                      {% render 'icon' with 'arrow-medium' %}
+                    </span>
+                  {%- endif -%}
+                </a>
+              {%- endif -%}
+
+              {%- if block.settings.second_button_label != blank -%}
+                <a href="{{ block.settings.second_button_link }}" class="button {% if block.settings.second_button_arrow_style %} button--plain button--icon tap color-accent{% else %}button--primary{% endif %}">
+                  {{ block.settings.second_button_label | escape }}
+
+                  {%- if block.settings.second_button_arrow_style -%}
+                    <span>
+                      {% render 'icon' with 'arrow-medium' %}
+                    </span>
+                  {%- endif -%}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.blocks.size > 1 and section.settings.text_below_image_mobile == false or section.settings.image_background -%}
+            <div class="hero-slider-buttons hero-slider-buttons--bottom {% if section.settings.text_below_image_mobile %}hide-mobile{% endif %} hide-tablet-and-up">
+              {{ hero_controls }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if section.blocks.size > 1 and section.settings.image_offset == false or section.settings.image_background -%}
+        <div class="hero-controls {% if section.settings.fixed_width %}hero-controls--padded{% endif %} {% if section.settings.image_background %}container container--capped{% endif %} hero-slider-buttons hide-mobile">
+          {{ hero_controls }}
+        </div>
+      {%- endif -%}
+    </loess-slideshow-text>
+
+    {%- if section.settings.maintain_text_first_slide -%}
+      {% break %}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture backgrounds -%}
+  <div class="hero-background-wrapper {% if section.settings.fixed_width %}border-radius{% else %}{% if section.settings.image_offset %}hero-background-wrapper--full-offset hero-background-wrapper--full-offset-{% if section.settings.text_below_image_mobile %}top{% else %}bottom{% endif %}-mobile {% endif %}{% endif %}">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        if block.settings.color_scheme == 'default' or block.settings.color_scheme == 'default-with-accent-1'
+          if section.settings.fixed_width and section.settings.soft_background == false and block.settings.custom_colors == false
+            assign border = true
+          endif
+        endif
+      -%}
+
+      <div id="shopify-section-{{ section.id }}-Block-{{ block.id }}" class="hero-background {% if forloop.first == false %}hero-background--hidden{% endif %} {% unless border %}block{% endunless %} {% if section.settings.image_background == false %}{% if block.settings.custom_colors %}color-custom{% else %}color color-{{ block.settings.color_scheme }}{% endif %} color-gradient{% endif %}"></div>
+
+      {%- if section.settings.maintain_background_color_first_slide -%}
+        {% break %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endcapture -%}
+
+{%- if section.settings.soft_background -%}
+  <div class="color-soft-background">
+{% endif %}
+
+{%- if section.settings.fixed_width -%}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+{%- if section.settings.fixed_width == false and section.settings.image_background == false -%}
+  {{ backgrounds }}
+{%- endif -%}
+
+<div class="section {% if section.settings.image_background == false and section.settings.fixed_width == false %}section-vertical-spacer{% endif %} {% if section.settings.fixed_width %}border-radius{% endif %}">
+  <loess-slideshow type="{% if section.settings.image_background %}image-background{% else %}media-with-text{% endif %}" {% if section.blocks.size > 1 %}{% if section.settings.auto_play %}auto-play{% endif %} animation-style="{{ section.settings.animation }}"{% endif %}>
+    {%- if section.settings.image_background -%}
+      <div class="hero-banner {% if section.settings.text_below_image_mobile %}hero-banner--stacked-mobile{% endif %} banner {% if section.settings.height_mobile != 'auto' %}banner-mobile--{{ section.settings.height_mobile }}{% endif %} {% if section.settings.height_large != 'auto' %}banner-large--{{ section.settings.height_large }}{% endif %}">
+        <div class="banner__text banner__text--overlay">
+          {%- if section.settings.text_below_image_mobile -%}
+            <div class="hide-tablet-and-up">
+              {{ backgrounds }}
+            </div>
+          {%- endif -%}
+
+          {{ text }}
+        </div>
+
+        <div class="hero-media-wrapper">
+          {%- for block in section.blocks -%}
+            <loess-slideshow-image class="hero-media banner__media {% if section.settings.fixed_width %}border-radius{% endif %}" {% if forloop.first == true %}style="visibility: visible"{% else %}hidden{% endif %} parallax="{{ section.settings.enable_parallax }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+              {%- else -%}
+                {%- capture placeholder -%}
+                  {%- cycle 1, 2 -%}
+                {%- endcapture -%}
+
+                {{ 'lifestyle-' | append: placeholder | placeholder_svg_tag }}
+              {%- endif -%}
+            </loess-slideshow-image>
+          {%- endfor -%}
+
+          {%- if section.settings.text_below_image_mobile -%}
+            <div class="hero-media-wrapper__mobile-controls hero-controls hero-slider-buttons hide-tablet-and-up">
+              {{ hero_controls }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- else -%}
+      <div class="hero {% if section.settings.image_offset %}hero-offset{% endif %} media-with-text media-with-text-mobile--{{ section.settings.height_mobile }} media-with-text-large--{{ section.settings.height_large }} {% if section.settings.text_below_image_mobile %}media-with-text--reverse-mobile{% endif %} {% if section.settings.fixed_width == false %}container{% endif %}">
+        {%- if section.settings.fixed_width -%}
+          {{ backgrounds }}
+        {%- endif -%}
+
+        {{ text }}
+
+        <div class="media-with-text__media-wrapper {% if section.settings.image_padding %}media-with-text__media-wrapper--padding{% endif %}">
+          {%- for block in section.blocks -%}
+            <loess-slideshow-image class="hero-media media-with-text__media {% if block.settings.image.src contains '.png' %}media-with-text__media--transparent{% endif %} media-with-text__media--fill {% if section.settings.fixed_width == false or section.settings.image_padding %}border-radius{% endif %}" {% if forloop.first == true %}style="visibility: visible"{% else %}hidden{% endif %} parallax="{{ section.settings.enable_parallax }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+              {%- else -%}
+                {%- capture placeholder -%}
+                  {%- cycle 1, 2 -%}
+                {%- endcapture -%}
+
+                {{ 'lifestyle-' | append: placeholder | placeholder_svg_tag }}
+              {%- endif -%}
+            </loess-slideshow-image>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.image_offset -%}
+          <div class="hero-overflow {% if section.settings.fixed_width %}hero-overflow--fixed{% endif %} {% if section.settings.soft_background %}hero-overflow--soft-background{% endif %} {% if section.settings.image_offset %}hero-overflow--offset{% endif %} hide-mobile">
+            {%- if section.blocks.size > 1 -%}
+              <div class="hero-controls-wrapper hide-mobile">
+                <div class="hero-controls">
+                  {{ hero_controls }}
+                </div>
+              </div>
+            {%- endif -%}
+
+            <div class="hero-overflow__inner"></div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </loess-slideshow>
+</div>
+
+{%- if section.settings.fixed_width -%}
+  </div>
+{%- endif -%}
+
+{%- if section.settings.soft_background -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "shopify-section--hero",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "fixed_width",
+      "label": "Enable fixed width layout",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "soft_background",
+      "label": "Enable soft background",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "height_large",
+      "label": "Section height on large screens",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "x-large",
+          "label": "Extra large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to first image"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen height"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Section height on mobile",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "x-large",
+          "label": "Extra large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to first image"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen height"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "text_width",
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Text Content Width",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "text_below_image_mobile",
+      "label": "Move text below image on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "image_padding",
+      "label": "Enable image padding",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "image_offset",
+      "label": "Enable image offset",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect on image",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "image_background",
+      "label": "Enable background image",
+      "default": false,
+      "info": "Overrides and disables “Enable image padding” and “Enable image offset” settings"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Image overlay",
+      "default": 40,
+      "info": "Applicable when the image style is set to “Background image”"
+    },
+    {
+      "type": "header",
+      "content": "Slideshow"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Image animation",
+      "options": [
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "swipe",
+          "label": "Swipe"
+        }
+      ],
+      "default": "swipe"
+    },
+    {
+      "type": "checkbox",
+      "id": "maintain_text_first_slide",
+      "label": "Maintain text from first slide",
+      "default": true,
+      "info": "Also maintains the foreground and accent colors from first slide if enabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "maintain_background_color_first_slide",
+      "label": "Maintain background color from first slide",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_play",
+      "label": "Auto-change slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "auto_play_delay",
+      "min": 4,
+      "max": 10,
+      "step": 1,
+      "unit": "sec",
+      "label": "Change slides every",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Hero"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "label": "Text size",
+          "options": [
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            },
+            {
+              "value": "x-large",
+              "label": "Extra large"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "select",
+          "id": "text_color",
+          "label": "Text color",
+          "options": [
+            {
+              "value": "hero-color-black",
+              "label": "Black"
+            },
+            {
+              "value": "hero-color-white",
+              "label": "White"
+            }
+          ],
+          "default": "hero-color-black"
+        },
+        {
+          "type": "select",
+          "id": "text_position_large",
+          "label": "Text position on large screens",
+          "options": [
+            {
+              "value": "start start",
+              "label": "Top left"
+            },
+            {
+              "value": "start center",
+              "label": "Top center"
+            },
+            {
+              "value": "start end",
+              "label": "Top right"
+            },
+            {
+              "value": "center start",
+              "label": "Middle left"
+            },
+            {
+              "value": "center center",
+              "label": "Middle center"
+            },
+            {
+              "value": "center end",
+              "label": "Middle right"
+            },
+            {
+              "value": "end start",
+              "label": "Bottom left"
+            },
+            {
+              "value": "end center",
+              "label": "Bottom middle"
+            },
+            {
+              "value": "end end",
+              "label": "Bottom right"
+            }
+          ],
+          "default": "center start"
+        },
+        {
+          "type": "select",
+          "id": "text_position_mobile",
+          "label": "Text position on mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            }
+          ],
+          "default": "start"
+        },
+        {
+          "type": "text",
+          "id": "first_button_label",
+          "label": "First button label",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "first_button_link",
+          "label": "First button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "first_button_arrow_style",
+          "label": "Use arrow button style",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "second_button_label",
+          "label": "Second button label",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "second_button_link",
+          "label": "Second button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "second_button_arrow_style",
+          "label": "Use arrow button style",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Colors",
+          "info": "Not applicable when “Background image” is enabled in the section settings"
+        },
+        {
+          "type": "select",
+          "id": "color_scheme",
+          "label": "Color scheme",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "default-with-accent-1",
+              "label": "Default with accent 1"
+            },
+            {
+              "value": "inverse",
+              "label": "Inverse"
+            },
+            {
+              "value": "inverse-with-accent-2",
+              "label": "Inverse with accent 2"
+            },
+            {
+              "value": "accent-1",
+              "label": "Accent 1"
+            },
+            {
+              "value": "accent-2",
+              "label": "Accent 2"
+            },
+            {
+              "value": "accent-3",
+              "label": "Accent 3"
+            }
+          ],
+          "default": "default-with-accent-1"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_colors",
+          "label": "Override with custom colors",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "color_foreground",
+          "label": "Custom foreground color",
+          "default": "#061C2F"
+        },
+        {
+          "type": "color",
+          "id": "color_accent",
+          "label": "Custom accent color",
+          "default": "#0D91BD"
+        },
+        {
+          "type": "color",
+          "id": "color_background",
+          "label": "Custom background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color_background",
+          "id": "color_gradient",
+          "label": "Custom background gradient",
+          "info": "Optional. Overrides “Custom background color”."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

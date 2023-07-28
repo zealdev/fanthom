@@ -1,0 +1,16 @@
+<div class='card'>
+  <div class='card__metadata {% if settings.product_card_center_metadata %}card__metadata--centered text-center{% endif %}'>
+    <a href='{{ product.url }}' class='card__title caption'>
+      {{ product.title }}
+
+      <div class='card__description small-caption'>
+        {{ product.content | strip_html | truncatewords: 25 }}
+      </div>
+    </a>
+
+    <div class='card__category'>
+      {% render 'icon' with 'page' %}
+      <span class='small-text'>{{ 'page_card.page' | t }}</span>
+    </div>
+  </div>
+</div>

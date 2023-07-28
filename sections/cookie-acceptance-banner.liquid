@@ -1,0 +1,146 @@
+{%- if section.settings.enable_bar -%}
+  {%- style -%}
+    #shopify-section-{{ section.id }} {
+      {%- if section.settings.custom_colors -%}
+        --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+        --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+        --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+        --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+      {%- endif -%}
+    }
+  {%- endstyle -%}
+
+  <loess-cookie-banner
+    section-id='{{ section.id }}'
+    class='cookie-banner {% if section.settings.custom_colors %}color-custom{% else %}block color color-{{ section.settings.color_scheme }}{% endif %} color-gradient'
+    hidden
+  >
+    <div class='section'>
+      <div class='container'>
+        <div class='cookie-banner__inner'>
+          {%- if section.settings.text != blank -%}
+            <span class='caption rte'>{{ section.settings.text }}</span>
+          {%- endif -%}
+          <div class='cookie-banner__buttons'>
+            <button class='button button--secondary' data-action='decline' aria-label='Decline cookies policy'>
+              {%- assign default_decline_text = 'sections.cookie_banner.decline' | t -%}
+              {{ section.settings.decline_button_label | default: default_decline_text }}
+            </button>
+
+            <button class='button button--primary' data-action='accept' aria-label='Accept cookies policy'>
+              {%- assign default_accept_text = 'sections.cookie_banner.accept' | t -%}
+              {{ section.settings.accept_button_label | default: default_accept_text }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </loess-cookie-banner>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cookie acceptance banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_bar",
+      "label": "Enable cookie bar",
+      "default": false,
+      "info": "Enabling of the app does not guarantee that your store is fully compliant with GDPR. The theme provides a cookie consent bar - it's up to you to complete other compliance steps, such as linking to a proper Privacy Policy page."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>This website uses cookies to personalize and improve your experience.</p>"
+    },
+    {
+      "type": "text",
+      "id": "decline_button_label",
+      "label": "“Decline” button label",
+      "default": "Decline"
+    },
+    {
+      "type": "text",
+      "id": "accept_button_label",
+      "label": "“Accept” button label",
+      "default": "Accept"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "inverse-with-accent-2"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,705 @@
+{% capture icon_attributes -%}
+  class="icon icon--{{ icon }}
+  {% if reverse %}icon--reverse{% endif %}" aria-hidden="true" focusable="false" role="presentation"
+{%- endcapture %}
+
+{% case icon %}
+    <!-- User interface -->
+  {% when 'burger' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M4 6.004a.5.5 0 0 1 .5-.5h16a.5.5 0 0 1 0 1h-16a.5.5 0 0 1-.5-.5ZM4 12.004a.5.5 0 0 1 .5-.5h16a.5.5 0 0 1 0 1h-16a.5.5 0 0 1-.5-.5ZM4 18.004a.5.5 0 0 1 .5-.5h16a.5.5 0 0 1 0 1h-16a.5.5 0 0 1-.5-.5Z"/>
+        </svg>
+      {% when 'regular' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M4 5.953a.75.75 0 0 1 .75-.75h15.5a.75.75 0 0 1 0 1.5H4.75a.75.75 0 0 1-.75-.75ZM4 11.953a.75.75 0 0 1 .75-.75h15.5a.75.75 0 0 1 0 1.5H4.75a.75.75 0 0 1-.75-.75ZM4 17.953a.75.75 0 0 1 .75-.75h15.5a.75.75 0 0 1 0 1.5H4.75a.75.75 0 0 1-.75-.75Z"/>
+        </svg>
+      {% when 'bold' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M4 5.703a1 1 0 0 1 1-1h15a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1ZM4 11.703a1 1 0 0 1 1-1h15a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1ZM4 17.703a1 1 0 0 1 1-1h15a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1Z"/>
+        </svg>
+    {% endcase %}
+  {% when 'close' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M19.385 18.94a.5.5 0 1 1-.707.706L12 12.97l-6.678 6.677a.5.5 0 1 1-.707-.707l6.678-6.677-6.908-6.908a.5.5 0 0 1 .707-.708L12 11.555l6.908-6.909a.5.5 0 1 1 .707.708l-6.908 6.908 6.678 6.677Z"/>
+        </svg>
+      {% when 'regular' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M4.438 18.608a.75.75 0 0 0 1.061 1.06l6.5-6.5 6.502 6.5a.75.75 0 0 0 1.06-1.06l-6.5-6.5 6.377-6.378a.75.75 0 0 0-1.06-1.061L12 11.047 5.622 4.669a.75.75 0 0 0-1.06 1.06l6.377 6.378-6.5 6.501Z"/>
+        </svg>
+      {% when 'bold' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M4.262 18.078a1 1 0 1 0 1.414 1.414L12 13.168l6.324 6.324a1 1 0 0 0 1.414-1.414l-6.324-6.324 5.848-5.848a1 1 0 1 0-1.415-1.414L12 10.34 6.152 4.492a1 1 0 0 0-1.414 1.414l5.848 5.848-6.324 6.324Z"/>
+        </svg>
+    {% endcase %}
+  {% when 'search' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M18 9.5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.736 6.024a8 8 0 1 1 .71-.704l4.62 4.62a.5.5 0 1 1-.707.706l-4.623-4.622Z"/>
+        </svg>
+      {% when 'regular' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 9.7a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Zm-1.236 6.023a8 8 0 1 1 1.033-1.089l4.473 4.474a.75.75 0 1 1-1.06 1.06l-4.446-4.445Z"/>
+        </svg>
+      {% when 'bold' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17 9.7a6 6 0 1 1-12 0 6 6 0 0 1 12 0Zm-.736 6.023a8 8 0 1 1 1.332-1.496l4.351 4.351a1 1 0 0 1-1.414 1.414l-4.269-4.269Z"/>
+        </svg>
+    {% endcase %}
+  {% when 'email' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        {% if settings.styles_icons_edges == 'square' %}
+          <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.4 5H3.6l7.33 7.53c.59.6 1.56.6 2.15 0L20.4 5ZM3 5.81V19.1h18V5.82l-7.2 7.4c-.99 1.01-2.6 1.01-3.59 0L3 5.82ZM2 20.1V4h20v16.1H2Z"/>
+          </svg>
+        {% else %}
+          <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M5 5h14a2 2 0 0 1 1.22.42l-7.16 7.16a1.5 1.5 0 0 1-2.12 0L3.78 5.42A2 2 0 0 1 5 5ZM3.16 6.21A2 2 0 0 0 3 7v10.1c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-.16-.79l-7.07 7.08a2.5 2.5 0 0 1-3.54 0L3.16 6.2ZM2 7a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10.1a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7Z"/>
+          </svg>
+        {% endif %}
+      {% when 'regular' %}
+        {% if settings.styles_icons_edges == 'square' %}
+          <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M19.56 5.5H4.44l6.67 6.85c.49.5 1.3.5 1.79 0l6.66-6.85ZM3.5 6.69v11.9h17V6.7l-6.53 6.7a2.75 2.75 0 0 1-3.94 0L3.5 6.7ZM2 20.09V4h20v16.1H2Z"/>
+          </svg>
+        {% else %}
+          <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M5 5.5h14c.23 0 .45.05.64.14L12.9 12.4c-.5.5-1.28.5-1.77 0L4.36 5.64c.2-.09.41-.14.64-.14ZM3.5 6.9v10.2c0 .82.67 1.5 1.5 1.5h14c.83 0 1.5-.68 1.5-1.5V6.9l-6.55 6.55a2.75 2.75 0 0 1-3.9 0L3.5 6.91ZM2 7a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10.1a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7Z"/>
+          </svg>
+        {% endif %}
+      {% when 'bold' %}
+        {% if settings.styles_icons_edges == 'square' %}
+          <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="m20 7.48-5.84 6.06a3 3 0 0 1-4.32 0L4 7.48v10.61h16V7.48ZM3 4H2v16.1h20V4H3Zm2.35 2 5.93 6.16a1 1 0 0 0 1.44 0L18.65 6H5.35Z"/>
+          </svg>
+        {% else %}
+          <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.93 6H5.07l6.22 6.23a1 1 0 0 0 1.42 0L18.93 6ZM4 7.76v9.33a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.76l-5.88 5.88a3 3 0 0 1-4.24 0L4 7.76ZM2 7a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10.1a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7Z"/>
+          </svg>
+        {% endif %}
+    {% endcase %}
+  {% when 'notice' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M5.41 7.15a47.28 47.28 0 0 1-3.4.2H2v5.24l.01.01h.02c1.19.03 2.32.09 3.38.19V7.15Zm1-.1v5.84c.68.08 1.33.17 1.95.27V6.77c-.62.1-1.27.2-1.95.28Zm2.95-.46v6.75c5.23 1.02 8.5 2.86 10.3 4.22V2.38c-1.8 1.35-5.07 3.2-10.3 4.21Zm0 7.77c5.6 1.13 8.79 3.21 10.27 4.45.36.3 1.03.03 1.03-.44v-4.99l1.17-.62c.5-.26.8-.77.8-1.32V8.5c0-.55-.3-1.07-.8-1.33l-1.17-.61v-5c0-.46-.67-.74-1.03-.43-2.04 1.7-7.29 5-17.62 5.2C1.45 6.35 1 6.8 1 7.34v5.25c0 .56.45 1 1 1.01 1.21.03 2.34.1 3.41.2v4.53a1.97 1.97 0 1 0 3.95 0v-3.97Zm-1-.18c-.62-.1-1.27-.2-1.95-.28v4.43a.97.97 0 0 0 1.95 0v-4.15Zm13-2.3-.7.37V7.7l.7.37a.5.5 0 0 1 .27.44v2.94a.5.5 0 0 1-.26.44Z"/>
+        </svg>
+      {% when 'regular' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 7.82v4.3c.93.02 1.81.07 2.66.14V7.67c-.85.08-1.73.13-2.66.15Zm4.16-.3v4.9c.5.06.98.12 1.45.2v-5.3l-1.45.2Zm2.95-.47v5.83c4.53.9 7.6 2.42 9.55 3.71V3.34A26.38 26.38 0 0 1 9.6 7.05Zm0 7.37c5.45 1.13 8.56 3.17 10.02 4.39.36.3 1.03.03 1.03-.44v-4.7l1.29-.68c.57-.3.93-.9.93-1.55V8.5c0-.65-.36-1.24-.93-1.55l-1.3-.68v-4.7c0-.47-.66-.75-1.02-.44-2.04 1.7-7.29 5-17.62 5.2C1.45 6.35 1 6.8 1 7.34v5.25c0 .56.45 1 1 1.01 1.12.02 2.17.08 3.16.17v4.56a2.22 2.22 0 1 0 4.45 0v-3.91Zm-1.5-.28a38.3 38.3 0 0 0-1.45-.21v4.4a.72.72 0 1 0 1.45 0v-4.2Zm13.14-2.48-.6.31v-4l.6.31c.08.04.13.13.13.22v2.94c0 .09-.05.17-.13.22Z"/>
+        </svg>
+      {% when 'bold' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M3 8.3v3.33c.66.03 1.3.06 1.91.11V8.2c-.61.04-1.25.08-1.91.1ZM6.91 8v3.94l.95.13v-4.2l-.95.12Zm2.95-.49v4.91a27.7 27.7 0 0 1 8.8 3.27V4.25a27.7 27.7 0 0 1-8.8 3.26Zm0 6.96c4.31.93 7.13 2.43 8.8 3.6l.02.01a15 15 0 0 1 .95.73c.36.3 1.03.03 1.03-.44v-4.42l1.4-.74a2 2 0 0 0 1.07-1.77V8.5a2 2 0 0 0-1.07-1.77L20.66 6V1.57c0-.47-.67-.75-1.03-.44a13.67 13.67 0 0 1-.95.72l-.02.02C16.13 3.64 10.99 6.16 2 6.33 1.45 6.35 1 6.8 1 7.34v5.25c0 .56.45 1 1 1.01 1.02.02 2 .07 2.91.15v4.58a2.47 2.47 0 1 0 4.95 0v-3.86Zm-2-.37-.95-.14v4.37a.47.47 0 1 0 .95 0V14.1Zm13.27-2.66-.47.25V8.25l.47.25v2.94Z"/>
+        </svg>
+    {% endcase %}
+  {% when 'account' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M16 5.5a4 4 0 1 1-8 0 4 4 0 0 1 8 0Zm1 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0Zm-12.5 14c0-2.143.486-3.732 1.596-4.796C7.212 13.634 9.058 13 12 13c2.942 0 4.788.635 5.904 1.704 1.11 1.064 1.596 2.652 1.596 4.796a.5.5 0 0 0 1 0c0-2.275-.514-4.186-1.904-5.518C17.212 12.656 15.058 12 12 12c-3.058 0-5.212.656-6.596 1.982C4.014 15.314 3.5 17.225 3.5 19.5a.5.5 0 0 0 1 0Z"/>
+        </svg>
+      {% when 'regular' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M15.5 5.7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm1.5 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0Zm-12.25 14c0-2.111.479-3.62 1.519-4.616 1.049-1.005 2.818-1.635 5.731-1.635s4.682.63 5.731 1.635c1.04.997 1.519 2.505 1.519 4.615a.75.75 0 0 0 1.5 0c0-2.307-.521-4.3-1.981-5.698-1.451-1.39-3.682-2.052-6.769-2.052s-5.318.661-6.769 2.052C3.771 15.4 3.25 17.39 3.25 19.699a.75.75 0 0 0 1.5 0Z"/>
+        </svg>
+      {% when 'bold' %}
+        <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M6.442 15.264C5.472 16.194 5 17.621 5 19.7a1 1 0 1 1-2 0c0-2.34.528-4.413 2.058-5.879C6.576 12.366 8.884 11.7 12 11.7s5.424.666 6.942 2.12C20.472 15.286 21 17.36 21 19.7a1 1 0 1 1-2 0c0-2.079-.472-3.506-1.442-4.436-.982-.94-2.674-1.565-5.558-1.565s-4.576.625-5.558 1.565ZM12 8.7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 2a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/>
+        </svg>
+    {% endcase %}
+  {% when 'cart' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        {% case settings.styles_cart_icon %}
+          {% when 'bag' %}
+            {% if settings.styles_icons_edges == 'square' %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10 3.833c0-.818.247-1.395.595-1.763.349-.368.837-.57 1.405-.57.568 0 1.056.202 1.405.57.348.368.595.945.595 1.763V5.5h-4V3.833ZM9 6.5v2a.5.5 0 0 0 1 0v-2h4v2a.5.5 0 0 0 1 0v-2h3.564l.867 13H4.57l.867-13H9Zm0-1V3.833c0-1.023.313-1.862.869-2.45C10.425.794 11.187.5 12 .5c.813 0 1.575.294 2.131.883.556.588.869 1.427.869 2.45V5.5h4.5l1 15h-17l1-15H9Z"/>
+              </svg>
+            {% else %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.033c0-.818.247-1.395.595-1.764.349-.368.837-.57 1.405-.57.568 0 1.056.202 1.405.57.348.369.595.946.595 1.764v1.666h-4V4.033ZM9 6.699v2a.5.5 0 0 0 1 0v-2h4v2a.5.5 0 0 0 1 0v-2h3.565l.724 10.867a2 2 0 0 1-1.995 2.133H6.707a2 2 0 0 1-1.995-2.133L5.436 6.7H9Zm0-1V4.033c0-1.024.313-1.863.869-2.451C10.425.994 11.187.699 12 .699c.813 0 1.575.295 2.131.883.556.588.869 1.427.869 2.45V5.7h4.5l.787 11.8a3 3 0 0 1-2.993 3.2H6.707a3 3 0 0 1-2.993-3.2L4.5 5.7H9Z"/>
+              </svg>
+            {% endif %}
+          {% when 'cart' %}
+            {% if settings.styles_icons_edges == 'square' %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18 18.001a.5.5 0 1 0 0-1H7.918l-.49-2.748H18.35l2.857-8.005-15.21.002L5.418 3h-3.92a.5.5 0 0 0 0 1H4.58l2.5 14.001H18ZM6.176 7.25l13.613-.001-2.143 6.004H7.248L6.176 7.25ZM17.5 19.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm-9.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/>
+              </svg>
+            {% else %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <circle cx="16.75" cy="19.949" r=".75"/>
+                <circle cx="9.75" cy="19.949" r=".75"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18 18.2a.5.5 0 0 0 0-1h-7.99a2.5 2.5 0 0 1-2.46-2.06l-.123-.688h9.16a2.5 2.5 0 0 0 2.355-1.66l1.55-4.34a1.5 1.5 0 0 0-1.413-2.004H5.997l-.065-.364A3.5 3.5 0 0 0 2.488 3.2h-.99a.5.5 0 1 0 0 1h.99a2.5 2.5 0 0 1 2.46 2.06l1.617 9.057a3.5 3.5 0 0 0 3.446 2.884H18ZM6.176 7.45l12.903-.001a.5.5 0 0 1 .47.668l-1.548 4.34a1.5 1.5 0 0 1-1.413.996h-9.34L6.176 7.45Z"/>
+              </svg>
+            {% endif %}
+        {% endcase %}
+      {% when 'regular' %}
+        {% case settings.styles_cart_icon %}
+          {% when 'bag' %}
+            {% if settings.styles_icons_edges == 'square' %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.25 4.033c0-.767.23-1.278.527-1.592.296-.313.717-.492 1.223-.492.506 0 .927.179 1.223.492.297.314.527.825.527 1.592v1.666h-3.5V4.033Zm-1.5 3.166v1.5a.75.75 0 0 0 1.5 0V7.2h3.5v1.5a.75.75 0 0 0 1.5 0V7.2h2.847l.8 12H5.103l.8-12H8.75Zm0-1.5V4.033c0-1.075.33-1.98.937-2.623C10.296.767 11.126.45 12 .45c.874 0 1.704.317 2.313.96.608.643.937 1.548.937 2.623v1.666h4.25l1 15h-17l1-15h4.25Z"/>
+              </svg>
+            {% else %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.25 3.732c0-.767.23-1.278.527-1.592.296-.313.717-.492 1.223-.492.506 0 .927.179 1.223.492.297.314.527.825.527 1.592v1.666h-3.5V3.732Zm-1.5 3.166v1.5a.75.75 0 0 0 1.5 0v-1.5h3.5v1.5a.75.75 0 0 0 1.5 0v-1.5h2.847l.694 10.4a1.5 1.5 0 0 1-1.497 1.6H6.707a1.5 1.5 0 0 1-1.497-1.6l.694-10.4H8.75Zm0-1.5V3.732c0-1.075.33-1.98.937-2.623C10.296.466 11.126.15 12 .15c.874 0 1.704.317 2.313.96.608.643.937 1.548.937 2.623v1.666h4.25l.787 11.8a3 3 0 0 1-2.993 3.2H6.707a3 3 0 0 1-2.993-3.2l.787-11.8H8.75Z"/>
+              </svg>
+            {% endif %}
+          {% when 'cart' %}
+            {% if settings.styles_icons_edges == 'square' %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <circle cx="17" cy="20.199" r="1"/><circle cx="8" cy="20.199" r="1"/><path fill-rule="evenodd" clip-rule="evenodd" d="M18 18.45a.75.75 0 0 0 0-1.5H8.127l-.401-2.248h10.8l3.035-8.505-15.354.001-.58-3.248H1.498a.75.75 0 1 0 0 1.5H4.37l2.5 14h11.13ZM6.475 7.698h12.958l-1.965 5.504H7.458l-.983-5.504Z"/>
+              </svg>
+            {% else %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <circle cx="17" cy="19.898" r="1"/>
+                <circle cx="9" cy="19.898" r="1"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18 18.15a.75.75 0 0 0 0-1.5h-7.99a2.25 2.25 0 0 1-2.214-1.855l-.07-.393h8.861c1.163 0 2.2-.731 2.59-1.826l1.55-4.341a1.75 1.75 0 0 0-1.65-2.338H6.208l-.029-.158a3.75 3.75 0 0 0-3.69-3.09h-.99a.75.75 0 1 0 0 1.5h.99a2.25 2.25 0 0 1 2.214 1.854l1.617 9.056a3.75 3.75 0 0 0 3.692 3.09H18ZM6.475 7.397l.983 5.504h9.129c.528 0 1-.333 1.177-.83l1.55-4.341a.25.25 0 0 0-.236-.334H6.475Z"/>
+              </svg>
+            {% endif %}
+        {% endcase %}
+      {% when 'bold' %}
+        {% case settings.styles_cart_icon %}
+          {% when 'bag' %}
+            {% if settings.styles_icons_edges == 'square' %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 4.033c0-.716.214-1.161.459-1.42.244-.258.596-.414 1.041-.414.445 0 .797.156 1.041.414.245.259.459.704.459 1.42v1.666h-3V4.033Zm-2 3.666v1a1 1 0 0 0 2 0v-1h3v1a1 1 0 1 0 2 0v-1h2.129l.733 11H5.638l.733-11H8.5Zm0-2V4.033c0-1.126.346-2.097 1.006-2.795S11.064.2 12 .2c.936 0 1.834.341 2.494 1.04.66.697 1.006 1.668 1.006 2.794v1.666h4l1 15h-17l1-15h4Z"/>
+              </svg>
+            {% else %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 4.732c0-.716.214-1.161.459-1.42.244-.258.596-.414 1.041-.414.445 0 .797.156 1.041.414.245.259.459.704.459 1.42v1.666h-3V4.732Zm-2 3.666v1a1 1 0 0 0 2 0v-1h3v1a1 1 0 1 0 2 0v-1h2.13l.662 9.934a1 1 0 0 1-.998 1.066H6.707a1 1 0 0 1-.998-1.066l.663-9.934H8.5Zm0-2V4.732c0-1.126.346-2.097 1.006-2.794.66-.699 1.558-1.04 2.494-1.04.936 0 1.834.341 2.494 1.04.66.697 1.006 1.668 1.006 2.794v1.666h4l.787 11.8a3 3 0 0 1-2.993 3.2H6.707a3 3 0 0 1-2.993-3.2l.787-11.8H8.5Z"/>
+              </svg>
+            {% endif %}
+          {% when 'cart' %}
+            {% if settings.styles_icons_edges == 'square' %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <circle cx="17.25" cy="21.449" r="1.25"/><circle cx="8.25" cy="21.449" r="1.25"/><path fill-rule="evenodd" clip-rule="evenodd" d="M18 18.7a1 1 0 0 0 0-2H8.336l-.312-1.748h10.678l3.214-9.005-15.5.002-.58-3.249H1.498a1 1 0 0 0 0 2H4.16l2.501 14H18ZM6.773 7.95l12.306-.001-1.786 5.004H7.667L6.773 7.95Z"/>
+              </svg>
+            {% else %}
+              <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+                <circle cx="17.25" cy="20.75" r="1.25"/>
+                <circle cx="9.25" cy="20.75" r="1.25"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18 18.4a1 1 0 0 0 0-2h-7.99a2 2 0 0 1-1.968-1.648L7.908 14h8.727a3 3 0 0 0 2.791-1.901l1.464-3.72a2 2 0 0 0-1.861-2.732l-12.613.001A4 4 0 0 0 2.488 2.4h-.99a1 1 0 0 0 0 2h.99a2 2 0 0 1 1.968 1.649l1.617 9.055a4 4 0 0 0 3.938 3.297H18ZM6.773 7.648H19.03l-1.464 3.718a1 1 0 0 1-.93.634H7.55l-.778-4.352Z"/>
+              </svg>
+            {% endif %}
+        {% endcase %}
+    {% endcase %}
+  {% when 'arrow-small' %}
+    <svg {{ icon_attributes }} width='9' height='8' viewBox='0 0 9 8'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M4.65 6.65a.5.5 0 1 0 .7.7L8.71 4 5.35.65a.5.5 0 0 0-.7.7L6.79 3.5H.5a.5.5 0 0 0 0 1h6.3L4.64 6.65Z"/>
+    </svg>
+  {% when 'arrow-medium' %}
+    <svg {{ icon_attributes }} width='18' height='8' viewBox='0 0 18 8'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.65 6.65a.5.5 0 0 0 .7.7L17.71 4 14.35.65a.5.5 0 0 0-.7.7l2.14 2.15H.5a.5.5 0 0 0 0 1h15.3l-2.15 2.15Z" />
+    </svg>
+  {% when 'arrow-long' %}
+    <svg {{ icon_attributes }} width='51' height='9' viewBox='0 0 51 9'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M46.127 8.662a.75.75 0 1 1-1.061-1.06l2.24-2.241H.75a.75.75 0 1 1 0-1.5h46.586l-2.27-2.27a.75.75 0 0 1 1.06-1.06l4.066 4.065-4.066 4.066Z"/>
+    </svg>
+  {% when 'arrow-minimal-previous' %}
+    <svg {{ icon_attributes }} width='7' height='9' viewBox='0 0 7 9'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M6.07 8.6c-.3.3-.77.3-1.06 0L.94 4.54 5.01.47a.75.75 0 1 1 1.06 1.06l-3 3 3 3.01c.29.3.29.77 0 1.06Z"/>
+    </svg>
+  {% when 'arrow-minimal-next' %}
+    <svg {{ icon_attributes }} width='7' height='9' viewBox='0 0 7 9'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M.93 8.6c.3.3.77.3 1.06 0l4.07-4.06L1.99.47A.75.75 0 1 0 .93 1.53l3 3-3 3.01c-.29.3-.29.77 0 1.06Z"/>
+    </svg>
+  {% when 'collapse' %}
+    <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M18 12a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1 0-1h11a.5.5 0 0 1 .5.5Z"/>
+    </svg>
+  {% when 'expand' %}
+    <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 6.5a.5.5 0 0 0-1 0v5h-5a.5.5 0 0 0 0 1h5v5a.5.5 0 0 0 1 0v-5h5a.5.5 0 0 0 0-1h-5v-5Z"/>
+    </svg>
+  {% when 'avatar' %}
+    <svg {{ icon_attributes }} width='40' height='40' viewBox='0 0 40 40'>
+      <path opacity=".04" d="M0 0h40v40H0z"/>
+      <path opacity=".5" d="M19.999 24c-11 0-14.667 5.901-14.667 16h29.333C34.665 29.901 31 24 20 24Z"/>
+      <circle opacity=".5" cx="19.999" cy="14.667" r="6.667"/>
+    </svg>
+  {% when 'play' %}
+    <svg {{ icon_attributes }} width='15' height='16' viewBox='0 0 15 16'>
+      <path d="M.38 15.02V.26l13.9 7.38-13.9 7.38Z"/>
+    </svg>
+  {% when 'lock' %}
+    <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M9.25 8a2.75 2.75 0 1 1 5.5 0v2H16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h1.25V8Zm4 0v2h-2.5V8a1.25 1.25 0 1 1 2.5 0ZM8.5 11.5v4h7v-4h-7Zm3.5 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
+    </svg>
+  {% when 'caret' %}
+    <svg {{ icon_attributes }} width='9' height='10' viewBox='0 0 9 10'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.424 3.89a.5.5 0 0 1 0 .706l-3.889 3.89-3.889-3.89a.5.5 0 1 1 .707-.707l3.182 3.182L7.717 3.89a.5.5 0 0 1 .707 0Z"/>
+    </svg>
+  {% when 'envelope' %}
+    {% case settings.styles_icons_thickness %}
+      {% when 'light' %}
+        {% if settings.styles_icons_edges == 'square' %}
+          <svg {{ icon_attributes }} width='35' height='25' viewBox='0 0 35 25'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.753 1h31.493L17.5 15.08 1.753 1ZM1 22.793V1.668l11.153 9.972L1 22.793Zm.707.707h31.587L22.1 12.307 17.5 16.421l-4.6-4.113L1.707 23.5Zm21.14-11.86L34 22.791V1.668L22.847 11.64ZM0 0v24.5h35V0H0Z"/>
+          </svg>
+        {% else %}
+          <svg {{ icon_attributes }} width='35' height='25' viewBox='0 0 35 25'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M30 1H5c-.917 0-1.762.309-2.437.828L17.5 15.082 32.437 1.828A3.983 3.983 0 0 0 30 1ZM1 5c0-.93.318-1.787.851-2.467l10.284 9.125L1.84 21.953A3.983 3.983 0 0 1 1 19.5V5Zm1.547 17.66c.678.526 1.529.84 2.453.84h25c.924 0 1.776-.314 2.453-.84L22.116 12.323 17.5 16.419l-4.616-4.096L2.547 22.66Zm20.319-11.002L33.16 21.952c.527-.677.84-1.528.84-2.452V5c0-.93-.318-1.787-.85-2.467l-10.284 9.125ZM5 0a5 5 0 0 0-5 5v14.5a5 5 0 0 0 5 5h25a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5H5Z"/>
+          </svg>
+        {% endif %}
+      {% when 'regular' %}
+        {% if settings.styles_icons_edges == 'square' %}
+          <svg {{ icon_attributes }} width='35' height='25' viewBox='0 0 35 25'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 14.744 2.688 1.5h29.625L17.5 14.744Zm-16 7.195V2.45l10.289 9.2L1.5 21.939ZM2.56 23h29.88L22.09 12.652l-4.59 4.104-4.591-4.105L2.559 23Zm20.65-11.35L33.5 21.94V2.45l-10.29 9.2ZM0 0v24.5h35V0H0Z"/>
+          </svg>
+        {% else %}
+          <svg {{ icon_attributes }} width='35' height='25' viewBox='0 0 35 25'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M30 1.5H5c-.675 0-1.306.191-1.84.523L17.5 14.748 31.841 2.023A3.484 3.484 0 0 0 30 1.5ZM1.5 5c0-.713.213-1.377.58-1.93l9.69 8.599-9.718 9.718A3.483 3.483 0 0 1 1.5 19.5V5Zm1.612 17.448C3.657 22.798 4.305 23 5 23h25c.695 0 1.343-.203 1.887-.552l-9.781-9.782-4.606 4.087-4.606-4.087-9.782 9.782ZM23.23 11.669l9.718 9.718c.35-.544.552-1.192.552-1.887V5c0-.713-.213-1.376-.58-1.93l-9.69 8.6ZM5 0a5 5 0 0 0-5 5v14.5a5 5 0 0 0 5 5h25a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5H5Z"/>
+          </svg>
+        {% endif %}
+      {% when 'bold' %}
+        {% if settings.styles_icons_edges == 'square' %}
+          <svg {{ icon_attributes }} width='35' height='25' viewBox='0 0 35 25'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.501 14.409 3.623 2h27.756L17.501 14.409ZM2 21.086V3.232l9.426 8.428L2 21.086ZM3.414 22.5h28.173l-9.505-9.504-4.581 4.096-4.582-4.097L3.414 22.5Zm20.161-10.84L33 21.085V3.234l-9.425 8.426ZM0 0v24.5h35V0H0Z"/>
+          </svg>
+        {% else %}
+          <svg {{ icon_attributes }} width='35' height='25' viewBox='0 0 35 25'>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M30 2H5c-.429 0-.837.09-1.206.252L17.5 14.413l13.706-12.16A2.99 2.99 0 0 0 30 2ZM2 5c0-.494.12-.96.331-1.372l9.075 8.052-9.114 9.114A2.988 2.988 0 0 1 2 19.5V5Zm1.707 17.208c.391.187.83.292 1.293.292h25c.463 0 .902-.105 1.294-.293l-9.198-9.198-4.596 4.078-4.595-4.077-9.198 9.198ZM23.594 11.68l9.114 9.113A2.99 2.99 0 0 0 33 19.5V5c0-.494-.12-.96-.331-1.372l-9.074 8.052ZM5 0a5 5 0 0 0-5 5v14.5a5 5 0 0 0 5 5h25a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5H5Z"/>
+          </svg>
+        {% endif %}
+    {% endcase %}
+  {% when 'alert' %}
+    <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-7 6.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z" fill="#061C2F"/><path d="M18.5 12a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" fill="red"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M11.99 7.75a.75.75 0 0 1 .75.75l.002 3.782a.75.75 0 0 1-1.5 0L11.24 8.5a.75.75 0 0 1 .75-.75Z" fill="#fff"/>
+      <path d="M13 15a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="#fff"/>
+    </svg>
+  {% when 'green-check' %}
+    <svg {{ icon_attributes }} width='14' height='14' fill='none' viewBox='0 0 14 14'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14 7A7 7 0 1 1 0 7a7 7 0 0 1 14 0Zm-7 6.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z" fill="#000"/>
+      <path d="M13.5 7a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" fill="#428445"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.97 6.97c.3-.3.77-.3 1.06 0l.75.75 2.97-2.97a.75.75 0 0 1 1.06 1.06L5.78 9.84 3.97 8.03a.75.75 0 0 1 0-1.06Z" fill="#fff"/>
+    </svg>
+  {% when 'red-exclamation' %}
+    <svg {{ icon_attributes }} width='14' height='14' fill='none' viewBox='0 0 14 14'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14 7A7 7 0 1 1 0 7a7 7 0 0 1 14 0Zm-7 6.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z" fill="#000"/>
+      <path d="M13.5 7a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" fill="red"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99 2.75c.41 0 .75.34.75.75v3.78a.75.75 0 1 1-1.5 0V3.5c0-.41.34-.75.75-.75Z" fill="#fff"/>
+      <path d="M8 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="#fff"/>
+    </svg>
+  {% when 'yellow-exclamation' %}
+    <svg {{ icon_attributes }} width='14' height='14' fill='none' viewBox='0 0 14 14'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14 7A7 7 0 1 1 0 7a7 7 0 0 1 14 0Zm-7 6.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z" fill="#000"/>
+      <path d="M13.5 7a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" fill="#FFB800"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99 2.75c.41 0 .75.34.75.75v3.78a.75.75 0 1 1-1.5 0V3.5c0-.41.34-.75.75-.75Z" fill="#000"/>
+      <path d="M8 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="#000"/>
+    </svg>
+  {% when 'filter' %}
+    <svg {{ icon_attributes }} width='14' height='12' viewBox='0 0 14 12'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="m7.75 6.7 3.97-5.2H2.28l3.97 5.2v3.24l1.5.27V6.69Zm1.5.5 4.27-5.6a1 1 0 0 0-.8-1.6H1.28a1 1 0 0 0-.8 1.6l4.28 5.6v3.16c0 .49.35.9.82.99l2.5.44a1 1 0 0 0 1.18-.98V7.2Z"/>
+    </svg>
+  {% when 'sort' %}
+    <svg {{ icon_attributes }} width='16' height='12' viewBox='0 0 16 12'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M11.87 3.8a2.5 2.5 0 0 1-4.74 0H1.25a.75.75 0 1 1 0-1.5H7.1a2.5 2.5 0 0 1 4.8 0h2.85a.75.75 0 0 1 0 1.5h-2.88ZM10.5 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM.5 9.05c0-.41.34-.75.75-.75H4.1a2.5 2.5 0 0 1 4.8 0h5.85a.75.75 0 0 1 0 1.5H8.87a2.5 2.5 0 0 1-4.74 0H1.25a.75.75 0 0 1-.75-.75Zm6 .95a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
+    </svg>
+  {% when 'trash' %}
+    <svg {{ icon_attributes }} width='10' height='11' viewBox='0 0 10 11'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M4 .5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H4Zm-2.75 2a.75.75 0 0 0 0 1.5H2v5.5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V4h.75a.75.75 0 0 0 0-1.5h-7.5Zm3.25 2a.5.5 0 0 0-1 0v4a.5.5 0 0 0 1 0v-4Zm2 0a.5.5 0 0 0-1 0v4a.5.5 0 0 0 1 0v-4Z"/>
+    </svg>
+  {% when 'close-small' %}
+    <svg {{ icon_attributes }} width='10' height='10' viewBox='0 0 10 10'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M.76 8.67a.75.75 0 0 0 1.06 1.06l3.3-3.3L8.3 9.6a.75.75 0 1 0 1.06-1.06L6.18 5.37 9.24 2.3a.75.75 0 0 0-1.06-1.06L5.12 4.31 1.94 1.13A.75.75 0 0 0 .87 2.19l3.19 3.18-3.3 3.3Z"/>
+    </svg>
+  {% when 'checkmark-small' %}
+    <svg {{ icon_attributes }} width='8' height='6' viewBox='0 0 8 6'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M1.03 2.97c.3-.3.77-.3 1.06 0l.75.75L5.81.75a.75.75 0 1 1 1.06 1.06L2.84 5.84 1.03 4.03a.75.75 0 0 1 0-1.06Z"/>
+    </svg>
+  {% when 'checkmark-large' %}
+    <svg {{ icon_attributes }} width='20' height='15' viewBox='0 0 20 15'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M.97 5.25a1.5 1.5 0 0 1 2.12.05l4.63 4.87 9.24-8.92a1.5 1.5 0 0 1 2.08 2.16L7.63 14.43.91 7.37a1.5 1.5 0 0 1 .06-2.12Z"/>
+    </svg>
+  {% when 'pencil' %}
+    <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="m14.044 9.182 1.061-1.06 1.414 1.413-1.06 1.061-1.415-1.414Zm-.707.707-4.61 4.61-.282 1.697 1.697-.283 4.61-4.61-1.415-1.414Zm1.06-3.182a1 1 0 0 1 1.415 0l2.121 2.121a1 1 0 0 1 0 1.415l-6.844 6.844a1 1 0 0 1-.543.28l-2.545.424A1 1 0 0 1 6.85 16.64l.424-2.546a1 1 0 0 1 .28-.543l6.844-6.844Z"/>
+    </svg>
+  {% when 'plus-small' %}
+    <svg {{ icon_attributes }} width='24' height='24' fill='none' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 9.5a.5.5 0 0 0-1 0v2h-2a.5.5 0 0 0 0 1h2v2a.5.5 0 0 0 1 0v-2h2a.5.5 0 0 0 0-1h-2v-2Z"/>
+    </svg>
+  {% when 'minus-small' %}
+    <svg {{ icon_attributes }} width='24' height='24' fill='none' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M15 12a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5Z"/>
+    </svg>
+  {% when 'discount' %}
+    <svg {{ icon_attributes }} width='12' height='12' viewBox='0 0 12 12'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M6.95.87a1 1 0 0 0-.87.28L.71 6.53a1 1 0 0 0 0 1.41l3.6 3.6a1 1 0 0 0 1.41 0l5.37-5.37a1 1 0 0 0 .28-.87l-.51-3.09a1 1 0 0 0-.82-.82L6.95.87ZM8 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
+    </svg>
+  {% when 'share' %}
+    <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M5.75 13.25a.75.75 0 0 1 .75.75v3c0 .138.112.25.25.25h11A.25.25 0 0 0 18 17v-3a.75.75 0 0 1 1.5 0v3a1.75 1.75 0 0 1-1.75 1.75h-11A1.75 1.75 0 0 1 5 17v-3a.75.75 0 0 1 .75-.75Z"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16.101 9.066a.75.75 0 1 1-1.06 1.06l-2.24-2.24V12.5a.75.75 0 0 1-1.5 0V7.857l-2.27 2.27A.75.75 0 1 1 7.97 9.066L12.036 5 16.1 9.066Z"/>
+    </svg>
+  {% when 'clipboard' %}
+    <svg {{ icon_attributes }} width='14' height='14' viewBox='0 0 14 14'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 4.5v8h8v-8h-8ZM1 3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H1Z"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M2.75 1c0-.41.34-.75.75-.75H12c.97 0 1.75.78 1.75 1.75v8.5a.75.75 0 0 1-1.5 0V2a.25.25 0 0 0-.25-.25H3.5A.75.75 0 0 1 2.75 1Z"/>
+    </svg>
+  {% when 'article' %}
+    <svg {{ icon_attributes }} width='18' height='22' fill='none' viewBox='0 0 18 22'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14 19h4V7H0v12h10v3l4-3Zm-2.5 0 2-1.5h3v-9h-15v9h10V19Z"/>
+      <path d="M6.75 13a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 13a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 13a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="m4.54 1.5-1.2 1 1.2 1h8.96v-2H4.54ZM4 5h10a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H4L1 2.5 4 5Z"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M11.75 1v3h-1V1h1Z"/>
+    </svg>
+  {% when 'page' %}
+    <svg {{ icon_attributes }} width='19' height='19' fill='none' viewBox='0 0 19 19'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14 5V2a1 1 0 0 0-1-1H0v18h18V6a1 1 0 0 0-1-1h-3Zm2.5 12.5v-11h-4v-4h-11v15h15Z"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.03 1.31c.2-.2.5-.2.68-.02l4.01 4.02c.19.18.18.49-.02.68-.2.2-.5.2-.68.02l-4.01-4c-.19-.2-.18-.5.02-.7ZM4 7c0-.28.22-.5.5-.5h6a.5.5 0 0 1 0 1h-6A.5.5 0 0 1 4 7ZM4 10c0-.28.22-.5.5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 4 10ZM4 13c0-.28.22-.5.5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 4 13Z"/>
+    </svg>
+    <!-- Section icons -->
+  {% when 'icon-close-small' %}
+    <svg {{ icon_attributes }} width='24' height='24' viewBox='0 0 24 24'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.742 15.667a.75.75 0 1 0 1.06 1.06l3.3-3.298 3.181 3.182a.75.75 0 1 0 1.06-1.06l-3.181-3.182 3.065-3.066a.75.75 0 0 0-1.06-1.06L12.1 11.308 8.92 8.126a.75.75 0 0 0-1.06 1.06l3.181 3.183-3.298 3.298Z"/>
+    </svg>
+  {% when 'icon-24-7' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5 7.2a1.7 1.7 0 0 1-1.7.5l-8.2 7.5 20.7-5.6-10.8-2.4Zm-2.8-.5-.1-.3a1.7 1.7 0 1 1 3.4-.6l13.1 3h.3l1.8-.5 4.5 16.8-30.1 8L0 16.5l1.5-.4.2-.2 9.9-9.1Zm17.5 3.5L1.9 17.5l3.7 13.8L33 24l-3.7-13.8Zm-6.8 5.5 5-1.3.3 1.1a6.5 6.5 0 0 0-1 3.7c-.1.6 0 1.3.1 2l-1.7.5c-.2-1-.2-2 0-2.8 0-.7.3-1.6.7-2.5l-3 .8-.4-1.5Zm-9.6 8 3.1-.8.3 1.1 1.5-.4-.3-1.1.8-.2-.3-1.4-.8.2-1-3.8-1.6.4-2.1 4.6.4 1.4Zm2.2-4.1.6 2-1.7.4 1.1-2.4Zm-7.7 6.8 5.2-1.4-.4-1.4-2.7.7a7 7 0 0 1 1-1.1l.8-1.5a2 2 0 0 0 0-1.2c0-.3-.2-.6-.5-.9-.2-.2-.6-.3-1-.4a4 4 0 0 0-1.4.2c-.6.1-1 .3-1.3.6-.3.2-.5.5-.6.8-.1.3-.2.7-.1 1.2l1.8-.3V21c.2-.2.3-.3.5-.3h.6l.4.4-.1.7c0 .2-.3.6-.7 1l-1.3 2.1c-.2.6-.2 1-.2 1.6Zm13.3-11-1.2 8 1 .2 1.2-8-1-.2Z"/>
+    </svg>
+  {% when 'icon-alert' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M18 5.8 31.3 29c.1.3 0 .8-.5.8H4.1a.5.5 0 0 1-.5-.8L17.1 5.7c.2-.3.6-.3.8 0ZM15.7 5a2 2 0 0 1 3.4 0l13.5 23.3a2 2 0 0 1-1.8 3H4.1a2 2 0 0 1-1.8-3L15.8 5Zm1.7 17a.8.8 0 0 1-.8-.8v-6a.8.8 0 0 1 1.6 0v6c0 .5-.4.8-.8.8Zm1 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
+    </svg>
+  {% when 'icon-bikini' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="m7.54.02.47.42a37.77 37.77 0 0 1 4.49 4.81c1.44 1.86 2.77 4.02 3.18 6h3.64c.4-1.98 1.74-4.14 3.18-6 1.56-2 3.33-3.78 4.5-4.81l.46-.42.5.4a13.25 13.25 0 0 1 4.07 6.22c.8 2.45 1 5.14.25 7.35l-.13.39-.4.1c-1.5.37-3.65.35-5.82 0-1.93-.3-3.95-.87-5.64-1.73h-5.58a19.34 19.34 0 0 1-5.64 1.74c-2.17.34-4.33.36-5.82-.01l-.4-.1-.13-.4c-.75-2.2-.55-4.9.25-7.34C3.77 4.19 5.2 1.87 7.05.4l.49-.39Zm13.42 11.39c1.51.77 3.37 1.3 5.2 1.6 1.86.29 3.6.31 4.82.1.47-1.75.3-3.92-.37-6A12.25 12.25 0 0 0 27.5 2a36.8 36.8 0 0 0-3.82 4.17c-1.36 1.76-2.46 3.6-2.85 5.16l.12.08Zm-9.65-5.24c1.36 1.76 2.46 3.6 2.85 5.16A17.83 17.83 0 0 1 8.84 13c-1.86.3-3.6.32-4.82.1a10.9 10.9 0 0 1 .37-6A12.25 12.25 0 0 1 7.5 2a36.8 36.8 0 0 1 3.82 4.17Zm19.44 13.08H4.25v4.73l.64.1h.02a3.49 3.49 0 0 1 .34.06 15.19 15.19 0 0 1 4.3 1.67 12.1 12.1 0 0 1 5.96 8.34l.13.6h3.72l.13-.6a12.1 12.1 0 0 1 5.97-8.34 15.19 15.19 0 0 1 4.63-1.73h.01l.65-.1v-4.73ZM6.71 22.97c-.38-.11-.7-.2-.96-.25v-1.97h23.5v1.97a16.69 16.69 0 0 0-4.55 1.8 13.57 13.57 0 0 0-6.55 8.73h-1.3a13.57 13.57 0 0 0-6.55-8.73 16.69 16.69 0 0 0-3.6-1.55Z"/>
+    </svg>
+  {% when 'icon-box' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M30.5 8.97 25.93 3.5H9.07L4.5 8.97V30.5h26V8.97ZM8.37 2h18.26L32 8.43V32H3V8.43L8.37 2Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M31 9H4V7.5h27V9Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M18 3v6h-1.5V3H18ZM13 15.25c0-.41.34-.75.75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1-.75-.75Z"/>
+    </svg>
+  {% when 'icon-calendar' %}
+    <svg {{ icon_attributes }} width='35' height='36' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M9.07 7.43a.75.75 0 1 0 1.5 0V6H24.2v1.43a.75.75 0 0 0 1.5 0V6h4.8v4.7h-26V6h4.57v1.43ZM3 12.2V4.5h6.07V2.62a.75.75 0 1 1 1.5 0V4.5H24.2V2.62a.75.75 0 0 1 1.5 0V4.5H32v17.76A7 7 0 1 1 22.25 32H3V12.2Zm27.5 0v9.27a7 7 0 0 0-9.04 9.03H4.5V12.2h26ZM28 33.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Zm-1.9-5.52a.75.75 0 0 0-1.07 1.06l1.81 1.81 4.03-4.03a.75.75 0 0 0-1.06-1.06l-2.97 2.97-.75-.75Z"/>
+    </svg>
+  {% when 'icon-cash' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17 5.25a.75.75 0 0 0 1.5 0V.75a.75.75 0 0 0-1.5 0v4.5Zm11.92 6.25H6.04a4.74 4.74 0 0 1-4.54 5.07v3.88a4.73 4.73 0 0 1 4.55 4.8H28.9a4.74 4.74 0 0 1 4.59-4.8v-3.88a4.73 4.73 0 0 1-4.58-5.07Zm4.58 13.75h-3.1a3.24 3.24 0 0 1 3.1-3.3v3.3Zm-28.95 0a3.24 3.24 0 0 0-3.05-3.3v3.3h3.05ZM1.5 11.5h3.03a3.24 3.24 0 0 1-3.03 3.57V11.5Zm28.92 0a3.24 3.24 0 0 0 3.08 3.57V11.5h-3.08ZM0 25.25v7.45h35V10H0v15.25Zm33.5 3v-1.5h-32v1.5h32Zm-32 1.5v1.45h32v-1.45h-32Zm16-7.25a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 1.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Zm5.85-17.13a.75.75 0 0 1-.3-1.02l2.2-3.93a.75.75 0 0 1 1.3.73L24.38 6.6c-.2.36-.66.49-1.02.28ZM11.87 5.85a.75.75 0 1 1-1.31.74l-2.2-3.94a.75.75 0 0 1 1.31-.73l2.2 3.93Z"/>
+    </svg>
+  {% when 'icon-coupon' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M4.35 5.27c.01-.02.08-.15-.06-.46a2.24 2.24 0 0 0-.93-.97c-.5-.28-.97-.36-1.31-.33-.34.04-.42.16-.43.18-.01.02-.08.15.06.46.14.31.45.69.94.97.49.28.97.36 1.3.33.34-.04.42-.16.43-.18Zm1.5.21c.18-1-.5-2.22-1.74-2.94-1.48-.85-3.17-.67-3.79.4-.62 1.07.07 2.63 1.55 3.48 1.07.62 2.27.7 3.07.27l1.49.86-1.37.79c-.8-.5-2.06-.45-3.2.2C.4 9.39-.3 10.94.33 12.02c.62 1.07 2.31 1.25 3.79.4 1.19-.69 1.87-1.84 1.76-2.82l2.06-1.19 7.67 4.43a.75.75 0 1 0 .75-1.3l-6.92-4 6.92-3.99a.75.75 0 1 0-.75-1.3L7.93 6.68l-2.08-1.2ZM0 30v1.5h1.5V30H0Zm33.5 1.5H35V30h-1.5v1.5Zm1.5-23V7h-1.5v1.5H35ZM14.58 7v1.5h1.95V7h-1.95Zm3.9 0v1.5h1.94V7h-1.95Zm3.88 0v1.5h1.95V7h-1.95Zm3.89 0v1.5h1.94V7h-1.94Zm3.89 0v1.5h1.94V7h-1.94ZM35 10.06h-1.5v2.04H35v-2.04Zm0 4.09h-1.5v2.04H35v-2.04Zm0 4.08h-1.5v2.04H35v-2.04Zm0 4.08h-1.5v2.04H35v-2.04Zm0 4.09h-1.5v2.04H35V26.4Zm-2.92 5.1V30h-1.94v1.5h1.94Zm-3.89 0V30h-1.94v1.5h1.94Zm-3.88 0V30h-1.95v1.5h1.95Zm-3.9 0V30h-1.94v1.5h1.95Zm-3.88 0V30h-1.95v1.5h1.95Zm-3.9 0V30H10.7v1.5h1.95Zm-3.88 0V30H6.81v1.5h1.94Zm-3.89 0V30H2.92v1.5h1.94ZM0 28.44h1.5V26.4H0v2.04Zm0-4.09h1.5v-2.04H0v2.04Zm0-4.08h1.5v-2.04H0v2.04Zm0-4.08h1.5v-2.04H0v2.04Zm4.3-6.04c.13-.3.06-.44.05-.46 0-.02-.09-.14-.43-.18-.33-.03-.81.05-1.3.33-.5.28-.8.66-.94.97-.14.3-.07.44-.06.46 0 .02.1.14.43.18.34.03.81-.05 1.3-.33.5-.28.8-.66.94-.97Z"/>
+    </svg>
+  {% when 'icon-credit-card' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M32 7.5H3c-.83 0-1.5.67-1.5 1.5v2h32V9c0-.83-.67-1.5-1.5-1.5Zm-30.5 7v-2h32v2h-32Zm0 1.5h32v10c0 .83-.67 1.5-1.5 1.5H3A1.5 1.5 0 0 1 1.5 26V16ZM0 11v15a3 3 0 0 0 3 3h29a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3H3a3 3 0 0 0-3 3v2Zm14 12.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Zm5.25.75c0-.41.34-.75.75-.75h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Zm6.75-.75a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5h-4Z"/>
+    </svg>
+  {% when 'icon-currency-dollar' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 31.5a14 14 0 1 0 0-28 14 14 0 0 0 0 28Zm0 1.5a15.5 15.5 0 1 0 0-31 15.5 15.5 0 0 0 0 31Zm0-26.25a10.75 10.75 0 1 0 0 21.5 10.75 10.75 0 0 0 0-21.5ZM5.25 17.5a12.25 12.25 0 1 1 24.5 0 12.25 12.25 0 0 1-24.5 0Zm11.82.46v2.66a1.74 1.74 0 0 1-.62-.53 2.11 2.11 0 0 1-.38-.88l-1.66.18c.13.83.42 1.48.88 1.94.46.45 1.05.73 1.78.82v1.15H18v-1.19a3.04 3.04 0 0 0 1.93-.96c.47-.53.7-1.17.7-1.94 0-.68-.18-1.24-.55-1.68-.37-.44-1.06-.8-2.08-1.07v-2.48c.41.17.67.51.77 1.01l1.6-.2a2.64 2.64 0 0 0-.76-1.52c-.4-.39-.93-.62-1.6-.7v-.62h-.93v.62c-.72.08-1.3.35-1.75.82a2.47 2.47 0 0 0-.65 1.75c0 .68.2 1.27.58 1.75.38.48 1 .84 1.82 1.07Zm-.6-3.57c.16-.2.35-.35.6-.43v2.2a1.42 1.42 0 0 1-.61-.47 1.12 1.12 0 0 1 .02-1.3Zm2.3 5.88c-.2.24-.46.38-.78.44v-2.47c.39.1.66.26.82.47.17.2.26.45.26.73 0 .32-.1.6-.3.83Z"/>
+    </svg>
+  {% when 'icon-currency-euro' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 31.5a14 14 0 1 0 0-28 14 14 0 0 0 0 28Zm0 1.5a15.5 15.5 0 1 0 0-31 15.5 15.5 0 0 0 0 31Zm0-26.25a10.75 10.75 0 1 0 0 21.5 10.75 10.75 0 0 0 0-21.5ZM5.25 17.5a12.25 12.25 0 1 1 24.5 0 12.25 12.25 0 0 1-24.5 0Zm14.17-2.53.37-1.76a4.16 4.16 0 0 0-1.85-.39 4.12 4.12 0 0 0-4.22 3.4h-.75l-.2.98h.83a9.1 9.1 0 0 0 0 .84h-.63l-.2.99h.94a4.3 4.3 0 0 0 1.07 2.15 4 4 0 0 0 3.04 1.27c.74 0 1.38-.14 1.93-.42V20.1c-.48.5-1.13.75-1.94.75-.68 0-1.23-.25-1.65-.75a2.5 2.5 0 0 1-.5-1.06h2.9l.2-.99h-3.23a8.79 8.79 0 0 1 0-.84h3.41l.2-.98h-3.49c.1-.42.28-.77.52-1.05.43-.5.98-.74 1.67-.74.7 0 1.22.18 1.58.54Z"/>
+    </svg>
+  {% when 'icon-currency-pounds' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 31.5a14 14 0 1 0 0-28 14 14 0 0 0 0 28Zm0 1.5a15.5 15.5 0 1 0 0-31 15.5 15.5 0 0 0 0 31Zm0-26.25a10.75 10.75 0 1 0 0 21.5 10.75 10.75 0 0 0 0-21.5ZM5.25 17.5a12.25 12.25 0 1 1 24.5 0 12.25 12.25 0 0 1-24.5 0ZM21 21.99l-.69-1.51a3.4 3.4 0 0 1-1.3.36 5.2 5.2 0 0 1-1.04-.2 2.85 2.85 0 0 0-.92-.15c-.35 0-.65.06-.88.18.4-.46.65-.83.78-1.12a2.24 2.24 0 0 0 .17-1.2h1.7v-1.4h-1.99a6 6 0 0 1-.32-1.51 1.15 1.15 0 0 1 1.18-1.2c.32 0 .59.1.8.3.2.2.36.53.44.98l1.72-.25a2.77 2.77 0 0 0-.91-1.81 2.96 2.96 0 0 0-2-.64c-.54 0-1.04.11-1.5.33a2.54 2.54 0 0 0-1.45 2.27c0 .52.08 1.02.26 1.52h-1v1.4h1.32l.03.37c0 .35-.1.72-.32 1.1-.2.4-.55.76-1.03 1.1l.68 1.54a2.8 2.8 0 0 1 1.58-.55c.3 0 .78.09 1.41.27.63.18 1.14.26 1.52.26.3 0 .6-.04.92-.12.31-.08.6-.19.84-.32Z"/>
+    </svg>
+  {% when 'icon-currency-yen' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 31.5a14 14 0 1 0 0-28 14 14 0 0 0 0 28Zm0 1.5a15.5 15.5 0 1 0 0-31 15.5 15.5 0 0 0 0 31Zm0-26.25a10.75 10.75 0 1 0 0 21.5 10.75 10.75 0 0 0 0-21.5ZM5.25 17.5a12.25 12.25 0 1 1 24.5 0 12.25 12.25 0 0 1-24.5 0Zm9.04 3.06h2.36v1.73h1.78v-1.73h2.39v-1.4h-2.39v-.77h2.39V17h-1.68l2-4h-1.96l-1.3 2.7c-.14.31-.26.61-.34.9a5.23 5.23 0 0 0-.34-.9l-1.27-2.7h-1.95l1.97 4H14.3v1.4h2.36v.76h-2.36v1.4Z"/>
+    </svg>
+  {% when 'icon-dollar-bill' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M33.5 9.71A8.38 8.38 0 0 0 35 9v19s-3 2-9.5 2c-3.25 0-5.63-.88-8-1.75-2.38-.88-4.75-1.75-8-1.75-3.88 0-6.5.53-8 .96C.49 27.76 0 28 0 28V9s3-2 9.5-2c3.25 0 5.63 1 8 2 2.38 1 4.75 2 8 2 3.88 0 6.5-.71 8-1.29Zm-.36 1.72.36-.12v3.76a3.24 3.24 0 0 1-3.08-2.98c1.07-.19 1.97-.42 2.72-.66Zm-2.84 3.76a4.73 4.73 0 0 0 3.2 1.38v6.88a4.73 4.73 0 0 0-4.6 4.84c-.98.13-2.12.21-3.4.21-2.96 0-5.11-.78-7.48-1.66l-.05-.02C15.6 25.95 13.02 25 9.5 25c-1.27 0-2.42.06-3.45.15a4.74 4.74 0 0 0-4.55-4.7v-6.88a4.73 4.73 0 0 0 4.55-4.85c1-.14 2.15-.22 3.45-.22 2.92 0 5.04.88 7.42 1.88l.06.03c2.36.99 4.97 2.09 8.52 2.09 1.26 0 2.4-.07 3.43-.2.1 1.06.56 2.08 1.37 2.89Zm.1 12.85a17.29 17.29 0 0 0 3.1-.95v-2.14a3.24 3.24 0 0 0-3.1 3.1ZM3.6 22.9c.66.66.98 1.54.95 2.41a26.17 26.17 0 0 0-3.05.6v-3.96c.76.05 1.51.36 2.1.95Zm.95-13.93a17.2 17.2 0 0 0-3.05.94v2.16a3.24 3.24 0 0 0 3.05-3.1ZM22.03 19.7c-.44 1.65-2.67 2.98-5.45 2.23-2.79-.74-4.05-3.01-3.6-4.65.43-1.65 2.65-2.98 5.44-2.23 2.79.74 4.05 3.01 3.6 4.65Zm1.45.4c-.73 2.7-3.99 4.17-7.3 3.28-3.3-.88-5.38-3.8-4.66-6.5.73-2.7 3.99-4.17 7.29-3.28 3.3.88 5.39 3.8 4.67 6.5Z"/>
+    </svg>
+  {% when 'icon-email' %}
+    <svg {{ icon_attributes }} width='35' height='25' viewBox='0 0 35 25'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 14.744 2.688 1.5h29.625L17.5 14.744Zm-16 7.195V2.45l10.289 9.2L1.5 21.939ZM2.56 23h29.88L22.09 12.652l-4.59 4.104-4.591-4.105L2.559 23Zm20.65-11.35L33.5 21.94V2.45l-10.29 9.2ZM0 0v24.5h35V0H0Z"/>
+    </svg>
+  {% when 'icon-gift' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.45 4.1c.7-1.21 1.6-2.67 2.25-3.22a2.88 2.88 0 0 1 3.75 4.37c-.78.68-3.55.8-5.37.81a43.9 43.9 0 0 1-1.27 0c-1.82 0-4.58-.13-5.37-.81A2.88 2.88 0 0 1 15.19.88c.65.55 1.56 2 2.26 3.23Zm-2.47-1.13c.33.47.67 1.03.99 1.58l-.5-.02c-.77-.03-1.54-.1-2.17-.2a5.1 5.1 0 0 1-.91-.24A1.38 1.38 0 0 1 14.2 2c.15.13.41.44.77.96Zm4.93 0c-.33.47-.67 1.03-.99 1.58l.5-.02c.77-.03 1.54-.1 2.17-.2a5.1 5.1 0 0 0 .91-.24A1.38 1.38 0 0 0 20.68 2c-.15.13-.41.44-.77.96ZM19.5 8.5h-4v5h4v-5Zm1.5 0v5h10.5v-5H21ZM19.5 15h-4v16h4V15ZM21 31V15h8.5v16H21ZM3.5 8.5H14v5H3.5v-5Zm2 6.5H14v16H5.5V15ZM31 15h2V7H2v8h2v17.5h27V15Z"/>
+    </svg>
+  {% when 'icon-globe' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14.56 2.14a13.3 13.3 0 1 0 6.88 25.72.75.75 0 1 1 .4 1.44c-1.29.35-2.57.51-3.84.51v3.69h3a.75.75 0 1 1 0 1.5h-7.5a.75.75 0 0 1 0-1.5h3v-3.76A14.81 14.81 0 0 1 14.17.7a.75.75 0 1 1 .39 1.44ZM28.5 14.8a10.53 10.53 0 0 0-1.55-5.28l-5.02 1.41a28.24 28.24 0 0 1 1.44 5.24l5.13-1.37Zm-.08 1.57-4.83 1.3c.3 2.57.15 4.85-.4 6.47a10.52 10.52 0 0 0 5.23-7.77Zm-6.5.2a26.87 26.87 0 0 0-1.44-5.23l-6.45 1.82a26.71 26.71 0 0 0 1.35 5.15l6.54-1.75Zm-5.97 3.14 6.17-1.65c.16 1.51.16 2.88 0 4.03a6.68 6.68 0 0 1-.69 2.36c-.29.51-.55.66-.71.7-.17.05-.47.05-.98-.25a6.68 6.68 0 0 1-1.77-1.7c-.71-.91-1.4-2.1-2.02-3.49Zm-2.03-1a28.42 28.42 0 0 1-1.34-5.14L7.5 15a10.51 10.51 0 0 0 1.3 5.07l5.12-1.38Zm-4.26 2.69 4.82-1.3c1.03 2.38 2.3 4.28 3.58 5.41-3.3.02-6.42-1.53-8.4-4.11Zm8.28-16.9a10.52 10.52 0 0 1 8.07 3.72l-4.66 1.32c-1-2.2-2.2-3.96-3.41-5.03Zm.09 2.31c.64.84 1.28 1.9 1.86 3.14l-6.05 1.7a16.9 16.9 0 0 1 .03-3.72c.14-1.05.4-1.84.7-2.36.26-.47.5-.63.67-.69l.04-.01.04-.01c.18-.03.47-.01.94.26.51.3 1.12.86 1.77 1.7Zm-5.23-.92a15.35 15.35 0 0 0-.43 6.18L7.63 13.4a10.52 10.52 0 0 1 5.18-7.52Zm2-2.44a12 12 0 1 0 6.4 23.13 12 12 0 0 0-6.4-23.13Z"/>
+    </svg>
+  {% when 'icon-handshake' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M28.7 5.44c-.57-.23-1.08-.47-1.55-.68l-.2-.1c-.51-.23-1.02-.46-1.52-.61a4.27 4.27 0 0 0-3.36.32l-3.13 1.56H7.17L1.19 4.32A.75.75 0 0 0 .8 5.76l6.17 1.67h8.97l-7.77 3.89.47.7a6.79 6.79 0 0 0 2.29 2.08c1.08.6 2.49.93 4.05.41l6.1-2.03c2.19 2.34 6.02 6.45 7.47 7.97l.1.16.62.71a1.4 1.4 0 1 1-2.1 1.82l-.62-.72a.75.75 0 0 0-1.21.1.75.75 0 0 0 .07.89l.62.71.06.07a1.4 1.4 0 0 1-2.07 1.85 2.96 2.96 0 0 0-.09-.1l-.62-.72a.75.75 0 0 0-.8-.23.75.75 0 0 0-.34 1.21l.62.72.1.1a1.4 1.4 0 0 1-2.2 1.72l-.62-.72a.75.75 0 0 0-.54-.26.75.75 0 0 0-.6 1.24l.62.72a1.4 1.4 0 1 1-2.11 1.82l-.62-.72a.76.76 0 0 0-.12-.1 2.6 2.6 0 0 0-2.03-4.36 2.59 2.59 0 0 0-2.7-2.7 2.59 2.59 0 0 0-2.72-2.72A2.59 2.59 0 0 0 4.82 19l-.6.6-3.1-.5a.75.75 0 1 0-.24 1.48l2.49.4A2.6 2.6 0 0 0 6 24.2a2.59 2.59 0 0 0 2.71 2.71 2.59 2.59 0 0 0 2.72 2.71 2.59 2.59 0 0 0 4.21 2.14l.04.05.62.72a2.9 2.9 0 0 0 5.09-1.82 2.89 2.89 0 0 0 3.25-2.8 2.89 2.89 0 0 0 3.23-2.8 2.89 2.89 0 0 0 2.88-4.28l1.23-.82 2.11-.26a.75.75 0 0 0-.18-1.49l-2.46.3-1.6 1.07c-1.28-1.3-5.76-6.12-8-8.52l-.32-.35-7.03 2.34a3.47 3.47 0 0 1-2.85-.3 5.3 5.3 0 0 1-1.21-.93l12.3-6.15c.48-.24.86-.34 1.2-.37.34-.02.67.03 1.05.14.4.12.81.3 1.34.55l.2.09c.46.22 1 .46 1.62.71 1.26.5 2.55.5 3.63.3a7.83 7.83 0 0 0 2.51-.9.75.75 0 1 0-.77-1.29c-.38.23-1.12.56-2 .72a5.1 5.1 0 0 1-2.81-.22ZM6.67 22.37a1.1 1.1 0 0 1-1.55-1.55l.78-.77a1.1 1.1 0 0 1 1.54 1.55l-.77.77Zm3.87 5.42a1.1 1.1 0 0 0 1.55 0l.77-.77a1.1 1.1 0 1 0-1.55-1.55l-.77.78a1.1 1.1 0 0 0 0 1.54Zm4.26 2.71a1.1 1.1 0 1 1-1.55-1.54l.78-.78a1.1 1.1 0 0 1 1.55 1.55l-.78.77Zm-6.97-5.42a1.1 1.1 0 0 0 1.55 0l.78-.77a1.1 1.1 0 0 0-1.55-1.55l-.78.78a1.1 1.1 0 0 0 0 1.54Z"/>
+    </svg>
+  {% when 'icon-heart' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16.46 8.2a7.77 7.77 0 0 0-5.56-2.17c-2.03 0-4.07.65-5.61 2.21a7.8 7.8 0 0 0 0 11.04L17.5 32l12.21-12.72a7.8 7.8 0 0 0 0-11.04 8.15 8.15 0 0 0-11.22 0l-.99 1.04-.99-1.04a5.5 5.5 0 0 0-.05-.05Zm-1.02 1.09a6.26 6.26 0 0 0-4.54-1.76c-1.71 0-3.34.55-4.55 1.77a6.3 6.3 0 0 0 .02 8.93l11.13 11.6 11.13-11.6a6.3 6.3 0 0 0 .03-8.92 6.65 6.65 0 0 0-9.1-.01l-2.06 2.15-2.06-2.16Z"/>
+    </svg>
+  {% when 'icon-highheel' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M31.1 5.76c-.15.04-.4.15-.72.48-.34.35-.99 1.26-1.9 2.6l-1.34 2.03-.12.17-1.7 2.53c-2.36 3.5-5.16 7.48-7.58 9.97a6.83 6.83 0 0 1-3.15 1.95 5.3 5.3 0 0 1-2.99-.1A8.08 8.08 0 0 1 8 22.84c-.9.37-2.09.93-3.18 1.62-.66.4-1.26.85-1.75 1.3-.49.47-.81.91-.97 1.3a10.33 10.33 0 0 0-.34 1.06l.13.03c.4.09 1.08.1 2.25.1l1.27-.02 3.37-.02c3.81 0 6.15-.91 7.9-2.22 1.43-1.05 2.49-2.37 3.66-3.83l1.03-1.25c1.4-1.68 3.58-2.68 5.44-3.26a16.9 16.9 0 0 1 4.08-.8h.4l.5-1.17c1.28-2.9 1.53-4.83 1.44-6.13a5.74 5.74 0 0 0-.7-2.38l-.08-.19c-.25-.5-.59-.96-.93-1.15a.58.58 0 0 0-.42-.07Zm-1.13 12.7c-.68.1-1.65.29-2.71.62-1.77.55-3.62 1.44-4.74 2.8-.32.37-.63.76-.94 1.15a22.57 22.57 0 0 1-4 4.16c-2.05 1.53-4.72 2.52-8.8 2.52l-3.33.02-1.3.02c-1.12 0-1.98 0-2.57-.13-.3-.06-.61-.16-.87-.38-.3-.25-.43-.57-.46-.91-.02-.3.05-.6.13-.88s.2-.59.33-.93c.26-.68.76-1.3 1.33-1.84.58-.55 1.27-1.05 1.98-1.5A23.32 23.32 0 0 1 8 21.24l.54-.2.33.47c.65.9 1.82 2.02 3.2 2.46.68.22 1.4.27 2.15.08.76-.2 1.59-.66 2.46-1.55 2.31-2.38 5.04-6.24 7.42-9.76l1.68-2.52.12-.18L27.24 8c.88-1.3 1.61-2.34 2.06-2.8.47-.48.96-.8 1.49-.9.54-.12 1.03 0 1.44.21a4.1 4.1 0 0 1 1.56 1.82l.09.17c.28.55.75 1.48.85 2.94.11 1.61-.22 3.8-1.57 6.85-2.06 4.65-2.93 10.43-3.1 12.72l-.05.7h-2.12l2.08-11.26Z"/>
+    </svg>
+  {% when 'icon-leaf' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M19.44 19.19A8.01 8.01 0 0 0 22 13.5a8.01 8.01 0 0 0-2.56-5.69 12.17 12.17 0 0 0-1.94-1.57 12.42 12.42 0 0 0-1.94 1.57A8.01 8.01 0 0 0 13 13.5a8.01 8.01 0 0 0 2.56 5.69 12.17 12.17 0 0 0 1.94 1.57l.1-.07c.5-.33 1.17-.84 1.84-1.5ZM17.5 22.5s-6-3-6-9 6-9 6-9 6 3 6 9-6 9-6 9Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17.54 30.75a.75.75 0 0 1-.75-.75V13a.75.75 0 0 1 1.5 0v17c0 .41-.33.75-.75.75Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17.99 21.56a.75.75 0 0 1 .38-.99L26 17.18a.75.75 0 0 1 .6 1.37l-7.62 3.4a.75.75 0 0 1-1-.39ZM17.6 21.56a.75.75 0 0 0-.38-.99l-7.63-3.39a.75.75 0 0 0-.61 1.37l7.63 3.4c.38.16.82 0 .99-.39Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="m1.08 14.7.75-.01-.47-.6-.29.24.01.38Zm1.53.35.07.54c.1.59.27 1.4.59 2.27a8.16 8.16 0 0 0 4.17 4.78 8.16 8.16 0 0 0 6.35.08 12.07 12.07 0 0 0 2.87-1.54h.01l.47.58.47.58-.01.01-.01.01a4.03 4.03 0 0 1-.24.17 13.56 13.56 0 0 1-3.05 1.6A9.65 9.65 0 0 1 6.82 24a9.65 9.65 0 0 1-4.95-5.63 13.56 13.56 0 0 1-.78-3.64v-.03l.75-.03a82.7 82.7 0 0 1-.47-.58h.01l.01-.02c.02 0 .03-.02.05-.04a7.58 7.58 0 0 1 .86-.57c.57-.35 1.38-.8 2.37-1.16a9.65 9.65 0 0 1 7.5.13l-.63 1.36a8.16 8.16 0 0 0-6.35-.08 12.06 12.06 0 0 0-2.57 1.33Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="m33.9 14.73-.75-.03.47-.58.3.23-.02.38Zm-1.53.33-.45-.3a12 12 0 0 0-2.1-1.01 8.12 8.12 0 0 0-6.31.07l-.63-1.36a9.61 9.61 0 0 1 7.46-.12 13.5 13.5 0 0 1 3.26 1.76l.01.01h.01l-.47.6.75.02v.02a4.38 4.38 0 0 1-.02.29 13.5 13.5 0 0 1-.76 3.34 9.61 9.61 0 0 1-4.92 5.6 9.61 9.61 0 0 1-7.46.12 13.5 13.5 0 0 1-3.27-1.76h-.01v-.01l.46-.59.47-.59v.01a3.26 3.26 0 0 0 .19.13 12 12 0 0 0 2.68 1.4c1.74.65 4.01.99 6.3-.07 2.3-1.06 3.52-3.01 4.16-4.76a12 12 0 0 0 .65-2.8Zm.03-.38Z"/>
+    </svg>
+  {% when 'icon-map-pin' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M28.5 13.16c0 1.38-.64 3.32-1.8 5.6a57.28 57.28 0 0 1-4.18 6.83 106.85 106.85 0 0 1-5.02 6.58 110.66 110.66 0 0 1-5.02-6.58 57.28 57.28 0 0 1-4.19-6.82c-1.15-2.3-1.79-4.23-1.79-5.61C6.5 6.98 11.44 2 17.5 2s11 4.98 11 11.16Zm1.5 0c0 5.79-8.57 16.63-11.52 20.18-.61.74-.98 1.16-.98 1.16s-.37-.42-.98-1.16C13.57 29.79 5 18.94 5 13.16 5 6.16 10.6.5 17.5.5S30 6.17 30 13.16ZM21.5 13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Zm1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"/>
+    </svg>
+  {% when 'icon-megaphone' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 14.75v5.5c1.34.03 2.6.1 3.8.2v-5.9c-1.2.1-2.46.17-3.8.2Zm5.3-.35v6.2c.74.08 1.45.18 2.14.28v-6.76c-.69.1-1.4.2-2.13.28Zm3.64-.54v7.28c6.05 1.13 9.97 3.1 12.28 4.67V9.19c-2.3 1.56-6.23 3.54-12.28 4.67Zm0 8.8c7.18 1.4 11.1 4 12.78 5.4.36.3 1 .03 1-.44v-5.95l1.6-.8c.6-.3.97-.9.97-1.57v-3.6c0-.67-.38-1.27-.97-1.57l-1.6-.8V7.38c0-.47-.64-.73-1-.43-2.3 1.92-8.83 6.1-22.2 6.3-.56.01-1.01.46-1.01 1.01v6.48c0 .55.45 1 1 1 1.52.03 2.95.1 4.3.22v5.22a2.57 2.57 0 1 0 5.13 0v-4.52Zm-1.5-.26-2.13-.3v5.08a1.07 1.07 0 1 0 2.13 0V22.4Zm16.2-2.87-.92.46v-4.98l.93.46c.08.05.14.13.14.23v3.6c0 .1-.06.18-.14.23Zm3.5-9.55a.75.75 0 0 1 .21-1.04l2.38-1.6a.75.75 0 0 1 .84 1.26l-2.39 1.58a.75.75 0 0 1-1.04-.2Zm1.93 4.07a.75.75 0 0 0 .42 1.44l2.75-.8a.75.75 0 1 0-.42-1.45l-2.75.8Zm3.67 6.98a.75.75 0 0 0-.51-.93l-2.75-.8a.75.75 0 0 0-.42 1.44l2.75.8c.4.11.8-.11.93-.51Zm-2.55 5.1a.75.75 0 0 1-.83 1.24l-2.39-1.59a.75.75 0 0 1 .84-1.24l2.38 1.59Z"/>
+    </svg>
+  {% when 'icon-open-24' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5 3.75a14.75 14.75 0 0 0 0 29.5.75.75 0 0 1 0 1.5 16.25 16.25 0 1 1 14.99-9.96.75.75 0 0 1-1.39-.58A14.75 14.75 0 0 0 18.5 3.75ZM27.6 34h-5.36c.06-.53.25-1.03.56-1.5.31-.46.9-1.02 1.75-1.65.53-.4.86-.69 1.01-.89a1 1 0 0 0 .22-.57c0-.2-.07-.37-.22-.5a.75.75 0 0 0-.54-.22.77.77 0 0 0-.57.22c-.14.14-.24.4-.29.76l-1.79-.15c.07-.5.2-.9.39-1.17.18-.29.45-.5.79-.65.34-.16.81-.23 1.42-.23.63 0 1.12.07 1.47.21a1.77 1.77 0 0 1 1.12 1.66c0 .4-.11.77-.34 1.13-.23.36-.65.75-1.26 1.18a7.07 7.07 0 0 0-1.15.91h2.8V34Zm3.85-1.2h-3.26v-1.48l3.26-3.87H33v3.96h.8v1.39h-.8V34h-1.56v-1.2Zm0-1.4v-2.02l-1.72 2.03h1.72ZM19.8 17.76h6.45a.75.75 0 0 1 0 1.5H19.8a1.5 1.5 0 1 1-2.05-2.05V8.75a.75.75 0 0 1 1.5 0v8.45c.23.13.42.32.55.55Z"/>
+    </svg>
+  {% when 'icon-phone' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M18 3.25a.75.75 0 0 0 0 1.5c6.77 0 12.25 5.48 12.25 12.25a.75.75 0 0 0 1.5 0c0-7.6-6.16-13.75-13.75-13.75Zm-7.87 13.58a16.88 16.88 0 0 0 3.27 4.89 16.85 16.85 0 0 0 4.97 3.35l.98-2.45 11.4 3.29-2.94 6.32c-.47 1-1.5 1.66-2.66 1.5a28.74 28.74 0 0 1-15.78-7.52 26.94 26.94 0 0 1-.37-.37 28.74 28.74 0 0 1-7.53-15.79 2.56 2.56 0 0 1 1.5-2.65L9.3 4.46l3.28 11.4-2.45.97Zm2.44 6.18a16.21 16.21 0 0 1-.38-.37 18.44 18.44 0 0 1-3.73-5.94v-.03l-.01-.01.7-.24-.7.24-.23-.68 2.55-1.02-2.43-8.4-4.74 2.2c-.46.21-.7.66-.64 1.1.37 2.76 1.8 9.47 7.24 15.06a27.2 27.2 0 0 0 15.15 7.33c.44.06.88-.19 1.1-.65l2.2-4.74-8.4-2.42-1.03 2.54-.67-.22.24-.71-.24.7h-.05a7.67 7.67 0 0 1-.55-.23A18.44 18.44 0 0 1 12.57 23v.01ZM18 9.25a.75.75 0 0 0 0 1.5c3.45 0 6.25 2.8 6.25 6.25a.75.75 0 0 0 1.5 0A7.75 7.75 0 0 0 18 9.25ZM17.25 7c0-.41.34-.75.75-.75 5.94 0 10.75 4.81 10.75 10.75a.75.75 0 1 1-1.5 0c0-5.1-4.14-9.25-9.25-9.25a.75.75 0 0 1-.75-.75Z"/>
+    </svg>
+  {% when 'icon-piggybank' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.75 8a3.25 3.25 0 1 1 5.55 2.3l.02.02a15.66 15.66 0 0 0-4.65-.05A3.24 3.24 0 0 1 13.75 8Zm-.69 2.66a4.73 4.73 0 0 1-.6-1.27c-.9.2-1.72.43-2.39.66l-.12.04h-.12c-1.16 0-2.11-.02-2.92-.04l-1.19-.02c-.74 0-1.35 0-1.96.07.16.78.6 1.96 1.62 2.95l.45.43-.34.51c-.54.84-.85 1.4-1.12 2.06-.27.67-.5 1.47-.85 2.8l-.15.56h-1.6c.03.54.05 1.02.1 1.45.06.62.16 1.04.32 1.35.27.48.82.9 2.67.9h.5l.2.47a4.1 4.1 0 0 0 1.4 1.63c.6.45 1.23.75 1.6.88l.5.18v2.98h2.92l.96-2h6.8v2h2.92c3.45-2.93 5.3-6.76 5.56-10.33.26-3.62-1.13-6.94-4.17-8.83a8.1 8.1 0 0 0-2.43-.97c-.14.57-.38 1.1-.7 1.57l.32.1a.75.75 0 1 1-.48 1.42c-1.4-.46-2.97-.62-4.36-.59a8.33 8.33 0 0 0-3.06.55.75.75 0 0 1-.68-1.34 4 4 0 0 1 .4-.17Zm8.67-3.05a4.75 4.75 0 0 0-9.48.3c-.94.2-1.8.44-2.55.68-1.09 0-1.96-.02-2.72-.03l-1.24-.03c-1.06 0-1.94.02-2.93.18l-.63.1v.64c0 .84.37 2.66 1.74 4.23-.4.64-.68 1.18-.94 1.8-.26.66-.48 1.4-.76 2.43h-2l.03.78.02.49c.02.66.05 1.28.1 1.83.07.68.2 1.34.5 1.9.62 1.15 1.78 1.62 3.52 1.7a5.95 5.95 0 0 0 1.67 1.8c.52.39 1.05.69 1.5.89v3.45h5.36l.96-2h4.37v2h4.95l.2-.17c3.88-3.2 6.02-7.48 6.31-11.55.15-1.98-.15-3.91-.9-5.63.34-.42.79-.73 1.21-.9.2-.08.38-.12.53-.13-.32.57-.45 1.3-.3 1.92.22.9 1.05 1.48 1.86 1.28.8-.2 1.27-1.1 1.05-2-.15-.6-.61-1.2-1.16-1.56.14-.05.32-.1.53-.12.46-.05 1 .02 1.5.24a.5.5 0 1 0 .4-.92 4.07 4.07 0 0 0-2-.32 2.5 2.5 0 0 0-1.34.52 2.5 2.5 0 0 0-1.43.16c-.47.18-.93.48-1.33.87a9.77 9.77 0 0 0-6.6-4.83Zm9.56 5.55c-.11.33-.13.66-.07.89.12.48.49.59.65.55.16-.04.44-.3.32-.8a1.65 1.65 0 0 0-.48-.74c-.1-.1-.19-.16-.27-.22-.06.09-.1.2-.15.32ZM7.5 19a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/>
+    </svg>
+  {% when 'icon-price-tag' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="m30.82 4.41 1.8 10.83-17.36 17.37L2.62 19.97 20 2.61l10.83 1.8Zm3.4 11.35L32.13 3.1 19.47 1 .5 19.97l14.76 14.76 18.97-18.97ZM28 8.48a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+    </svg>
+  {% when 'icon-promotion' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M21.84 4.16 17.5 1l-4.33 3.16H7.8l-1.65 5.1-4.34 3.14 1.67 5.1-1.67 5.1 4.34 3.14 1.65 5.1h5.37L17.5 34l4.34-3.16h5.36l1.65-5.1 4.34-3.14-1.66-5.1 1.66-5.1-4.34-3.14-1.65-5.1h-5.36Zm4.27 1.5h-4.76l-3.85-2.8-3.85 2.8H8.9l-1.46 4.52-3.86 2.8 1.48 4.52-1.48 4.52 3.86 2.8 1.46 4.53 4.76-.01 3.85 2.8 3.85-2.8h4.76l1.46-4.52 3.86-2.8-1.48-4.52 1.48-4.53-3.86-2.79-1.46-4.53ZM15.25 14a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Zm1.5 0a2.75 2.75 0 1 1-5.5 0 2.75 2.75 0 0 1 5.5 0Zm5.5 7a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Zm1.5 0a2.75 2.75 0 1 1-5.5 0 2.75 2.75 0 0 1 5.5 0Zm-11.28.4a.75.75 0 0 0 1.06 1.07l8.94-8.94a.75.75 0 1 0-1.06-1.06l-8.94 8.94Z"/>
+    </svg>
+  {% when 'icon-question' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M32 28.6H21.22L13.44 34v-5.4H3a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h29a3 3 0 0 1 3 3v16.6a3 3 0 0 1-3 3Zm-11.25-1.5-5.8 4.03V27.1H3a1.5 1.5 0 0 1-1.5-1.5V9c0-.83.67-1.5 1.5-1.5h29c.83 0 1.5.67 1.5 1.5v16.6c0 .83-.67 1.5-1.5 1.5H20.75ZM15.8 13.62c.37-.79 1.15-1.18 2.33-1.18.7 0 1.26.17 1.65.52.4.33.6.75.6 1.26 0 .5-.12.9-.36 1.21-.24.3-.7.64-1.4 1.04-.69.4-1.17.83-1.43 1.28-.27.44-.4 1.08-.4 1.92v.16a.74.74 0 0 0 1.48 0v-.04c0-.63.12-1.1.35-1.44.13-.19.3-.35.52-.5.21-.15.47-.31.79-.5a5.1 5.1 0 0 0 1.59-1.32c.33-.46.49-1.04.49-1.74 0-.91-.36-1.7-1.08-2.33a4.18 4.18 0 0 0-2.91-.96c-1.22 0-2.18.3-2.86.9-.46.4-.79.9-.98 1.5-.14.45.25.88.73.88.4 0 .72-.3.9-.66Zm2.56 8.46a1.07 1.07 0 0 0-.81-.34c-.33 0-.6.12-.8.34-.2.23-.3.5-.3.82 0 .3.1.57.3.78.2.21.47.32.8.32.32 0 .6-.1.81-.32.21-.21.32-.47.32-.78 0-.32-.1-.6-.32-.82Z"/>
+    </svg>
+  {% when 'icon-recycle' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16 31.01v-8.66H8.44l1.94-3.34 3.56 2.05-3.84-9.3L.14 13.1l3.18 1.84-1.5 2.6A3.75 3.75 0 0 0 1.66 21l3.7 7.87.07.14c.63 1.34 2 2.2 3.48 2.16l7.08-.16Zm-9.27-2.79.07.15c.38.81 1.2 1.32 2.09 1.3l5.6-.13v-5.69l-6.92.01-.74 1.28c-.49.86-.57 1.89-.2 2.8l.1.28Zm2.43-14.81L4.7 14l.66.38-2.26 3.9c-.36.64-.4 1.42-.08 2.08l2.2 4.67c.08-.22.19-.43.3-.64l4.3-7.43 1.04.6-1.71-4.15Zm13.92 9.07v-4.11l-6.13 7.97 6.13 7.97v-3.68h3c1.23 0 2.38-.6 3.08-1.6l4.96-7.14.1-.13c.84-1.22.9-2.83.12-4.1l-3.67-6.05-7.5 4.33 3.79 6.54h-3.88Zm5.6 0h1.49c.98 0 1.92-.45 2.53-1.22l.18-.22.1-.14c.51-.73.55-1.7.08-2.46l-2.91-4.8-4.93 2.85 3.47 6Zm-7.1 7.42-2.74-3.56 2.74-3.56v1.2h8.59c.24 0 .47-.02.7-.05l-2.94 4.24c-.42.6-1.1.96-1.85.96h-4.5v.77Zm-5-17.7 3.39-2.33-2.19-3.2-3.26 6.82-7.8-3.74 2.9-6.45a3.75 3.75 0 0 1 3.46-2.2h.16l8.7.06c1.22 0 2.37.61 3.06 1.63l1.7 2.47 3.03-2.07-3.12 9.56-10.04-.55Zm-3.34-9.6h-.17c-.9-.01-1.7.5-2.08 1.32L8.7 9.03l5.13 2.46 2.98-6.25-.83-1.21a3.25 3.25 0 0 0-2.44-1.41l-.29-.02Zm12.3 8.59 1.4-4.27-.63.43-2.55-3.72c-.41-.6-1.1-.97-1.84-.97l-5.16-.04c.16.17.31.36.45.56l4.84 7.08-.99.68 4.48.25Z"/>
+    </svg>
+  {% when 'icon-returns' %}
+    <svg {{ icon_attributes }} width='36' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M1.75 16.5a9.75 9.75 0 0 1 9.75-9.75H15a.75.75 0 0 0 0-1.5h-3.5a11.25 11.25 0 0 0 0 22.5h20.71l-2.68 2.72a.75.75 0 0 0 1.07 1.06L35.06 27l-4.46-4.53a.75.75 0 0 0-1.07 1.06l2.68 2.72H11.5a9.75 9.75 0 0 1-9.75-9.75Z"/>
+    </svg>
+  {% when 'icon-ruler' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M26.48 1 1 26.48l7.78 7.78 3.79-3.79a.7.7 0 0 0 .06-.06l3.48-3.48a.7.7 0 0 0 .05-.05l3.48-3.48a.74.74 0 0 0 .06-.06l3.45-3.45a.75.75 0 0 0 .1-.1l3.45-3.45a.77.77 0 0 0 .08-.08l3.46-3.46a.78.78 0 0 0 .08-.08l3.94-3.94L26.5 1ZM12.07 28.85l2.47-2.47-1.23-1.24a.75.75 0 0 1 1.06-1.06l1.23 1.24 2.48-2.48-2.65-2.65a.75.75 0 0 1 1.06-1.06l2.65 2.65 2.47-2.48-1.23-1.23A.75.75 0 0 1 21.44 17l1.24 1.23 2.47-2.47-2.65-2.65a.75.75 0 0 1 1.06-1.06l2.65 2.65 2.48-2.48L27.45 11a.75.75 0 0 1 1.06-1.06l1.24 1.23 2.4-2.4-5.66-5.65L3.13 26.48l5.65 5.66 2.23-2.23-2.65-2.65a.75.75 0 0 1 1.06-1.06l2.65 2.65Z"/>
+    </svg>
+  {% when 'icon-running-shoe' %}
+    <svg {{ icon_attributes }} width='35' height='20' viewBox='0 0 35 20'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M.26 20H35L32.9 0H21.83s-.53 3.16-5.26 5.79C14.6 6.89 12 7.62 9.47 8.32c-3.54 1-6.93 1.94-8.15 3.79C-.78 15.26.26 20 .26 20ZM22.91 1.5a10.82 10.82 0 0 1-1.69 2.56l1.76 2.39c.23.32.14.78-.21 1.04s-.82.22-1.05-.1l-1.63-2.22c-.26.22-.53.44-.82.66l1.6 2.18c.23.31.13.78-.22 1.04s-.82.21-1.05-.1l-1.64-2.23a18.47 18.47 0 0 1-.92.52l1.7 2.32c.24.32.14.79-.2 1.05-.35.25-.83.2-1.06-.1l-1.9-2.59c-1.8.76-3.87 1.34-5.76 1.86l-1.44.41a28.1 28.1 0 0 0-3.83 1.33c-1.07.5-1.7.97-1.99 1.42a6.22 6.22 0 0 0-.87 2.23H33L31.53 1.5h-8.63Zm10.23 15.17H1.51a12.2 12.2 0 0 0 .05 1.83h31.77l-.19-1.83Z"/>
+    </svg>
+  {% when 'icon-shield' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.51 1.78c-.4.24-.94.54-1.58.83A14.39 14.39 0 0 1 10 4a16.2 16.2 0 0 1-6.5-1.53V21c0 1.5.73 3.04 2.06 4.58a23.45 23.45 0 0 0 5 4.16 45.91 45.91 0 0 0 6.86 3.6l.08.04.08-.03a46.11 46.11 0 0 0 6.86-3.61 23.46 23.46 0 0 0 5-4.16c1.33-1.54 2.06-3.08 2.06-4.58V2.45l-.42.18A16.3 16.3 0 0 1 25 4c-2.3 0-4.4-.71-5.87-1.38-.65-.3-1.2-.6-1.62-.84ZM31.5.8c-1.53.73-4.01 1.7-6.5 1.7-4 0-7.5-2.5-7.5-2.5S14.13 2.5 10 2.5c-2.55 0-5-.95-6.5-1.68C2.57.37 2 0 2 0v21c0 8 15.5 14 15.5 14S33 29 33 21V0s-.57.36-1.5.8Zm-14 2.7s-3.72 2-7.05 2c-1.65 0-3-.25-3.95-.5-.96-.25-1.5-.5-1.5-.5V21c0 5 12.5 11 12.5 11S30 26 30 21.5v-17s-.55.25-1.5.5c-.96.25-2.33.5-3.95.5-3.23 0-7.05-2-7.05-2Zm11 3.04c-1.02.24-2.38.46-3.95.46-1.88 0-3.84-.57-5.25-1.1-.73-.26-1.34-.52-1.78-.72l-.01-.01c-.44.2-1.04.47-1.76.74-1.41.52-3.37 1.09-5.3 1.09-1.6 0-2.94-.2-3.95-.45V21c0 .66.45 1.61 1.55 2.8a24.13 24.13 0 0 0 4.04 3.33 51.52 51.52 0 0 0 5.41 3.2 58.7 58.7 0 0 0 5.42-3.14c1.53-1.01 3-2.12 4.06-3.2 1.13-1.16 1.52-2 1.52-2.49V6.54Zm-3.98 7a.75.75 0 1 0-1.04-1.08l-7.88 7.5-3.08-2.93a.75.75 0 1 0-1.04 1.08l4.12 3.93 8.92-8.5Z"/>
+    </svg>
+  {% when 'icon-shirt' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M31.58 17 35 8.93l-8.17-3.46h-4.26a5.9 5.9 0 0 1-11.12 0H8.17L0 8.93 3.42 17l4.39-1.86L7.18 32h20.64l-.63-16.86L31.6 17Zm-5.32 13.5-.65-17.66 5.17 2.2 2.25-5.32-6.5-2.75h-2.99a7.4 7.4 0 0 1-13.07 0h-2l-6.5 2.75 2.24 5.31 5.18-2.19-.65 17.66h17.52Z"/>
+    </svg>
+  {% when 'icon-shopping-cart' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M28.57 28.15a.75.75 0 1 0 0-1.5H11.65l-.85-4.76H29.1L33.8 8.7H8.45l-.97-5.42H1a.75.75 0 1 0 0 1.5h5.22l4.18 23.38h18.17ZM8.7 10.2h22.96l-3.64 10.2h-17.5L8.72 10.2ZM27 33.05a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm-13.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+    </svg>
+  {% when 'icon-stars' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16.32 12.74 12.5 5l-3.82 7.74-8.54 1.24 6.18 6.03-1.46 8.5 7.64-4.01 7.64 4.02L18.68 20l6.18-6.03-8.54-1.24Zm5.32 2.29-6.32-.92L12.5 8.4 9.68 14.1l-6.32.92 4.57 4.45-1.08 6.3 5.65-2.97 5.65 2.97-1.08-6.3 4.57-4.45Zm8.06 6.44L27.5 17l-2.2 4.47-4.93.71 3.56 3.48-.84 4.9 4.41-2.31 4.4 2.32-.83-4.91 3.56-3.48-4.93-.71Zm1.71 1.76-2.7-.4-1.21-2.44-1.2 2.45-2.7.39 1.95 1.9-.47 2.7 2.42-1.27 2.42 1.27-.47-2.7 1.96-1.9ZM24.76 8.49 25.5 7l.73 1.49 1.65.24-1.2 1.16.29 1.63-1.47-.77-1.47.77.28-1.63-1.19-1.16 1.64-.24Z"/>
+    </svg>
+  {% when 'icon-store' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="m30.28 10.69-3.63-5H8.37l-3.63 5h25.54ZM7.61 4.19l-4.67 6.4a.98.98 0 0 0-.19.68v1.76c0 .9.39 1.71 1 2.27v15.45h27.5V15.31c.62-.57 1-1.37 1-2.27v-1.67a.98.98 0 0 0-.17-.77L27.4 4.2H7.61Zm22.14 11.87a3.1 3.1 0 0 1-2.92-1.02 3.07 3.07 0 0 1-4.67 0 3.07 3.07 0 0 1-4.67.01 3.07 3.07 0 0 1-4.66 0 3.07 3.07 0 0 1-4.66 0 3.07 3.07 0 0 1-2.92 1v13.2h8v-9h8.5v9h8V16.06Zm-9.5 13.19v-7.5h-5.5v7.5h5.5Zm10.5-17.06H27.6v.85a1.58 1.58 0 1 0 3.16 0v-.85Zm-12.51.85v-.85h3.16v.85a1.58 1.58 0 1 1-3.16 0Zm7.83-.85h-3.16v.84a1.58 1.58 0 1 0 3.16 0v-.84Zm-14 .84v-.84H8.92v.85a1.58 1.58 0 0 0 3.16.15v-.16Zm3.09 1.59c-.83 0-1.5-.63-1.58-1.43v-1h3.16v.84c0 .88-.71 1.59-1.58 1.59Zm-10.9-1.59v-.84h3.16v.84a1.58 1.58 0 1 1-3.17 0Z"/>
+    </svg>
+  {% when 'icon-thumbs-up' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M18.849 7.328c.051-.464.098-.884.15-1.274.084-.63.174-1.113.296-1.48.122-.365.254-.55.378-.65.114-.09.298-.174.661-.174.428 0 .681.064.86.188.17.118.387.371.554 1.004.347 1.318.37 3.855-.215 8.659l-.102.84h8.624c.089 0 .39.106.717.455.308.328.478.706.478 1.008 0 .317-.098.739-.247 1.154-.15.418-.318.735-.394.844l-.32.454.342.438c.121.156.408.79.408 1.7 0 .324-.167.842-.472 1.36-.312.531-.65.86-.833.947l-.584.277.188.618c.173.57.22.873.214 1.104-.006.225-.06.438-.204.848a2.643 2.643 0 0 1-.541.869c-.241.264-.48.436-.628.506l-.429.204v.474c0 .143.005.282.01.421.02.58.041 1.14-.312 1.81-.082.155-.332.418-.983.672-.639.249-1.58.457-2.899.565-2.575.211-6.466.035-12.066-.83v-12.77a83.33 83.33 0 0 1 1.01-.994c.928-.906 2.104-2.054 3.16-3.23.747-.832 1.459-1.703 2.008-2.55.54-.832.969-1.71 1.067-2.546.038-.326.072-.632.104-.92ZM11.5 15.464l.008-.008c.918-.896 2.025-1.976 3.047-3.114.72-.803 1.375-1.609 1.864-2.363.499-.769.779-1.414.836-1.905.036-.302.069-.599.1-.885.053-.479.103-.93.157-1.333.086-.648.19-1.248.36-1.757.17-.51.427-.995.862-1.344.446-.358.991-.505 1.6-.505.544 0 1.166.074 1.716.457.56.39.926 1.012 1.148 1.853.404 1.534.408 4.107-.077 8.381h6.934c.69 0 1.36.448 1.811.929.47.501.884 1.229.884 2.034 0 .567-.161 1.176-.336 1.662a7.004 7.004 0 0 1-.325.763c.256.537.45 1.306.45 2.165 0 .705-.311 1.495-.679 2.12-.245.418-.57.852-.94 1.176.092.382.139.717.131 1.045-.01.478-.137.88-.288 1.31a4.133 4.133 0 0 1-.847 1.381 4.275 4.275 0 0 1-.65.586c.024.598.025 1.54-.491 2.52-.322.61-.956 1.054-1.765 1.37-.823.32-1.92.547-3.321.662-2.704.222-6.653.036-12.189-.808V32h-9V15h9v.464ZM4 16.5h6v14H4v-14Z"/>
+    </svg>
+  {% when 'icon-truck' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M21 6H1v16.85l4 3 .01-.02a4.5 4.5 0 0 0 8.96.17h8.06a4.5 4.5 0 0 0 8.62 1.25h4.1v-5.5H34v-3.77L29.7 8.5H21V6Zm-7.11 18.5h5.61v-17h-17v14.6l2.71 2.03a4.5 4.5 0 0 1 8.68.37ZM26.5 21a4.5 4.5 0 0 0-4.39 3.5H21V10h7.73l3.77 8.3v3.45h-3.51A4.48 4.48 0 0 0 26.5 21Zm4.5 4.5c0-.82-.22-1.59-.6-2.25h2.85v2.5H31l.01-.25ZM27.52 11 30 16.56h-7.5V11h5.02Zm-.98 1.5 1.15 2.56H24V12.5h2.54Zm-.04 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-14-3a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-1.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM26.5 27a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/>
+    </svg>
+  {% when 'icon-virus' %}
+    <svg {{ icon_attributes }} width='35' height='35' viewBox='0 0 35 35'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M18 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm.25 1.85a2 2 0 1 0-1.5 0v1.42A12.2 12.2 0 0 0 9.42 8.3L7.6 6.5a3 3 0 1 0-1.04 1.08l1.78 1.78a12.2 12.2 0 0 0-3.08 7.4H3.85a2 2 0 1 0 0 1.5h1.42a12.2 12.2 0 0 0 3.08 7.4l-1.79 1.79a3 3 0 1 0 1.04 1.08l1.82-1.81a12.2 12.2 0 0 0 7.33 3.02v1.42a2 2 0 1 0 1.5 0v-1.42a12.2 12.2 0 0 0 7.4-3.08l1.79 1.79a3 3 0 1 0 1.08-1.04l-1.81-1.82a12.2 12.2 0 0 0 3.02-7.33h1.42a2 2 0 1 0 0-1.5h-1.42a12.2 12.2 0 0 0-3.02-7.33l1.8-1.81a3 3 0 1 0-1.08-1.04l-1.78 1.78a12.2 12.2 0 0 0-7.4-3.08V3.85ZM30 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm-12.5.25a10.75 10.75 0 1 0 0 21.5 10.75 10.75 0 0 0 0-21.5Zm5 7.25a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-12-1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0 1.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm5.5 19.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM33 18a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1Zm-31.5-.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0Zm22 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm1.5 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-11-.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm0 1.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6.5 5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM30 31.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM6.5 30a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+    </svg>
+  {% when 'icon-wave' %}
+    <svg {{ icon_attributes }} width='62' height='7' viewBox='0 0 62 7'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M.36 1.61a.75.75 0 0 1 1.03-.25L6.3 4.3c1.35.81 3.03.81 4.38 0l2.35-1.41a5.75 5.75 0 0 1 5.92 0l2.35 1.41c1.35.81 3.03.81 4.38 0l2.35-1.41a5.75 5.75 0 0 1 5.92 0l2.35 1.41c1.35.81 3.03.81 4.38 0l2.35-1.41a5.75 5.75 0 0 1 5.92 0l2.35 1.41c1.35.81 3.03.81 4.38 0l4.92-2.95a.75.75 0 0 1 .78 1.28L56.46 5.6a5.75 5.75 0 0 1-5.92 0L48.2 4.19a4.25 4.25 0 0 0-4.38 0L41.46 5.6a5.75 5.75 0 0 1-5.92 0L33.2 4.19a4.25 4.25 0 0 0-4.38 0L26.46 5.6a5.75 5.75 0 0 1-5.92 0L18.2 4.19a4.25 4.25 0 0 0-4.38 0L11.46 5.6a5.75 5.75 0 0 1-5.92 0L.61 2.64a.75.75 0 0 1-.25-1.03Z"/>
+    </svg>
+  {% when 'link-question-mark' %}
+    <svg {{ icon_attributes }} width='15' height='15' viewBox='0 0 15 15'>
+      <path d="M7.55 4.05c-.86 0-1.44.27-1.71.8-.14.27-.38.49-.67.49-.36 0-.65-.32-.53-.66.14-.4.38-.73.71-1.01.5-.42 1.21-.63 2.12-.63.91 0 1.63.22 2.15.67.54.45.8 1 .8 1.64 0 .48-.12.89-.36 1.22-.24.31-.64.62-1.18.92l-.59.35c-.15.1-.28.22-.37.35-.18.23-.27.57-.27 1 0 .31-.24.56-.55.56a.55.55 0 0 1-.54-.55v-.08c0-.6.1-1.04.3-1.35.19-.32.54-.61 1.06-.9.5-.27.85-.52 1.03-.72.18-.22.27-.5.27-.86 0-.35-.15-.65-.45-.88-.29-.24-.7-.36-1.22-.36Zm-.43 6.52a.82.82 0 0 1 .84.81c0 .22-.08.4-.24.55a.84.84 0 0 1-.6.22.8.8 0 0 1-.59-.22.74.74 0 0 1-.22-.55.8.8 0 0 1 .22-.57.77.77 0 0 1 .59-.24Z" fill="var(--color-foreground, var(--color-default-text))"/>
+      <path opacity=".1" d="M14 7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" fill="var(--color-foreground, var(--color-default-text))"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M15 7.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0ZM7.5 14a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z" fill="var(--color-foreground, var(--color-default-text))"/>
+    </svg>
+  {% when 'link-plus' %}
+    <svg {{ icon_attributes }} width='15' height='15' viewBox='0 0 15 15'>
+      <path opacity=".1" d="M14 7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" fill="var(--color-foreground, var(--color-default-text))"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M15 7.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0ZM7.5 14a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z" fill="var(--color-foreground, var(--color-default-text))"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 4c.28 0 .5.22.5.5v6a.5.5 0 0 1-1 0v-6c0-.28.22-.5.5-.5Z" fill="var(--color-foreground, var(--color-default-text))"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M11 7.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h6c.28 0 .5.22.5.5Z" fill="var(--color-foreground, var(--color-default-text))"/>
+    </svg>
+  {% when 'link-arrow' %}
+    <svg {{ icon_attributes }} width='15' height='15' viewBox='0 0 15 15'>
+      <path opacity=".1" d="M14 7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" fill="var(--color-foreground, var(--color-default-text))"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M15 7.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0ZM7.5 14a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z" fill="var(--color-foreground, var(--color-default-text))"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.38 10.13a.48.48 0 0 1-.68-.69L9.14 8H4.98a.48.48 0 0 1 0-.96h4.18L7.7 5.57a.48.48 0 1 1 .68-.68L11 7.51l-2.62 2.62Z" fill="var(--color-foreground, var(--color-default-text))"/>
+    </svg>
+    <!-- Social media -->
+  {% when 'twitter' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M21 7.157a6.869 6.869 0 0 1-2.003.557 3.533 3.533 0 0 0 1.533-1.956c-.674.405-1.42.7-2.214.858A3.462 3.462 0 0 0 15.77 5.5c-1.926 0-3.488 1.582-3.488 3.534 0 .277.031.547.09.806-2.898-.148-5.468-1.555-7.188-3.693a3.552 3.552 0 0 0-.472 1.777c0 1.226.615 2.308 1.551 2.942a3.443 3.443 0 0 1-1.58-.442v.044c0 1.712 1.202 3.14 2.798 3.466a3.465 3.465 0 0 1-1.575.06c.444 1.404 1.732 2.426 3.258 2.454A6.939 6.939 0 0 1 4 17.912 9.775 9.775 0 0 0 9.346 19.5c6.416 0 9.924-5.385 9.924-10.056 0-.153-.003-.306-.01-.458A7.116 7.116 0 0 0 21 7.157Z"/>
+    </svg>
+  {% when 'facebook' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16 9.357h-2.384V7.8c0-.584.39-.72.663-.72h1.683V4.508L13.645 4.5c-2.572 0-3.158 1.917-3.158 3.144v1.713H9v2.649h1.487V19.5h3.129v-7.494h2.111L16 9.357Z"/>
+    </svg>
+  {% when 'pinterest' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path d="M13.523 4.444c-4.36 0-6.558 3.025-6.558 5.547 0 1.527.597 2.886 1.879 3.391.21.084.398.003.46-.222.041-.155.142-.548.186-.712.062-.223.038-.3-.132-.495-.37-.422-.606-.967-.606-1.741 0-2.244 1.735-4.252 4.518-4.252 2.464 0 3.818 1.456 3.818 3.402 0 2.56-1.171 4.72-2.909 4.72-.96 0-1.678-.767-1.448-1.71.275-1.124.81-2.338.81-3.15 0-.727-.404-1.333-1.238-1.333-.981 0-1.77.982-1.77 2.298 0 .838.293 1.405.293 1.405l-1.18 4.838c-.35 1.436-.053 3.196-.027 3.374.015.105.154.13.218.051.09-.114 1.26-1.51 1.656-2.906.113-.394.646-2.44.646-2.44.319.589 1.25 1.106 2.241 1.106 2.95 0 4.95-2.602 4.95-6.084.001-2.634-2.304-5.087-5.807-5.087Z"/>
+    </svg>
+  {% when 'instagram' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M9.463 7.147a2.265 2.265 0 0 0-2.265 2.265v6.176a2.265 2.265 0 0 0 2.265 2.265h6.176a2.265 2.265 0 0 0 2.265-2.265V9.412a2.265 2.265 0 0 0-2.265-2.265H9.463ZM5.55 9.412A3.912 3.912 0 0 1 9.463 5.5h6.176a3.912 3.912 0 0 1 3.912 3.912v6.176a3.912 3.912 0 0 1-3.912 3.912H9.463a3.912 3.912 0 0 1-3.912-3.912V9.412Z"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.82 10.843a1.647 1.647 0 1 0-.482 3.258 1.647 1.647 0 0 0 .483-3.258Zm-1.758-1.295a3.294 3.294 0 1 1 3.034 5.848 3.294 3.294 0 0 1-3.034-5.848Z"/>
+      <circle cx="16.1" cy="8.949" r=".772"/>
+    </svg>
+  {% when 'linkedin' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.625 5.25h9.75c.898 0 1.625.728 1.625 1.625v9.75c0 .898-.727 1.625-1.625 1.625h-9.75A1.625 1.625 0 0 1 6 16.625v-9.75c0-.897.728-1.625 1.625-1.625Zm-.203 2.51c0-.643.487-1.133 1.232-1.133.744 0 1.203.49 1.217 1.132 0 .629-.473 1.132-1.232 1.132h-.014c-.731 0-1.203-.503-1.203-1.132Zm.125 2.028h2.177v6.55H7.547v-6.55Zm7.525-.155c-1.155 0-1.672.635-1.962 1.082v-.928h-2.177c.029.614 0 6.55 0 6.55h2.177v-3.658c0-.196.014-.392.072-.531.157-.391.515-.796 1.117-.796.787 0 1.103.6 1.103 1.48v3.505h2.177V12.58c0-2.012-1.075-2.948-2.507-2.948Z"/>
+    </svg>
+  {% when 'tiktok' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path d="M12.98 4.444h2.601s-.144 3.32 3.613 3.554v2.566s-2.005.125-3.613-1.095l.028 5.3c0 .947-.282 1.873-.812 2.66a4.815 4.815 0 0 1-2.163 1.765 4.849 4.849 0 0 1-5.253-1.038 4.762 4.762 0 0 1-1.045-5.22 4.797 4.797 0 0 1 1.775-2.15 4.843 4.843 0 0 1 2.678-.808h.676V12.602a2.205 2.205 0 0 0-2.437.815 2.168 2.168 0 0 0 .02 2.555 2.205 2.205 0 0 0 3.54-.013c.27-.372.416-.819.416-1.277L12.98 4.444Z"/>
+    </svg>
+  {% when 'tumblr' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path d="M13.81 19.558c-2.258 0-3.941-1.169-3.941-3.967v-4.48H7.816V8.685c2.26-.59 3.203-2.547 3.313-4.24h2.344V8.29h2.736v2.82h-2.736v3.901c0 1.17.586 1.574 1.52 1.574h1.325v2.972H13.81Z"/>
+    </svg>
+  {% when 'snapchat' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.56 18.198c.108 0 .172-.047.202-.15.034-.117.06-.229.085-.343.068-.313.113-.462.228-.48 1.41-.216 1.813-.511 1.903-.719.013-.03.02-.06.022-.09a.158.158 0 0 0-.133-.165c-2.168-.355-3.138-2.556-3.179-2.65l-.003-.007c-.133-.268-.159-.5-.077-.69.148-.348.633-.501.954-.602a3.54 3.54 0 0 0 .212-.072c.562-.22.676-.445.674-.594-.004-.158-.146-.31-.364-.387l-.004-.002a.694.694 0 0 0-.26-.049.55.55 0 0 0-.226.044 1.94 1.94 0 0 1-.728.201c-.28-.01-.405-.13-.42-.145l.024-.411.003-.045c.065-1.017.145-2.284-.18-3.007C15.323 5.67 13.259 5.5 12.649 5.5h-.036l-.267.003c-.608 0-2.667.168-3.639 2.334-.324.722-.244 1.988-.18 3.006l.028.455c-.016.017-.151.147-.46.147-.225 0-.485-.068-.773-.203a.414.414 0 0 0-.175-.034c-.244 0-.546.156-.589.38-.025.132.029.39.669.643.059.023.133.046.212.07.32.102.806.255.954.603.081.19.056.422-.077.69a.138.138 0 0 0-.004.007c-.04.094-1.011 2.296-3.178 2.65a.158.158 0 0 0-.133.165c.002.03.01.06.022.09.09.21.493.504 1.903.72.12.02.165.196.228.483.025.111.05.226.085.345.04.138.134.156.22.156.082 0 .19-.02.315-.045.206-.04.489-.095.847-.095.199 0 .404.017.61.051.424.07.784.323 1.165.59.551.388 1.121.789 2.01.789l.075-.003c.038.002.076.003.115.003.888 0 1.459-.4 2.011-.79.38-.267.74-.519 1.163-.589.206-.034.412-.051.611-.051.34 0 .608.043.847.089.134.026.24.04.315.04h.018Z"/>
+    </svg>
+  {% when 'youtube' %}
+    <svg {{ icon_attributes }} width='26' height='25' viewBox='0 0 26 25'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M19.182 6.935a2.01 2.01 0 0 1 1.42 1.42c.335 1.252.335 3.865.335 3.865s0 2.613-.335 3.865a2.011 2.011 0 0 1-1.42 1.42c-1.252.336-6.274.336-6.274.336s-5.021 0-6.274-.336a2.011 2.011 0 0 1-1.42-1.42c-.335-1.252-.335-3.865-.335-3.865s0-2.613.335-3.865a2.011 2.011 0 0 1 1.42-1.42C7.887 6.6 12.908 6.6 12.908 6.6s5.022 0 6.274.335Zm-3.71 5.022-4.171 2.409V9.548l4.172 2.41Z"/>
+    </svg>
+  {% when 'vimeo' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path d="m5 9.288.61.793s1.256-.983 1.675-.492c.419.492 2.017 6.43 2.55 7.526.467.96 1.752 2.231 3.16 1.323 1.409-.907 6.092-4.878 6.93-9.567.838-4.689-5.635-3.707-6.32.378 1.713-1.022 2.628.415 1.751 2.042-.876 1.625-1.675 2.686-2.094 2.686-.418 0-.74-1.088-1.219-2.99-.495-1.965-.492-5.506-2.55-5.104C7.55 6.26 5 9.288 5 9.288Z"/>
+    </svg>
+  {% when 'share-email' %}
+    <svg {{ icon_attributes }} width='25' height='25' viewBox='0 0 25 25'>
+      <path d="M18.7 5.8H6.3l6.2 4.5 6.2-4.5Z"/>
+      <path d="m12.5 11.8-7-5v9c0 1.1.9 2 2 2h10a2 2 0 0 0 2-2v-9l-7 5Z"/>
+    </svg>
+  {% when 'quick-view' %}
+    <svg {{ icon_attributes }} width='16' height='16' viewBox='0 0 16 16'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M11 .75c0-.41.34-.75.75-.75h3.5c.41 0 .75.34.75.75v3.5a.75.75 0 0 1-1.5 0V1.5h-2.75A.75.75 0 0 1 11 .75ZM8 12c-3.31 0-6-4-6-4s2.69-4 6-4 6 4 6 4-2.69 4-6 4ZM4.77 7.1c-.33.31-.63.63-.87.9.24.27.54.59.87.9 1 .92 2.15 1.6 3.23 1.6s2.22-.68 3.23-1.6c.33-.31.63-.63.87-.9-.24-.27-.54-.59-.87-.9-1-.92-2.15-1.6-3.23-1.6s-2.22.68-3.23 1.6Zm9.73 4.65a.75.75 0 0 1 1.5 0v3.5c0 .41-.34.75-.75.75h-3.5a.75.75 0 0 1 0-1.5h2.75v-2.75Zm-13-7.5a.75.75 0 0 1-1.5 0V.75C0 .34.34 0 .75 0h3.5a.75.75 0 0 1 0 1.5H1.5v2.75Zm0 7.5a.75.75 0 0 0-1.5 0v3.5c0 .41.34.75.75.75h3.5a.75.75 0 0 0 0-1.5H1.5v-2.75ZM8 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
+    </svg>
+  {% when 'image-zoom' %}
+    <svg {{ icon_attributes }} width='15' height='14' viewBox='0 0 15 14'>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 6a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-.7 4.64a6 6 0 1 1 1.03-1.09l3.13 3.12a.75.75 0 0 1-1.06 1.06l-3.1-3.09ZM6 3.25c.28 0 .5.22.5.5V5.5h1.75a.5.5 0 0 1 0 1H6.5v1.75a.5.5 0 0 1-1 0V6.5H3.75a.5.5 0 0 1 0-1H5.5V3.75c0-.28.22-.5.5-.5Z"/>
+    </svg>
+  {% when 'model' %}
+    <svg {{ icon_attributes }} width='18' height='21' viewBox='0 0 18 21'>
+      <path d="M7.67998 20.629L1.28002 16.723C0.886205 16.4784 0.561675 16.1368 0.337572 15.731C0.113468 15.3251 -0.00274623 14.8686 -1.39464e-05 14.405V6.59497C-0.00238367 6.13167 0.113819 5.6755 0.33751 5.26978C0.561202 4.86405 0.884959 4.52227 1.278 4.27698L7.67796 0.377014C8.07524 0.131403 8.53292 0.000877102 8.99999 9.73346e-08C9.46678 -0.000129605 9.92446 0.129369 10.322 0.374024V0.374024L16.722 4.27399C17.1163 4.51985 17.4409 4.86287 17.6647 5.27014C17.8885 5.67742 18.0039 6.13529 18 6.59998V14.409C18.0026 14.8725 17.8864 15.3289 17.6625 15.7347C17.4386 16.1405 17.1145 16.4821 16.721 16.727L10.321 20.633C9.92264 20.8742 9.46565 21.0012 8.99999 21C8.53428 20.9998 8.07761 20.8714 7.67998 20.629V20.629ZM8.72398 2.078L2.32396 5.97803C2.22303 6.04453 2.14066 6.13551 2.08452 6.24255C2.02838 6.34959 2.00031 6.46919 2.00298 6.59003V14.4C2.00026 14.5205 2.02818 14.6396 2.08415 14.7463C2.14013 14.853 2.22233 14.9438 2.32298 15.01L7.99999 18.48V10.919C8.00113 10.5997 8.08851 10.2867 8.25292 10.0129C8.41732 9.73922 8.65267 9.51501 8.93401 9.36401L15.446 5.841L9.28001 2.08002C9.19614 2.02738 9.09901 1.99962 8.99999 2C8.90251 1.99972 8.8069 2.02674 8.72398 2.078V2.078Z" fill="currentColor"/>
+    </svg>
+
+    <!-- Misc -->
+  {% when 'shopify-logo' %}
+    <svg {{ icon_attributes }} width='57' height='15' viewBox='0 0 57 15'>
+      <g clip-path="url(#a)">
+        <path d="M19.72 8.342c-.486-.248-.741-.448-.741-.73 0-.365.344-.588.893-.588.64 0 1.201.247 1.201.247l.447-1.259s-.409-.294-1.622-.294c-1.686 0-2.86.894-2.86 2.141 0 .706.548 1.247 1.276 1.635.588.306.792.53.792.848 0 .34-.294.611-.843.611-.817 0-1.583-.388-1.583-.388l-.473 1.259s.715.435 1.903.435c1.737 0 2.976-.788 2.976-2.2.025-.776-.613-1.317-1.367-1.717ZM26.641 5.694c-.856 0-1.52.377-2.043.942l-.026-.012.74-3.577h-1.94l-1.878 9.095h1.929l.638-3.106c.256-1.177.907-1.895 1.52-1.895.434 0 .6.271.6.66 0 .246-.025.54-.09.788l-.727 3.564h1.928l.754-3.67c.09-.389.14-.847.14-1.165.026-1.024-.536-1.624-1.545-1.624ZM32.58 5.694c-2.324 0-3.87 1.93-3.87 4.083 0 1.376.92 2.494 2.657 2.494 2.287 0 3.82-1.883 3.82-4.083.012-1.282-.793-2.494-2.606-2.494Zm-.944 5.2c-.665 0-.933-.517-.933-1.164 0-1.024.575-2.683 1.622-2.683.69 0 .907.541.907 1.07 0 1.107-.575 2.777-1.596 2.777ZM40.143 5.694c-1.303 0-2.044 1.06-2.044 1.06h-.025l.115-.954h-1.712c-.09.647-.242 1.624-.396 2.365l-1.34 6.494h1.928l.536-2.635h.038s.396.235 1.137.235c2.273 0 3.755-2.141 3.755-4.306 0-1.188-.575-2.259-1.992-2.259Zm-1.84 5.236c-.498 0-.791-.26-.791-.26l.319-1.658c.23-1.106.856-1.847 1.52-1.847.587 0 .766.506.766.976 0 1.142-.74 2.789-1.813 2.789ZM44.892 3.141c-.613 0-1.11.447-1.11 1.036 0 .53.357.894.906.894h.026c.6 0 1.123-.377 1.136-1.036.013-.529-.37-.894-.958-.894ZM42.184 12.142h1.94l1.316-6.306h-1.954l-1.302 6.306ZM50.347 5.824h-1.34l.063-.294c.115-.612.498-1.153 1.15-1.153.345 0 .613.094.613.094l.383-1.388s-.332-.153-1.047-.153c-.69 0-1.367.176-1.89.588-.665.518-.971 1.259-1.124 2.012l-.052.294h-.894l-.28 1.341h.893l-1.021 4.977h1.928l1.022-4.977h1.328l.268-1.341ZM54.993 5.836s-1.214 2.8-1.75 4.33h-.026c-.038-.495-.472-4.33-.472-4.33h-2.031l1.162 5.788c.026.13.013.212-.038.294-.23.4-.6.788-1.047 1.07-.358.248-.767.4-1.086.507L50.242 15c.395-.082 1.2-.376 1.89-.964.88-.765 1.698-1.93 2.529-3.53l2.362-4.67h-2.03ZM9.552 1.741s-.179.047-.473.13a3.295 3.295 0 0 0-.23-.518C8.518.765 8.02.447 7.433.447c-.038 0-.077 0-.128.012-.013-.024-.038-.036-.05-.06C6.997.142 6.665.024 6.27.036c-.767.024-1.533.53-2.146 1.436-.434.635-.766 1.435-.856 2.058-.88.247-1.494.424-1.507.436-.447.13-.46.14-.51.529C1.211 4.788.036 13.07.036 13.07l9.655 1.542V1.729c-.076 0-.114.012-.14.012Zm-2.235.635c-.51.142-1.073.306-1.622.46.153-.554.46-1.107.817-1.471.14-.13.332-.283.55-.377.217.424.268 1 .255 1.388ZM6.27.518c.178 0 .332.035.46.105a2.42 2.42 0 0 0-.6.424C5.643 1.529 5.273 2.282 5.12 3l-1.34.376C4.06 2.247 5.094.541 6.27.518Zm-1.482 6.47c.051.753 2.21.918 2.337 2.694.09 1.4-.804 2.353-2.094 2.424-1.558.094-2.414-.753-2.414-.753l.332-1.294s.856.6 1.545.553c.447-.024.613-.365.6-.6-.063-.989-1.826-.93-1.94-2.553-.103-1.365.868-2.741 3.014-2.87.83-.048 1.251.14 1.251.14l-.485 1.694s-.55-.235-1.2-.188c-.946.06-.959.612-.946.753Zm3.04-4.753c0-.353-.051-.859-.23-1.282.587.106.868.706.996 1.07-.23.06-.485.13-.766.212ZM9.986 14.588l4.01-.917S12.274 2.929 12.26 2.859a.145.145 0 0 0-.14-.118c-.065 0-1.189-.023-1.189-.023s-.69-.612-.945-.847v12.717Z"/>
+      </g>
+      <defs>
+        <clipPath id="a">
+          <path d="M0 0h57v15H0z"/>
+        </clipPath>
+      </defs>
+    </svg>
+  {% when 'gift-card-horizontal' %}
+    {%- comment -%}
+      We wanted something custom and way nicer than the default gift card placeholder :p
+    {%- endcomment -%}
+    <svg width='350' height='234' viewBox='0 0 350 234'>
+      <g clip-path="url(#a)">
+        <rect width="350" height="233.2" style="fill:rgb(var(--color-foreground))"/>
+        <circle opacity=".6" cx="318.5" cy="137.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="230.5" cy="51.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle opacity=".6" cx="101.5" cy="128.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="71.5" cy="55.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="18.5" cy="154.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="49.5" cy="232.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle opacity=".6" cx="212.5" cy="198.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="323.5" cy="65.5" r="3.3" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="m283.6 82.4 4 4.7 5.6-2.7 4.1 4.8 3.7-1.7 2.5 5.4-7.7 3.6-4.1-4.7-5.7 2.6-4-4.7-3.8 1.7-2.4-5.5 7.8-3.5ZM153.8 200.8l5.8 1.8 3.3-5.3 6 1.7 2.2-3.4 5 3.2-4.5 7.2-6-1.7-3.3 5.3-6-1.7-2.1 3.4-5-3.2 4.6-7.3ZM39.1 100l2.8 5.5 6.1-1.2 3 5.5 3.8-.8 1.2 5.9-8.3 1.7-3-5.6-6 1.3-2.9-5.5-4 .8-1.1-6L39 100ZM244.1.2l-.4 6.1 5.9 2-.4 6.3L253 16l-2 5.7-8-2.8.3-6.3-5.9-2 .4-6.2L234 3l2-5.6 8.1 3Z" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))"/>
+        <path opacity=".6" fill-rule="evenodd" clip-rule="evenodd" d="m121.2 33.9-4.8 3.7 2.4 5.8-5 3.9 1.6 3.7-5.5 2.3-3.3-7.9 4.9-3.9-2.4-5.8L114 32l-1.5-3.8L118 26l3.2 8Z" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="m17.2 32.7-5.8-2-3.6 5-5.9-2L-.4 37l-4.9-3.5 4.9-7 6 2.1L9 23.5l5.9 2 2.4-3.3 4.8 3.6-5 7Z" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))"/>
+        <path opacity=".6" fill-rule="evenodd" clip-rule="evenodd" d="m58.5 184.3-2.7 5.5 4.7 4.2-2.7 5.6 3 2.7-4 4.5-6.4-5.7 2.7-5.7-4.7-4.1 2.8-5.6-3-2.7 4-4.5 6.3 5.8Z" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="m348.8 32.2 3.8 4.8 5.7-2.4 4 4.9 3.6-1.6 2.3 5.6-7.8 3.2-4-4.8-5.7 2.4-3.8-4.9-3.8 1.5-2.3-5.6 8-3.1Z" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="m293.3 194.7 6.2.2 1.8-6h6.2l1.2-3.8 5.7 1.8-2.5 8.1h-6.2l-1.8 6-6.2-.2-1.2 4-5.8-1.9 2.6-8.2Z" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))"/>
+        <path opacity=".6" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" d="m-4 85.1 43.3-12 1.7 5.7-43.4 12z"/>
+        <path style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" d="m69.8 146 40 20.6-2.7 5.3-40-20.6zM-19 232.6 13 201l4.2 4.2-32 31.7zm186-206L199-5l4.2 4.2-32 31.7z"/>
+        <path opacity=".6" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" d="m280 53 16.3-42 5.6 2.2-16.3 42z"/>
+        <path style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" d="m248.9 126 26.3 36.5-4.8 3.5-26.4-36.5zM110 224.5l35 28.4-3.8 4.7-35-28.4zm-59.1-246 16.5 41.9-5.6 2.2-16.5-41.9z"/>
+        <path opacity=".6" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" d="m251.2 210.4 2.7 45-6 .3-2.7-45z"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M174.8 85.3a42 42 0 0 1 6.3-9 8 8 0 0 1 10.4 12.2c-.8.7-2.3 1.2-4.1 1.5H215v23h-3v43h-74v-43h-3V90h27.3a9.4 9.4 0 0 1-4.1-1.5 8 8 0 1 1 10.4-12.1 42 42 0 0 1 6.2 9Zm-6.8-3.1 2.7 4.4a89.6 89.6 0 0 1-7.4-.6 14.1 14.1 0 0 1-2.5-.7 3.8 3.8 0 0 1 5-5.8c.5.4 1.2 1.2 2.2 2.7Zm11 4.4a71.6 71.6 0 0 1 4.8-7 3.8 3.8 0 0 1 5 5.7l-.4.2-2 .5a50.1 50.1 0 0 1-7.5.6Zm32 7.4h-30v15h30V94Zm-3 19h-27v39h27v-39Zm-39 39v-39h-27v39h27Zm-30-43h30V94h-30v15Z" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))"/>
+      </g>
+      <defs>
+        <clipPath id="a">
+          <path style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" d="M0 0h350v233.2H0z"/>
+        </clipPath>
+      </defs>
+    </svg>
+  {% when 'gift-card-vertical' %}
+    <svg width='234' height='351' viewBox='0 0 234 351'>
+      <g clip-path="url(#a)">
+        <rect x="233.6" y=".6" width="350" height="233.2" transform="rotate(90 233.6 .6)" style="fill:rgb(var(--color-foreground))"/>
+        <circle opacity=".4" cx="96.1" cy="319.1" r="3.3" transform="rotate(90 96.1 319.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="182.1" cy="231.1" r="3.3" transform="rotate(90 182.1 231.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle opacity=".4" cx="105.1" cy="102.1" r="3.3" transform="rotate(90 105.1 102.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="178.1" cy="72.1" r="3.3" transform="rotate(90 178.1 72.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="79.1" cy="19.1" r="3.3" transform="rotate(90 79.1 19.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="1.1" cy="50.1" r="3.3" transform="rotate(90 1.1 50.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle opacity=".4" cx="35.1" cy="213.1" r="3.3" transform="rotate(90 35.1 213.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <circle cx="168.1" cy="324.1" r="3.3" transform="rotate(90 168.1 324.1)" style="fill:rgb(var(--color-background));stroke:rgb(var(--color-background))" stroke-width="2.5"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="m151.2 284.2-4.7 4 2.7 5.6-4.7 4.1 1.6 3.7-5.4 2.5-3.6-7.7 4.7-4.1-2.6-5.7 4.7-4-1.7-3.8 5.5-2.4 3.5 7.8ZM32.8 154.3l-1.8 6 5.3 3.2-1.7 6 3.4 2.1-3.2 5.1-7.2-4.5 1.7-6L24 163l1.7-6-3.4-2.1 3.2-5 7.3 4.5ZM133.6 39.7l-5.5 2.8 1.2 6.1-5.5 3 .8 3.8-5.9 1.2-1.7-8.3 5.6-3-1.3-6 5.5-2.9-.8-4 6-1.1 1.6 8.4ZM233.4 244.7l-6.1-.4-2 5.9-6.3-.4-1.3 3.8-5.7-2 2.8-8 6.3.3 2-5.9 6.2.4 1.4-3.8 5.6 2-3 8.1Z" style="fill:rgb(var(--color-background))"/>
+        <path opacity=".4" fill-rule="evenodd" clip-rule="evenodd" d="M199.7 121.8 196 117l-5.8 2.4-3.9-5-3.7 1.6-2.3-5.5 7.9-3.3 3.9 4.9 5.8-2.4 3.8 4.9 3.8-1.5 2.2 5.5-8 3.2Z" style="fill:rgb(var(--color-background))"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="m200.9 17.8 2-5.8-5-3.6 2-5.9-3.3-2.3 3.5-4.9 7 4.9-2.1 6 5.1 3.5-2 5.9 3.3 2.4-3.6 4.8-7-5Z" style="fill:rgb(var(--color-background))"/>
+        <path opacity=".4" fill-rule="evenodd" clip-rule="evenodd" d="m49.3 59.1-5.5-2.7-4.2 4.7-5.6-2.7-2.7 3-4.5-4 5.7-6.4 5.6 2.7 4.2-4.7 5.6 2.8 2.7-3 4.5 4-5.8 6.3Z" style="fill:rgb(var(--color-background))"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="m201.4 349.4-4.8 3.8 2.4 5.7-4.9 4 1.6 3.6-5.6 2.3-3.2-7.8 4.8-4-2.4-5.7 4.9-3.8-1.5-3.8 5.6-2.3 3.1 8Z" style="fill:rgb(var(--color-background))"/>
+        <path opacity=".4" fill-rule="evenodd" clip-rule="evenodd" d="m38.9 294-.2 6 6 1.9v6.2l3.8 1.2-1.8 5.7-8.1-2.5v-6.2l-6-1.8.2-6.2-4-1.2 1.9-5.8 8.2 2.6Z" style="fill:rgb(var(--color-background))"/>
+        <path opacity=".4" style="fill:rgb(var(--color-background))" d="m148.5-3.3 12 43.3-5.7 1.6-12.1-43.3z"/>
+        <path style="fill:rgb(var(--color-background))" d="m87.7 70.4-20.6 40-5.3-2.7 20.5-40zM1-18.4l31.6 32-4.2 4.2-31.7-32zM207 167.6l31.6 32-4.2 4.2-31.7-32z"/>
+        <path opacity=".4" style="fill:rgb(var(--color-background))" d="m180.6 280.6 42 16.2-2.2 5.6-42-16.2z"/>
+        <path style="fill:rgb(var(--color-background))" d="M107.6 249.4 71 275.8l-3.5-4.9 36.5-26.3zM9.2 110.7l-28.4 34.8-4.7-3.8L4.5 107zM255 51.4 213.3 68l-2.2-5.6L253 45.8z"/>
+        <path opacity=".4" style="fill:rgb(var(--color-background))" d="m23.3 251.8-45 2.7-.3-6 45-2.7z"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M116.8 145.9a42 42 0 0 1 6.3-9 8 8 0 1 1 10.4 12.2c-.8.6-2.3 1.1-4.1 1.5H157v23h-3v43H80v-43h-3v-23h27.3a9.4 9.4 0 0 1-4.1-1.5 8 8 0 1 1 10.4-12.2 42 42 0 0 1 6.2 9Zm-6.8-3.2 2.7 4.4a93.7 93.7 0 0 1-7.4-.6 14 14 0 0 1-2.5-.7 3.8 3.8 0 0 1 5-5.7c.5.3 1.2 1.2 2.2 2.6Zm11 4.4a71.4 71.4 0 0 1 4.8-7 3.8 3.8 0 0 1 5 5.7l-.4.2-2 .5a50 50 0 0 1-7.5.6Zm32 7.5h-30v15h30v-15Zm-3 19h-27v39h27v-39Zm-39 39v-39H84v39h27Zm-30-43h30v-15H81v15Z" style="fill:rgb(var(--color-background))"/>
+      </g>
+      <defs>
+        <clipPath id="a">
+          <path style="fill:rgb(var(--color-background));" transform="rotate(90 116.5 117.1)" d="M0 0h350v233.2H0z"/>
+        </clipPath>
+      </defs>
+    </svg>
+{% endcase %}
+
+{% comment %}
+   {% when 'sample' %}
+  {% case settings.styles_icons_thickness %}
+    {% when 'light' %}
+      {% if settings.styles_icons_edges == 'square' %}
+      {% else %}
+      {% endif %}
+    {% when 'regular' %}
+      {% if settings.styles_icons_edges == 'square' %}
+      {% else %}
+      {% endif %}
+    {% when 'bold' %}
+      {% if settings.styles_icons_edges == 'square' %}
+      {% else %}
+      {% endif %}
+  {% endcase %}
+{% endcomment %}

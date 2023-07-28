@@ -1,0 +1,6 @@
+{%- if template.name == 'cart' -%}Subtotal&nbsp;{%- endif -%}
+{%- if settings.currency_show_codes -%}
+  {{- cart.total_price | money_with_currency -}}
+{%- else -%}
+  {{- cart.total_price | money -}}
+{%- endif %}

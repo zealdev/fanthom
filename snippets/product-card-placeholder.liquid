@@ -1,0 +1,94 @@
+<loess-product-card class='card'>
+  <a
+    href='#'
+    class='card__image-wrapper {% if settings.product_card_enable_image_lift %}card__image-wrapper--lift-on-hover{% endif %}'
+    aria-label='{{ 'sections.image_hotspots.product_details' | t: title: 'Product title' }}'
+  >
+    <div
+      class='card__image card__image--{{ section.settings.image_container_ratio }} {% if section.settings.fit_image_to_container %}{% endif %} {% if settings.product_card_enable_image_zoom %}card__image--zoom-on-hover{% endif %} {% if section.settings.fit_image_to_container %}card__image--alternate-hover{% endif %} {% if settings.product_card_show_soft_background %}card__image--background{% endif %} border-radius image-cover'
+      {% if section.settings.image_container_ratio == 'auto' %}
+        style='--aspect-ratio: {{ 1 | divided_by: 1 | times: 100 }}%;'
+      {% endif %}
+    >
+      {{ placeholder_image | placeholder_svg_tag }}
+    </div>
+  </a>
+
+  <div class='card__metadata {% if settings.product_card_center_metadata %}card__metadata--centered{% endif %}'>
+    {%- if settings.product_show_vendor -%}
+      <span class='small-text'>{{ 'products.product.vendor' | t }}</span>
+    {%- endif -%}
+
+    <a href='#' class='card__title caption'>{{ 'products.product.placeholder_title' | t }}</a>
+
+    {% render 'product-price', product: product %}
+
+    {%- if settings.product_card_show_product_rating -%}
+      <span
+        class='card__reviews stars {% if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false %}stars--color-default{% else %}color-accent{% endif %}'
+        style='--star-rating: 5.0'
+      ></span>
+    {%- endif -%}
+
+    {%- if settings.product_card_color_swatch_type != 'disabled' -%}
+      {%- assign color_swatch_count = 0 -%}
+      {%- assign difference_count = 0 -%}
+
+      {%- if settings.product_card_color_swatch_type == 'count' -%}
+        <span class='card-swatches card-swatches--count small-caption'>
+          {{ 'product_cards.colors_available_count' | t: count: 4 }}
+        </span>
+      {%- elsif settings.product_card_color_swatch_type == 'swatch' -%}
+        <ul class='card-swatches' role='list'>
+          {%- for i in (1..3) -%}
+            {%- capture swatch_color -%}
+              {%- cycle settings.colors_default_background, settings.colors_accent_1, settings.colors_accent_2 -%}
+            {%- endcapture -%}
+
+            <li>
+              <button
+                class='card-swatches__button {% if forloop.first == true %}card-swatches__button--active{% endif %}'
+                style='--swatch-color: {{ swatch_color }}'
+              >
+                <span class='sr-only'>{{ 'products.product.color_swatch' | t }}</span>
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <ul class='card-swatches' role='list'>
+          {%- for i in (1..5) -%}
+            {%- capture swatch_color -%}
+              {%- cycle
+                settings.colors_default_background,
+                settings.colors_accent_1,
+                settings.colors_accent_2,
+                settings.colors_accent_3
+              -%}
+            {%- endcapture -%}
+            {%- assign color_swatch_count = color_swatch_count | plus: 1 -%}
+
+            {%- if forloop.index <= 4 -%}
+              <li>
+                <button
+                  class='card-swatches__button {% if forloop.first == true %}card-swatches__button--active{% endif %}'
+                  style='--swatch-color: {{ swatch_color }}'
+                >
+                  <span class='sr-only'>
+                    {{- 'products.product.color_swatch' | t }}: {{ variant.metafields.custom.color_swatch.value -}}
+                  </span>
+                </button>
+
+                {%- assign difference_count = difference_count | plus: 1 -%}
+              </li>
+            {%- elsif forloop.last == true -%}
+              <li>
+                <span class='small-text'> + {{ color_swatch_count | minus: difference_count }} </span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</loess-product-card>

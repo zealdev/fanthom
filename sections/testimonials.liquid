@@ -1,0 +1,483 @@
+{%- liquid
+  assign columns_large = section.settings.columns_large | times: 1
+
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: 1;
+    --columns-tablet: 1;
+    --columns-large: {{ columns_large }};
+    --text-y-axis: start;
+    --text-x-axis: {% if section.settings.center_body_text %}center{% else %}start{% endif %};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="{% unless border %}block{% endunless %} {% if section.settings.soft_background != 'section' %}section {% if section.settings.custom_colors %}color-custom color-gradient{% else %}color color-{{ section.settings.color_scheme }} color-gradient{% endif %}{% else %}color-soft-background{% endif %} {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container">
+    {%- if section.settings.title != blank or section.settings.subheading != blank -%}
+      <header class="section-heading {% if section.settings.center_heading_text %}section-heading--centered{% endif %}">
+        {%- if section.settings.title != blank -%}
+          <h2 class="section-heading__heading">
+            {{ section.settings.title | escape }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <div class="section-heading__subheading">
+            <p class="large-subtext">
+              {{ section.settings.subheading | escape }}
+            </p>
+          </div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <loess-scroller {% if section.settings.slider_mobile and section.blocks.size > 1 %}columns-mobile="1" columns-tablet="1"{% endif %} {% if section.settings.slider_large and section.blocks.size > columns_large %}columns-large="{{ columns_large }}"{% endif %}>
+      <ul class="columns scroller {% if section.settings.slider_mobile %}scroller-mobile scroller-tablet{% endif %} {% if section.settings.slider_large %}scroller-large{% endif %} hide-scrollbar" role="list">
+        {%- for block in section.blocks -%}
+          <li class="column-wrapper {% unless border %}block{% endunless %} {% if section.settings.soft_background == 'column' %}column-wrapper--soft-background{% elsif section.settings.soft_background == 'section' %}block color-gradient color-gradient--fixed {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %}{% endif %}" {{ block.shopify_attributes }}>
+            <div class="column testimonial {% if columns_large == 1 %}testimonial--large-contained{% endif %}">
+              <div class="rich-text">
+                {%- if block.settings.icon != 'none' -%}
+                  {%- if block.settings.icon contains 'star' -%}
+                    {%- assign block_rating = block.settings.icon | split: '-' | first -%}
+                    <span class="testimonial__stars stars color-accent" style="--star-rating: {{ block_rating }}" aria-label="{{ 'general.rating' | t: rating: block_rating }}"></span>
+                  {%- else -%}
+                    <span class="testimonial__quote-icon h0 color-accent" aria-hidden="true">“</span>
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if block.settings.title != blank -%}
+                  <h3 class="testimonial-heading {% if columns_large == 1 %}h1{% else %}large-body-text{% endif %}">
+                    {{ block.settings.title | escape }}
+                  </h3>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <div class="rte">
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.author_image != blank or block.settings.author_name != blank or block.settings.date != blank or block.settings.logo != blank -%}
+                <div class="testimonial-footer {% if columns_large == 1 %}testimonial-footer--large-contained{% endif %}">
+                  {%- if block.settings.author_image != blank or block.settings.author_name != blank or block.settings.date != blank -%}
+                    <div class="testimonial-author">
+                      {%- if block.settings.author_image != blank -%}
+                        {{ block.settings.author_image | image_url: width: 80 | image_tag: alt: block.settings.author_image.alt, class: 'testimonial__image', loading: 'lazy' }}
+                      {%- endif -%}
+
+                      <div class="testimonial-author-info {% if block.settings.author_image == blank and section.settings.center_body_text %}testimonial-author-info--centered{% endif %}">
+                        {%- if block.settings.author_name != blank -%}
+                          <span class="caption">
+                            {{ block.settings.author_name | escape }}
+                          </span>
+                        {%- endif -%}
+
+                        {%- if block.settings.date != blank -%}
+                          <span class="testmonial-author-info__date small-caption">
+                            {{ block.settings.date | escape }}
+                          </span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.logo != blank -%}
+                    {%- assign logo_width = block.settings.logo_width | times: 2 -%}
+                    {%- capture logo_max_width -%}
+                      max-width: {{ block.settings.logo_width | append: 'px' }}
+                    {%- endcapture -%}
+
+                    {{ block.settings.logo | image_url: width: logo_width | image_tag: alt: block.settings.logo.alt, class: 'testimonial__logo', loading: 'lazy', style: logo_max_width }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="scroller-bar {% if section.settings.slider_large == false and section.blocks.size <= columns_large %}hide-desktop{% endif %}">
+        <loess-scroller-dots class="scroller-dots slider-dots {% if section.settings.soft_background == 'section' %}scroller-dots--color-alternate{% endif %}" aria-hidden="true">
+          <ol role="list"></ol>
+          <template>
+            <li></li>
+          </template>
+        </loess-scroller-dots>
+
+        <loess-scroller-buttons class="scroller-buttons slider-buttons hide-mobile">
+          <button class="slider-buttons__previous button button--icon" aria-label="{{ 'general.slider.previous_slide' | t }}" disabled>
+            {% render 'icon' with 'arrow-minimal-previous' %}
+          </button>
+          <button class="slider-buttons__next button button--icon" aria-label="{{ 'general.slider.next_slide' | t }}">
+            {% render 'icon' with 'arrow-minimal-next' %}
+          </button>
+        </loess-scroller-buttons>
+      </div>
+    </loess-scroller>
+  </div>
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_large",
+      "label": "Enable slider on large screens",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_mobile",
+      "label": "Enable slider on mobile",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "columns_large",
+      "label": "Number of columns on large screens",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        }
+      ],
+      "default": "3",
+      "info": "Set to 1 column on mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading_text",
+      "label": "Center heading text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Testimonials"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_body_text",
+      "label": "Center testimonial text",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "soft_background",
+      "label": "Soft background",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "section",
+          "label": "Show as section background"
+        },
+        {
+          "value": "column",
+          "label": "Show as column background"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1",
+      "info": "It is recommended to choose a color scheme that provides good contrast with the logos. Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "quote",
+              "label": "Quote"
+            },
+            {
+              "value": "0.5-star",
+              "label": "0.5 star"
+            },
+            {
+              "value": "1-star",
+              "label": "1 star"
+            },
+            {
+              "value": "1.5-star",
+              "label": "1.5 stars"
+            },
+            {
+              "value": "2-star",
+              "label": "2 stars"
+            },
+            {
+              "value": "2.5-star",
+              "label": "2.5 stars"
+            },
+            {
+              "value": "3-star",
+              "label": "3 stars"
+            },
+            {
+              "value": "3.5-star",
+              "label": "3.5 stars"
+            },
+            {
+              "value": "4-star",
+              "label": "4 stars"
+            },
+            {
+              "value": "4.5-star",
+              "label": "4.5 stars"
+            },
+            {
+              "value": "5-star",
+              "label": "5 stars"
+            }
+          ],
+          "default": "quote"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Testimonial"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Author"
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author image"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author name"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date"
+        },
+        {
+          "type": "header",
+          "content": "Logo"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image"
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "label": "Logo width",
+          "unit": "px",
+          "min": 10,
+          "max": 300,
+          "step": 10,
+          "default": 100
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Testimonial 1"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Testimonial 2"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Testimonial 3"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,464 @@
+{%- liquid
+  assign columns_mobile = section.settings.columns_mobile | times: 1
+  assign columns_tablet = columns_mobile | plus: 1
+  assign columns_large = section.settings.columns_large | times: 1
+
+  assign active_filters_count = 0
+
+  for filter in search.filters
+    if filter.type == 'list'
+      assign active_filters_count = active_filters_count | plus: filter.active_values.size
+    elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value
+      assign active_filters_count = active_filters_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: {{ columns_mobile }};
+    --columns-tablet: {{ columns_tablet }};
+    --columns-large: {{ columns_large }};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<loess-product-filters section-id="{{ section.id }}" terms="{{ search.terms | escape }}" class="section-span-height-wrapper section {% unless section.settings.color_scheme == 'default' and section.settings.layout == 'fixed' and section.settings.custom_colors == false %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  <div class="container">
+    <div class="section-form vertical-spacer">
+      {%- if search.performed -%}
+        <h1 class="h2">{{ 'search.results' | t }}</h1>
+      {%- else -%}
+        <h1 class="h2">{{ 'search.search_store' | t }}</h1>
+      {%- endif -%}
+
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <div class="input-group">
+          <input
+            is="loess-input-field"
+            id="SearchTemplate"
+            type="search"
+            name="q"
+            class="input__field {% if search.performed %}input__field--has-input{% endif %} input__field--has-button"
+            value="{{ search.terms | escape }}"
+            required
+          >
+
+          <label for="SearchTemplate" class="input__label">
+            {{ 'search.search' | t }}
+          </label>
+
+          <button type="submit" class="button button--plain input__button" aria-label="{{ 'search.search' | t }}">
+            {% render 'icon' with 'search' %}
+          </button>
+        </div>
+      </form>
+
+      {%- if search.performed -%}
+        <p class="caption" role="status">
+          {%- if search.results_count > 0 -%}
+            {{ 'search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
+          {%- elsif search.results_count == 0 -%}
+            {{ 'search.no_results' | t: term: search.terms }}
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+    </div>
+
+    {%- if search.performed and search.results_count > 0 -%}
+      <div class="collection {% if section.settings.filtering and section.settings.collapsed_filtering == false %}collection--filters-large{% endif %}" id="FilterDrawers">
+        {%- if section.settings.filtering and search.filters != empty -%}
+          {% comment %}
+            Because the design is different, we have two separate drawers for mobile and large screens
+          {% endcomment %}
+          <loess-filters class="filters-mobile drawer block color color-default hide-tablet-and-up" id="FilterDrawerMobile" position="left">
+            {% render 'filters-mobile', filters: search.filters %}
+          </loess-filters>
+
+          <loess-filters class="collection-aside {% if section.settings.collapsed_filtering %}drawer{% endif %} hide-mobile" id="FilterDrawerLarge" {% if section.settings.collapsed_filtering == false %}sticky{% endif %} position="left">
+            {% render 'filters-large', filters: search.filters %}
+          </loess-filters>
+        {%- endif -%}
+
+        <div>
+          <div class="collection-bar {% if section.settings.filtering and search.filters != empty and active_filters_count > 0 %}collection-bar--active-filters{% endif %}">
+            <div>
+              {%- if section.settings.filtering and search.filters != empty and active_filters_count > 0 -%}
+                {% render 'active-filters', filters: search.filters %}
+              {%- endif -%}
+            </div>
+
+            <div class="collection-utility-bar {% unless section.settings.filtering or section.settings.sorting %}collection-utilit-bar--right-aligned{% endunless %} small-caption">
+              {%- if section.settings.filtering or section.settings.sorting -%}
+                <div class="collection-utility-bar__buttons">
+                  {%- if section.settings.filtering -%}
+                    <button is="loess-button" class="button button--plain button--icon button--icon-before hide-tablet-and-up" aria-expanded="false" aria-controls="FilterDrawerMobile">
+                      <span>
+                        {% render 'icon' with 'filter' %}
+                      </span>
+                      {{ 'sections.collection.filters' | t }}
+                    </button>
+
+                    <button is="loess-button" class="button button--plain button--icon button--icon-before {% if section.settings.collapsed_filtering == false %}hide-desktop{% endif %} hide-mobile" aria-expanded="false" aria-controls="FilterDrawerLarge">
+                      <span>
+                        {% render 'icon' with 'filter' %}
+                      </span>
+                      {{ 'sections.collection.filters' | t }}
+                    </button>
+                  {%- endif -%}
+                  {%- if section.settings.sorting -%}
+                    {%- assign search_sort_by = search.sort_by | default: search.default_sort_by -%}
+
+                    <div class="collection-utility-bar__sorting">
+                      <label for="SortBy">
+                        {% render 'icon' with 'sort' %}
+                        {{ 'sections.collection.sort_by' | t }}
+                      </label>
+                      <div class="input__select-wrapper">
+                        <select is="loess-sort-by" id="SortBy" class="input__select" name="sort_by">
+                          {%- for option in search.sort_options -%}
+                            <option value="{{ option.value | strip | escape }}" {% if option.value == search_sort_by %}selected="selected"{% endif %}>
+                              {{ option.name | strip | escape }}
+                            </option>
+                          {%- endfor -%}
+                        </select>
+                        <span>
+                          {% render 'icon' with 'caret' %}
+                        </span>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              <span id="FilterProductCount" class="collection-utility-bar__count">
+                <span class="collection-utility-bar__count-text">
+                  {{ 'sections.collection.total_products_count' | t: count: search.results_count }}
+                </span>
+                <svg class="spinner" viewBox="0 0 24 24">
+                  <circle class="spinner__value" cx="12" cy="12" r="10" />
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div id="FilterProductGrid">
+            {%- paginate search.results by section.settings.products_per_page -%}
+              <ul class="product-grid columns" role="list">
+                {%- for item in search.results -%}
+                  <li>
+                    {%- case item.object_type -%}
+                      {%- when 'product' -%}
+                        {% render 'product-card', product: item %}
+                      {%- when 'article' -%}
+                        {% render 'article-card', product: item %}
+                      {%- when 'page' -%}
+                        {% render 'page-card', product: item %}
+                    {%- endcase -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+              {% render 'pagination', paginate: paginate, async: true %}
+            {%- endpaginate -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</loess-product-filters>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Search",
+  "tag": "section",
+  "class": "shopify-section--span-height",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "columns_large",
+      "label": "Number of columns on large screens",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        },
+        {
+          "value": "5",
+          "label": "5 columns"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Number of columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 1,
+      "label": "Products per page",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Filtering and sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "filtering",
+      "label": "Enable filtering",
+      "default": true,
+      "info": "Customize [Filters](https://loess.ticksy.com/article/18636/)."
+    },
+    {
+      "type": "select",
+      "id": "sidebar_style_large",
+      "label": "Sidebar functionality on large screens",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Automatic formatting"
+        },
+        {
+          "value": "1st-open",
+          "label": "1st tab open by default"
+        },
+        {
+          "value": "collapsed",
+          "label": "All tabs collapsed by default"
+        },
+        {
+          "value": "non-collapsible",
+          "label": "Non-collapsible tabs"
+        }
+      ],
+      "default": "auto",
+      "info": "Automatic formatting optimizes the user experience based on the number of filters. [Learn more](https://loess.ticksy.com/article/18636/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "collapsed_filtering",
+      "label": "Collapsed filtering on large screens",
+      "default": false,
+      "info": "Defaults to collapsed on mobile and tablet devices"
+    },
+    {
+      "type": "checkbox",
+      "id": "sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "filter_color_type",
+      "label": "“Color” option type",
+      "options": [
+        {
+          "value": "checkbox",
+          "label": "Checkbox"
+        },
+        {
+          "value": "swatch",
+          "label": "Swatch"
+        }
+      ],
+      "default": "checkbox",
+      "info": "To display color swatches, [follow these guidelines](https://loess.ticksy.com/article/18636/)."
+    },
+    {
+      "type": "header",
+      "content": "Product cards"
+    },
+    {
+      "type": "select",
+      "id": "image_container_ratio",
+      "label": "Image container ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "checkbox",
+      "id": "fit_image_to_container",
+      "label": "Fit image to container",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "image_padding",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "%",
+      "label": "Image padding",
+      "default": 5,
+      "info": "Applicable when “Fit images to container” is enabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_second_image_on_hover",
+      "label": "Show second image on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ]
+}
+{% endschema %}

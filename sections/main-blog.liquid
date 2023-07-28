@@ -1,0 +1,407 @@
+{%- liquid
+  assign columns_tablet = 2
+  assign columns_large = section.settings.columns_large | times: 1
+
+  if section.settings.color_scheme == 'default'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: 1;
+    --columns-tablet: {{ columns_tablet }};
+    --columns-large: {{ columns_large }};
+    --text-x-axis: {% if section.settings.center_body_text %}center{% else %}start{% endif %};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- paginate blog.articles by 18 -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="{% unless border %}block{% endunless %} {% if section.settings.soft_background != 'section' %}section {% if section.settings.custom_colors %}color-custom color-gradient{% else %}color color-{{ section.settings.color_scheme }} color-gradient{% endif %}{% else %}color-soft-background{% endif %} {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container">
+    {%- if blog.articles != empty -%}
+      <header class="section-heading {% if section.settings.center_heading_text %}section-heading--centered{% endif %}">
+       
+
+        <span class="section-heading__link small-caption">
+          {%- assign from = paginate.current_offset | plus: 1 -%}
+          {%- assign to = paginate.current_offset | plus: paginate.page_size | at_most: paginate.items -%}
+          {{ 'blogs.showing_n_of_articles' | t: from: from, to: to, total: paginate.items }}
+        </span>
+      </header>
+
+      <ul class="blog-grid columns scroller" role="list">
+        {%- for article in blog.articles -%}
+          <li class="column-wrapper {% unless border %}block{% endunless %} {% if section.settings.soft_background == 'column' %}column-wrapper--soft-background{% elsif section.settings.soft_background == 'section' %}block color-gradient color-gradient--fixed {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %}{% endif %}">
+            {{ '' | link_to: article.url, class: 'column-link' }}
+
+            <div class="column blog-post">
+              <div class="rich-text">
+                {%- if section.settings.show_image and article.image != blank -%}
+                  <div class="text-column-image-wrapper {% if section.settings.center_body_text %}text-column-image-wrapper--centered{% endif %}" style="--image-width: {{ section.settings.image_width }}">
+                    <div class="text-column-image text-column-image--{{ section.settings.image_ratio }} {% if section.settings.image_ratio == 'circle' %}text-column-image--circle{% endif %} {% if section.settings.image_padding == false %}text-column-image--no-padding{% endif %} {% if section.settings.image_padding == false and section.settings.image_width != '1' %}text-column-image--margin-reset{% endif %}" {% if section.settings.image_ratio == 'auto' %}style="--aspect-ratio: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"{% endif %}>
+                      {{ article.image | image_url: width: 1380 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+                    </div>
+                  </div>
+                {%- endif -%}
+
+                {%- if article.title != blank -%}
+                  <h3 class="text-column-heading">
+                    {{ article.title | escape }}
+                  </h3>
+                {%- endif -%}
+
+                {%- if section.settings.show_excerpt and article.excerpt != blank -%}
+                  <div class="rte">
+                    {{ article.excerpt }}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.button_label != blank -%}
+                  <a href="{{ section.settings.button_link }}" class="text-column__button button button--plain button--icon color-accent tap">
+                    {{ block.settings.button_label | escape }}
+                    <span>
+                      {% render 'icon' with 'arrow-small' %}
+                    </span>
+                  </a>
+                {%- endif -%}
+              </div>
+
+              {%- if section.settings.show_author_name or section.settings.show_author_image or section.settings.show_date or section.settings.show_tags -%}
+                <div class="testimonial-footer">
+                  {%- if section.settings.show_author_name or section.settings.show_author_image or section.settings.show_date -%}
+                    <div class="testimonial-author">
+                      {%- if section.settings.show_author_image -%}
+                        {%- if article.user.image != blank -%}
+                          {{ article.user.image | image_url: width: 80 | image_tag: class: 'testimonial__image', loading: 'lazy' }}
+                        {%- else -%}
+                          <div class="testimonial__image">
+                            {% render 'icon' with 'avatar' %}
+                          </div>
+                        {%- endif -%}
+                      {%- endif -%}
+
+                      <div class="testimonial-author-info {% if section.settings.show_author_image == false and section.settings.center_body_text %}testimonial-author-info--centered{% endif %}">
+                        {%- if section.settings.show_author_name -%}
+                          <span class="caption">
+                            {{ article.author }}
+                          </span>
+                        {%- endif -%}
+
+                        {%- if section.settings.show_date -%}
+                          <span class="testimonial-author-info__date small-caption">
+                            {{ article.published_at | time_tag: format: 'date' }}
+                          </span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if section.settings.show_tags and article.tags.size > 0 -%}
+                    <ul class="article-tags" role="list">
+                      {%- for tag in article.tags -%}
+                        <li class="article-tags__tag">
+                          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="button button--small tap">
+                            {{ tag }}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if paginate.parts.size > 0 -%}
+        <div class="section-link-bottom">
+          {% render 'pagination', paginate: paginate %}
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="product-grid-empty">
+        There aren't any blog posts associated to this blog.
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Main blog",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Change images and excerpts by editing your blog posts. [Learn more](https://help.shopify.com/en/manual/online-store/blogs/writing-blogs)"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "columns_large",
+      "label": "Number of columns on large screens",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        }
+      ],
+      "default": "3",
+      "info": "Set to 1 column on mobile"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "select",
+      "id": "image_width",
+      "label": "Image width",
+      "options": [
+        {
+          "value": "1/3",
+          "label": "One-third of column"
+        },
+        {
+          "value": "1/2",
+          "label": "Half width of column"
+        },
+        {
+          "value": "1",
+          "label": "Full width of column"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_padding",
+      "label": "Enable image padding",
+      "default": false,
+      "info": "Only applicable when “Image width” is set to “Full width of column”."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading_text",
+      "label": "Center heading text",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "center_body_text",
+      "label": "Center blog post text",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author_image",
+      "label": "Show author image",
+      "default": true,
+      "info": "To add profile images, authors must edit their account in the users and permissions. [Learn more](https://loess.ticksy.com/article/18619/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author_name",
+      "label": "Show author name",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "soft_background",
+      "label": "Soft background",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "section",
+          "label": "Show as section background"
+        },
+        {
+          "value": "column",
+          "label": "Show as column background"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ]
+}
+{% endschema %}

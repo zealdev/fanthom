@@ -1,0 +1,773 @@
+<div class='section block {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}'>
+  <div class='vertical-spacer container container--capped'>
+    <div class='article-wrapper'>
+      <div class='article'>
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render block %}
+              </div>
+            {%- when 'author-date' -%}
+              {%- if block.settings.show_author_name or block.settings.show_author_image or block.settings.show_date -%}
+                <div class='testimonial-author' {{ block.shopify_attributes }}>
+                  {%- if block.settings.show_author_image -%}
+                    {%- if article.user.image != blank -%}
+                      {{
+                        article.user.image
+                        | image_url: width: 80
+                        | image_tag: class: 'testimonial__image', loading: 'lazy'
+                      }}
+                    {%- else -%}
+                      <div class='testimonial__image'>
+                        {% render 'icon' with 'avatar' %}
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  <div class='testimonial-author-info {% if block.settings.show_author_image == false and block.settings.center_body_text %}testimonial-author-info--centered{% endif %}'>
+                    {%- if block.settings.show_author_name -%}
+                      <span class='caption'>
+                        {{ article.author }}
+                      </span>
+                    {%- endif -%}
+
+                    {%- if block.settings.show_date -%}
+                      <span class='testimonial-author-info__date small-caption'>
+                        {{ article.published_at | time_tag: format: 'date' }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- when 'blog-post' -%}
+              <div
+                class='rte {% if block.settings.emphasize_first_letter %}article__blog-post-letter{% endif %}'
+                {{ block.shopify_attributes }}
+              >
+                {{ article.content }}
+              </div>
+            {%- when 'tags' -%}
+              {%- if article.tags.size > 0 -%}
+                <ul
+                  class='article-tags article-tags--no-spacing article-tags--no-margin'
+                  role='list'
+                  {{ block.shopify_attributes }}
+                >
+                  {%- for tag in article.tags -%}
+                    <li class='article-tags__tag'>
+                      <a href='{{ blog.url }}/tagged/{{ tag | handle }}' class='button button--small tap'>
+                        {{ tag }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            {%- when 'buttons' -%}
+              <div {{ block.shopify_attributes }}>
+                <div class='article-buttons'>
+                  {%- if block.settings.back_to_blog_label != blank -%}
+                    <a
+                      href='{{ blog.url }}'
+                      class='button button--icon-before {% if block.settings.back_to_blog_style %}button--secondary{% else %}button--primary{% endif %} tap'
+                    >
+                      <span>
+                        {% render 'icon' with 'arrow-small', reverse: true %}
+                      </span>
+                      {{ block.settings.back_to_blog_label | escape }}
+                    </a>
+                  {%- endif -%}
+
+                  {%- if block.settings.share_label != blank -%}
+                    <button
+                      is='loess-share-button'
+                      class='button button--icon-before button--{{ block.settings.share_style }} tap'
+                      aria-controls='ShowShareLink'
+                      aria-expanded='false'
+                    >
+                      <span>
+                        {% render 'icon' with 'share' %}
+                      </span>
+                      {{ block.settings.share_label | escape }}
+                    </button>
+
+                    {%- liquid
+                      assign share_url = shop.url | append: article.url
+                      assign twitter_text = article.title | url_param_escape
+                      assign pinterest_image = article.image | image_url: width: 800 | prepend: 'https:'
+                      assign pinterest_description = article.excerpt | strip_html | truncatewords: 15 | url_param_escape
+                    -%}
+
+                    <ul class='social-media' role='list'>
+                      <li>
+                        <a
+                          href='https://www.facebook.com/sharer.php?u={{ share_url }}'
+                          class='social-media__link tap'
+                          target='_blank'
+                          rel='noopener'
+                          aria-label='{{ 'social.share_on_facebook' | t }}'
+                        >
+                          {%- render 'icon' with 'facebook' -%}
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href='https://pinterest.com/pin/create/button/?url={{ share_url }}{% if pinterest_image != blank %}&media={{ pinterest_image }}{% endif %}&description={{ pinterest_description }}'
+                          class='social-media__link tap'
+                          target='_blank'
+                          rel='noopener'
+                          aria-label='{{ 'social.pin_on_pinterest' | t }}'
+                        >
+                          {%- render 'icon' with 'pinterest' -%}
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href='https://twitter.com/share?{% if twitter_text != blank %}text={{ twitter_text }}&{% endif %}url={{ share_url }}'
+                          class='social-media__link tap'
+                          target='_blank'
+                          rel='noopener'
+                          aria-label='{{ 'social.tweet_on_twitter' | t }}'
+                        >
+                          {%- render 'icon' with 'twitter' -%}
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href='mailto:?&subject={{ article.title | escape }}&body={{ share_url }}'
+                          class='social-media__link tap'
+                          aria-label='{{ 'social.share_by_email' | t }}'
+                        >
+                          {%- render 'icon' with 'share-email' -%}
+                        </a>
+                      </li>
+                    </ul>
+                  {%- endif -%}
+                </div>
+
+                {%- if block.settings.share_label != blank -%}
+                  <loess-collapsible-panel id='ShowShareLink' class='collapsible-panel'>
+                    <div class='input-group'>
+                      <input
+                        is='loess-input-field'
+                        id='ShareLinkInput'
+                        type='text'
+                        class='input__field input__field--has-input input__field--has-button'
+                        value='{{ article.url | prepend: request.origin }}'
+                        onclick='this.select()'
+                        readonly
+                      >
+
+                      <label for='ShareLinkInput' class='input__label'> Link </label>
+
+                      <button
+                        class='button button--plain input__button'
+                        aria-label='{{ 'products.product.share.copy_to_clipboard' | t }}'
+                      >
+                        {% render 'icon' with 'clipboard' %}
+                      </button>
+                    </div>
+                  </loess-collapsible-panel>
+                {%- endif -%}
+              </div>
+            {%- when 'comments' -%}
+              {%- if blog.comments_enabled? -%}
+                <div class='article-comments' {{ block.shopify_attributes }}>
+                  {%- if article.comments_count > 0 -%}
+                    {%- assign anchor_id = '#ArticleComments-' | append: article.id -%}
+
+                    <div id='ArticleComments-{{ article.id }}' class='article-comments-list-wrapper'>
+                      <div class='large-body-text'>
+                        {{ 'blogs.article.comments' | t: count: article.comments_count }}
+                      </div>
+
+                      {% paginate article.comments by 12 %}
+                        <div class='article-comments-list'>
+                          {%- if comment.status == 'pending' and comment.content -%}
+                            <article class='article-comment'>
+                              <div class='testimonial-author'>
+                                {%- if block.settings.show_author_image -%}
+                                  {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+                                  <img
+                                    src='//www.gravatar.com/avatar/{{ comment.email | md5 }}?s=100'
+                                    class='testimonial__image'
+                                    width='80'
+                                    height='80'
+                                    src=''
+                                    alt='{{ comment.author }}'
+                                    loading='lazy'
+                                  >
+                                  {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+                                {%- endif -%}
+
+                                <div class='testimonial-author-info {% if block.settings.show_author_image == false and block.settings.center_body_text %}testimonial-author-info--centered{% endif %}'>
+                                  <span class='caption'>
+                                    {{ comment.author }}
+                                  </span>
+
+                                  <span class='testimonial-author-info__date small-caption'>
+                                    {{ comment.created_at | time_tag: format: 'date' }}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div class='caption'>
+                                {{ comment.content }}
+                              </div>
+                            </article>
+                          {%- endif -%}
+
+                          {% for comment in article.comments %}
+                            <article class='article-comment'>
+                              <div class='testimonial-author'>
+                                {%- if block.settings.show_author_image -%}
+                                  {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+                                  <img
+                                    src='//www.gravatar.com/avatar/{{ comment.email | md5 }}?s=100'
+                                    class='testimonial__image'
+                                    width='80'
+                                    height='80'
+                                    src=''
+                                    alt='{{ comment.author }}'
+                                    loading='lazy'
+                                  >
+                                  {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+                                {%- endif -%}
+
+                                <div class='testimonial-author-info {% if block.settings.show_author_image == false and block.settings.center_body_text %}testimonial-author-info--centered{% endif %}'>
+                                  <span class='caption'>
+                                    {{ comment.author }}
+                                  </span>
+
+                                  <span class='testimonial-author-info__date small-caption'>
+                                    {{ comment.created_at | time_tag: format: 'date' }}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div class='caption'>
+                                {{ comment.content }}
+                              </div>
+                            </article>
+                          {% endfor %}
+                        </div>
+
+                        {%- if paginate.parts.size > 0 -%}
+                          <div class='article-comments-pagination'>
+                            {% render 'pagination', paginate: paginate, hash: anchor_id %}
+                          </div>
+                        {%- endif -%}
+                      {% endpaginate %}
+                    </div>
+                  {%- endif -%}
+
+                  {%- form 'new_comment', article, class: 'article-comment-form-wrapper' -%}
+                    {%- liquid
+                      assign post_message = 'blogs.article.success'
+
+                      if blog.moderated? and comment.status == 'unapproved'
+                        assign post_message = 'blogs.article.success_moderated'
+                      endif
+                    -%}
+
+                    <div class='article-comments-form__title large-body-text'>
+                      {{ 'blogs.article.comment_placeholder' | t }}
+                      <button
+                        is='loess-button'
+                        type='button'
+                        class='article-comments-form__button button button--icon large-body-text tap'
+                        aria-expanded='{% if form.errors or form.posted_successfully? %}true{% else %}false{% endif %}'
+                        aria-controls='ArticleForm-{{ article.id }}'
+                      >
+                        {% render 'icon' with 'collapse' %}
+                        {% render 'icon' with 'expand' %}
+                      </button>
+                    </div>
+
+                    <loess-collapsible-panel
+                      id='ArticleForm-{{ article.id }}'
+                      class='collapsible-panel'
+                      {% if form.errors or form.posted_successfully? %}
+                        open
+                      {% endif %}
+                    >
+                      {%- if form.errors -%}
+                        <div role='alert'>
+                          <small
+                            class='form-message small-text'
+                            id='ArticleCommentForm-error--{{ article.id }}'
+                            tabindex='-1'
+                            autofocus
+                          >
+                            {% render 'icon' with 'red-exclamation' %}
+                            <span>{{ 'blogs.article.error' | t }}</span>
+                          </small>
+                        </div>
+                      {%- elsif form.posted_successfully? -%}
+                        <h3
+                          class='form-message small-text'
+                          id='ArticleCommentForm-success--{{ article.id }}'
+                          tabindex='-1'
+                          autofocus
+                        >
+                          {% render 'icon' with 'green-check' %}
+                          <span>{{ post_message | t }}</span>
+                        </h3>
+                      {%- endif -%}
+
+                      <div class='article-comment-form'>
+                        <div class='article-comment-form-top'>
+                          <div class='input-group'>
+                            <input
+                              is='loess-input-field'
+                              id='CommentForm-author'
+                              type='text'
+                              name='comment[author]'
+                              class='input__field'
+                              value='{{ form.author }}'
+                              aria-required='true'
+                              autocomplete='name'
+                              {% if form.errors contains 'author' %}
+                                aria-invalid='true'
+                                aria-describedby='CommentForm-author-error'
+                              {% endif %}
+                              required
+                            >
+                            <label class='input__label' for='CommentForm-author'>
+                              {{ 'blogs.article.name' | t -}}
+                              <span aria-hidden='true'>*</span>
+                            </label>
+
+                            {%- if form.errors contains 'author' -%}
+                              <small id='CommentForm-author-error' class='sr-only'>
+                                {{ 'blogs.article.name' | t }}
+                                {{ form.errors.messages.author }}
+                              </small>
+                            {%- endif -%}
+                          </div>
+
+                          <div class='input-group'>
+                            <input
+                              is='loess-input-field'
+                              id='CommentForm-email'
+                              type='email'
+                              name='comment[email]'
+                              class='input__field'
+                              value='{{ form.email }}'
+                              aria-required='true'
+                              autocomplete='email'
+                              autocorrect='off'
+                              autocapitalize='off'
+                              {% if form.errors contains 'email' %}
+                                aria-invalid='true'
+                                aria-describedby='CommentForm-email-error'
+                              {% endif %}
+                              required
+                            >
+                            <label class='input__label' for='CommentForm-email'>
+                              {{ 'blogs.article.email' | t -}}
+                              <span aria-hidden='true'>*</span>
+                            </label>
+
+                            {%- if form.errors contains 'email' -%}
+                              <small id='CommentForm-email-error' class='sr-only'>
+                                {{ 'blogs.article.email' | t }}
+                                {{ form.errors.messages.email }}
+                              </small>
+                            {%- endif -%}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div class='input-group'>
+                            <textarea
+                              class='input__field input__textarea'
+                              name='comment[body]'
+                              id='CommentForm-body'
+                              placeholder='{{ 'blogs.article.comment_placeholder' | t }}*'
+                              aria-required='true'
+                              {% if form.errors contains 'body' %}
+                                aria-invalid='true'
+                                aria-describedby='CommentForm-body-error'
+                              {% endif %}
+                              required
+                            ></textarea>
+
+                            <label class='sr-only' for='CommentForm-body'>
+                              {{ 'blogs.article.comment' | t }}
+                            </label>
+
+                            {%- if form.errors contains 'body' -%}
+                              <small id='CommentForm-body-error' class='sr-only'>
+                                {{ 'blogs.article.comment' | t }}
+                                {{ form.errors.messages.body }}
+                              </small>
+                            {%- endif -%}
+                          </div>
+
+                          {%- assign form_subtext = '' -%}
+
+                          {%- if blog.moderated? -%}
+                            {%- assign form_subtext = 'All comments are moderated before being published. ' -%}
+                          {%- endif -%}
+
+                          {%- if block.settings.text_below_form -%}
+                            {%- assign form_subtext = form_subtext | append: block.settings.text_below_form -%}
+                          {%- endif -%}
+
+                          <div class='article-comment-form__subtext input__subtext small-caption rte'>
+                            {{ form_subtext }}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='article-comment-form__button'>
+                        <button type='submit' class='button button--primary'>{{ 'forms.submit' | t }}</button>
+                      </div>
+                    </loess-collapsible-panel>
+                  {%- endform -%}
+                </div>
+              {%- endif -%}
+            {%- when 'previous-next-articles' -%}
+              {%- if blog.previous_article or blog.next_article -%}
+                <div
+                  class='article-previous-next-links {% if blog.previous_article and blog.next_article %}article-previous-next-links--split{% endif %}'
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if blog.next_article -%}
+                    <div>
+                      <h3>{{ 'blogs.article.previous_article' | t }}</h3>
+                      <a href='{{ blog.next_article.url }}' class='article-previous-next'>
+                        {%- if blog.next_article.image != blank -%}
+                          {{
+                            blog.next_article.image
+                            | image_url: width: 180
+                            | image_tag: alt: blog.next_article.image.alt, class: 'border-radius', loading: 'lazy'
+                          }}
+                        {%- endif -%}
+
+                        <div>
+                          {%- if blog.next_article.title != blank -%}
+                            <span class='caption'>
+                              {{ blog.next_article.title | escape }}
+                            </span>
+                          {%- endif -%}
+
+                          <span class='small-caption'>
+                            {{ blog.next_article.published_at | time_tag: format: 'date' }}
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if blog.previous_article -%}
+                    <div>
+                      <h3>{{ 'blogs.article.next_article' | t }}</h3>
+                      <a href='{{ blog.previous_article.url }}' class='article-previous-next'>
+                        {%- if blog.previous_article.image != blank -%}
+                          {{
+                            blog.previous_article.image
+                            | image_url: width: 180
+                            | image_tag: alt: blog.previous_article.image.alt, class: 'border-radius', loading: 'lazy'
+                          }}
+                        {%- endif -%}
+
+                        <div>
+                          {%- if blog.previous_article.title != blank -%}
+                            <span class='caption'>
+                              {{ blog.previous_article.title | escape }}
+                            </span>
+                          {%- endif -%}
+
+                          <span class='small-caption'>
+                            {{ blog.previous_article.published_at | time_tag: format: 'date' }}
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='application/ld+json'>
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "articleBody": {{ article.content | strip_html | json }},
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ request.origin | append: page.url | json }}
+    },
+    "headline": {{ article.title | json }},
+    {% if article.excerpt != blank %}
+      "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+    {% if article.image %}
+      "image": [
+        {{ article | image_url: width: article.image.width | prepend: "https:" | json }}
+      ],
+    {% endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "author": {
+      "@type": "Person",
+      "name": {{ article.author | json }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      {% if settings.share_image %}
+        "logo": {
+          "@type": "ImageObject",
+          "height": {{ settings.share_image.height | json }},
+          "url": {{ settings.share_image | image_url: width: settings.share_image.width | prepend: "https:" | json }},
+          "width": {{ settings.share_image.width | json }}
+        },
+      {% endif %}
+      "name": {{ shop.name | json }}
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Main blog post",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Change images and excerpts by editing your blog posts. [Learn more](https://help.shopify.com/en/manual/online-store/blogs/writing-blogs)"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "author-date",
+      "name": "Author and date",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_author_image",
+          "label": "Show author image",
+          "default": true,
+          "info": "To add profile images, authors must edit their account in the users and permissions. [Learn more](https://loess.ticksy.com/article/18619/)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_author_name",
+          "label": "Show author name",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_date",
+          "label": "Show date",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "blog-post",
+      "name": "Blog post",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "emphasize_first_letter",
+          "label": "Emphasize first letter",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "tags",
+      "name": "Tags",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "back_to_blog_label",
+          "label": "“Back to blog” button label",
+          "default": "Back to blog",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "checkbox",
+          "id": "back_to_blog_style",
+          "label": "Use outline style",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "share_label",
+          "label": "“Share” button label",
+          "default": "Share",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "select",
+          "id": "share_style",
+          "label": "“Share” button style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Solid"
+            },
+            {
+              "value": "secondary",
+              "label": "Outline"
+            },
+            {
+              "value": "subdued",
+              "label": "Subdued"
+            }
+          ],
+          "default": "secondary"
+        }
+      ]
+    },
+    {
+      "type": "comments",
+      "name": "Comments",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Enable comments by managing your blog. [Learn more](https://help.shopify.com/en/manual/online-store/blogs/managing-comments)."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_author_image",
+          "label": "Show author image",
+          "default": true
+        },
+        {
+          "type": "richtext",
+          "id": "text_below_form",
+          "label": "Text below form",
+          "default": "<p>Read our <a href=\"/policies/privacy-policy\">Privacy Policy</a> and <a href=\"/policies/terms-of-service\">Terms of Service</a>.</p>"
+        }
+      ]
+    },
+    {
+      "type": "previous-next-articles",
+      "name": "Previous/next articles",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Previous and next articles will be displayed when applicable."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

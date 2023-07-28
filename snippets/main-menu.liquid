@@ -1,0 +1,169 @@
+{%- liquid
+  assign first_level_menu_items = ''
+  assign second_level_menu_items = ''
+
+  if section.settings.menu.levels > 1
+    for block in section.blocks
+      unless block.settings.menu_item contains ' > '
+        assign first_level_menu_items = first_level_menu_items | append: block.settings.menu_item
+      else
+        assign second_level_menu_items = second_level_menu_items | append: block.settings.menu_item
+      endunless
+    endfor
+  endif
+
+  if section.settings.mega_menu_list != blank
+    assign mega_menu_list_split = section.settings.mega_menu_list | replace: ', ', ',' | downcase | split: ','
+  endif
+-%}
+
+<nav is="loess-main-menu" class="{% unless bottom_menu %}header-menu{% else %}header-bottom header-bottom--{{ section.settings.layout }}{% endunless %}">
+  {%- if section.settings.menu.links.size > 0 -%}
+    <ul class="menu-list {% if section.settings.layout == 'left-center' or section.settings.layout == 'center-below' %}menu-list--centered{% endif %}" role="list">
+      {%- for link in section.settings.menu.links -%}
+        <li>
+          {%- if link.links != blank -%}
+            <a href="{{ link.url }}" class="menu-list-item {% if link.current %}menu-list-item--active{% endif %} has-dropdown caption" {% if link.current %}aria-current="page"{% endif %} aria-controls="MainMenu-{{ forloop.index }}" aria-expanded="false" data-title="{{ link.title | escape }}">
+              {{ link.title | escape }}
+              <span>
+                {% render 'icon' with 'caret' %}
+              </span>
+            </a>
+
+            {%- liquid
+              if mega_menu_list_split.size > 0
+                assign mega_menu_enabled = false
+                assign link_title_lowercase = link.title | downcase
+
+                if mega_menu_list_split contains link_title_lowercase
+                  assign mega_menu_enabled = true
+                endif
+              endif
+            -%}
+
+            {%- if mega_menu_enabled -%}
+              <div id="MainMenu-{{ forloop.index }}" class="menu-mega" hidden>
+                <div class="container">
+                  <div class="menu-mega__inner">
+                    {%- if link.links != blank -%}
+                      <div class="menu-mega__links-wrapper">
+                        {%- for childlink in link.links -%}
+                          <div class="menu-mega-links">
+                            <div>
+                              <a href="{{ childlink.url }}" class="menu-mega-links__heading-wrapper caption">
+                                {%- if second_level_menu_items != '' -%}
+                                  {%- for block in section.blocks -%}
+                                    {%- assign split_menu_item = block.settings.menu_item | split: ' > ' -%}
+
+                                    {%- if second_level_menu_items contains split_menu_item[1] and split_menu_item[0] == link.title and split_menu_item[1] == childlink.title -%}
+                                      <div class="menu-mega-links__image-wrapper border-radius">
+                                        {{ block.settings.image | image_url: width: 340 | image_tag: class: 'menu-mega-links__image', loading: 'lazy' }}
+                                      </div>
+
+                                      {%- assign second_level_menu_items = second_level_menu_items | remove_first: block.settings.menu_item -%}
+                                    {%- else -%}
+                                      {%- continue -%}
+                                    {%- endif -%}
+                                  {%- endfor -%}
+                                {%- endif -%}
+                                <span class="menu-mega-links__heading {% if childlink.links == blank %}menu-mega-links__heading--centered{% endif %}">
+                                  {{ childlink.title | escape }}
+                                </span>
+                              </a>
+                            </div>
+
+                            {%- if childlink.links != blank -%}
+                              <ul class="menu-mega-links__list" role="list">
+                                {%- for grandchildlink in childlink.links -%}
+                                  <li>
+                                    <a href="{{ grandchildlink.url }}" class="small-caption">
+                                      {{ grandchildlink.title | escape }}
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if first_level_menu_items != '' and first_level_menu_items contains link.title -%}
+                      <div class="menu-mega-images">
+                        {%- for block in section.blocks -%}
+                          {%- if first_level_menu_items contains block.settings.menu_item and block.settings.menu_item == link.title -%}
+                            {%- if block.settings.link != blank -%}
+                              <a href="{{ block.settings.link }}" class="small-caption">
+                            {%- else -%}
+                              <div>
+                            {%- endif -%}
+
+                            <div class="menu-mega-image__image border-radius">
+                              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                            </div>
+
+                            <div class="menu-mega-image__heading small-caption">
+                              {%- if block.settings.title != '' -%}
+                                {{ block.settings.title | escape }}
+                                {%- if block.settings.link != blank -%}
+                                  <span>
+                                    {% render 'icon' with 'arrow-small' %}
+                                  </span>
+                                {%- endif -%}
+                              {%- endif -%}
+                            </div>
+
+                            {%- if block.settings.link != blank -%}
+                              </a>
+                            {%- else -%}
+                              </div>
+                            {%- endif -%}
+
+                            {%- assign first_level_menu_items = first_level_menu_items | remove_first: block.settings.menu_item -%}
+                          {%- else -%}
+                            {%- continue -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- else -%}
+              <ul id="MainMenu-{{ forloop.index }}" class="menu-dropdown" role="list" hidden>
+                {%- for childlink in link.links -%}
+                  <li class="menu-dropdown__item button button--plain">
+                    <a href="{{ childlink.url }}" class="menu-dropdown__link {% if childlink.links != blank %}has-dropdown{% endif %}" {% if childlink.links != blank %}aria-controls="MainMenu-{{ forloop.parentloop.index }}-{{ forloop.index }}" aria-expanded="false"{% endif %}>
+                      {{ childlink.title | escape }}
+                      {%- if childlink.links != blank -%}
+                        <span>
+                          {% render 'icon' with 'caret' %}
+                        </span>
+                      {%- endif -%}
+                    </a>
+
+                    {%- if childlink.links != blank -%}
+                      <ul id="MainMenu-{{ forloop.parentloop.index }}-{{ forloop.index }}" class="menu-dropdown" role="list" hidden>
+                        {%- for grandchildlink in childlink.links -%}
+                          <li class="menu-dropdown__item button button--plain">
+                            <a href="{{ grandchildlink.url }}" class="menu-dropdown__link">
+                              {{ grandchildlink.title | escape }}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          {%- else -%}
+            <a href="{{ link.url }}" class="menu-list-item {% if link.current %}menu-list-item--active{% endif %} caption" {% if link.current %}aria-current="page"{% endif %}>
+              {{ link.title | escape }}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</nav>

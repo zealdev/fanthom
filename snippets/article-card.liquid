@@ -1,0 +1,30 @@
+<div class='card'>
+  <div class='card__image-wrapper {% if section.settings.enable_second_image_on_hover and product.media.size > 1 %}card__image-wrapper--multiple{% endif %} {% if settings.product_card_enable_image_lift %}card__image-wrapper--lift-on-hover{% endif %}'>
+    <a
+      href='{{ product.url }}'
+      class='card__image card__image--{{ section.settings.image_container_ratio | default: 'square' }} {% if settings.product_card_enable_image_zoom %}card__image--zoom-on-hover{% endif %} {% if section.settings.fit_image_to_container %}card__image--alternate-hover{% endif %} {% if settings.product_card_show_soft_background %}card__image--background{% endif %} border-radius'
+      {% if section.settings.image_container_ratio == 'auto' %}
+        style='--aspect-ratio: {{ 1 | divided_by: product.image.aspect_ratio | times: 100 }}%;'
+      {% endif %}
+    >
+      {%- if product.image != blank -%}
+        {{
+          product.image
+          | image_url: width: 1000
+          | image_tag: class: 'card__primary-image', is: 'loess-image', reveal: true, loading: 'lazy'
+        }}
+      {%- endif -%}
+    </a>
+  </div>
+
+  <div class='card__metadata {% if settings.product_card_center_metadata %}card__metadata--centered{% endif %}'>
+    <a href='{{ product.url }}' class='card__title caption'>
+      {{ product.title }}
+    </a>
+
+    <div class='card__category'>
+      {% render 'icon' with 'article' %}
+      <span class='small-text'>{{ 'blogs.article.blog_post' | t }}</span>
+    </div>
+  </div>
+</div>

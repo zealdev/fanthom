@@ -1,0 +1,55 @@
+{% comment %}
+  Renders a language selector
+  Accepts:
+  - id: {String} ID for form and list. Defaults to section.id if none  passed (optional)
+  - position: {String} Position of the dropdown relative to the button. Defaults to 'center' (optional)
+  - above_button: {Boolean} Renders the dropdown above the button trigger. Defaults to false (optional)
+  Usage:
+  {% render 'language-selector', id: 'UtilityBar', position: 'right', above_button: true %}
+{% endcomment %}
+{%- liquid
+  assign formId = id | default: section.id | append: 'LanguageForm'
+  assign listId = id | default: section.id | append: 'LanguageList'
+-%}
+
+<loess-localization-form>
+  {%- form 'localization', id: formId -%}
+    <div class='popover-wrapper popover-wrapper--{{ position | default: 'center' }}'>
+      <button
+        is='loess-button'
+        type='button'
+        class='button button--small button--icon button--plain tap'
+        aria-expanded='false'
+        aria-controls='{{ listId }}'
+      >
+        {{ localization.language.endonym_name }}
+        <span>
+          {% render 'icon' with 'caret' %}
+        </span>
+      </button>
+
+      <loess-popover id='{{ listId }}' class='popover {% if above_button %}popover--top{% endif %}'>
+        <ul class='popover-menu-list' role='list'>
+          {%- for language in localization.available_languages -%}
+            <li class='popover-menu-list__item button button--plain' tabindex='-1'>
+              <a
+                class='popover-menu-list__link{% if language.iso_code == localization.language.iso_code %} popover-menu-list__link--active{% endif %}'
+                href='#'
+                hreflang='{{ language.iso_code }}'
+                lang='{{ language.iso_code }}'
+                {% if language.iso_code == localization.language.iso_code %}
+                  aria-current='true'
+                {% endif %}
+                data-value='{{ language.iso_code }}'
+              >
+                {{ language.endonym_name }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </loess-popover>
+
+      <input type='hidden' name='locale_code' value='{{ localization.language.iso_code }}'>
+    </div>
+  {%- endform -%}
+</loess-localization-form>

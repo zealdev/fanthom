@@ -1,0 +1,41 @@
+<div class='rich-text-wrapper vertical-spacer container'>
+  <div class='rich-text'>
+    <h2 class='h1'>404</h2>
+    <p>{{ 'sections.404.page_not_found' | t }}</p>
+    {%- if section.settings.label != blank -%}
+      <div class='button-group'>
+        <a
+          href='{{ section.settings.url | default: routes.all_products_collection_url }}'
+          class='button button--primary button--large'
+        >
+          {{ section.settings.label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button label",
+      "default": "Continue shopping",
+      "info": "Leave the label blank to hide the button"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button link",
+      "default": "/collections/all"
+    }
+  ]
+}
+{% endschema %}

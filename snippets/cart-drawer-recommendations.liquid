@@ -1,0 +1,35 @@
+{%- liquid
+  assign recommendations_count = 0
+
+  for recommendation in recommendations.products
+    assign product_not_same_as_cart = cart.items | where: 'product_id', recommendation.id | first
+
+    if product_not_same_as_cart == blank
+      assign recommendations_count = recommendations_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if recommendations.performed and recommendations_count > 0 -%}
+  {%- assign shown_products_count = 0 -%}
+
+  <ul class='featured-collection scroller scroller-mobile hide-scrollbar' role='list'>
+    {%- liquid
+      for recommendation in recommendations.products
+        if shown_products_count >= 4
+          break
+        endif
+
+        assign matching_product = cart.items | where: 'product_id', recommendation.id
+
+        if matching_product.size == 0
+          assign shown_products_count = shown_products_count | plus: 1
+
+          echo '<li>'
+          render 'product-card', product: recommendation, cart_drawer: true
+          echo '</li>'
+        endif
+      endfor
+    -%}
+  </ul>
+{%- endif -%}

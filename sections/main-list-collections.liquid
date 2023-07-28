@@ -1,0 +1,419 @@
+{%- liquid
+  assign columns_mobile = section.settings.columns_mobile | times: 1
+  assign columns_tablet = section.settings.columns_mobile | plus: 1
+  assign columns_large = section.settings.columns_large | times: 1
+
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+
+  if section.settings.display == 'all'
+    case section.settings.sort
+      when 'products_high' or 'products_low'
+        assign collections = collections | sort: 'all_products_count'
+      when 'date' or 'date_reversed'
+        assign collections = collections | sort: 'published_at'
+    endcase
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: {{ columns_mobile }};
+    --columns-tablet: {{ columns_tablet }};
+    --columns-large: {{ columns_large }};
+    --button-alignment: {{ section.settings.button_alignment }};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.card_layout == 'below' -%}
+      --button-radius: var(--radius);
+    {%- endif -%}
+
+    {%- if section.settings.card_layout == 'overlay' or section.settings.card_layout == 'gradient' -%}
+      --overlay-opacity: {{ section.settings.overlay }}%;
+    {%- endif -%}
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+
+  #shopify-section-{{ section.id }} > .section {
+    --color-foreground-placeholder: var(--color-foreground);
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="section {% unless border %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}<div class="color-soft-background">{%- endif -%}
+    <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container">
+      <ul class="columns {% if section.settings.display == 'custom' and section.settings.collection_list == blank %}columns--single{% endif %} scroller" role="list">
+        {%- liquid
+          if section.settings.display == 'all'
+            if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical'
+              for collection in collections limit: section.settings.limit
+                render 'collection-card', collection: collection
+              endfor
+            else
+              for collection in collections reversed limit: section.settings.limit
+                render 'collection-card', collection: collection
+              endfor
+            endif
+          else
+            for collection in section.settings.collection_list
+              render 'collection-card', collection: collection
+            else
+              echo '<p class="list-collections--empty">Please update the “Collections” setting with the list of collections you want to display.</p>'
+            endfor
+          endif
+        -%}
+      </ul>
+    </div>
+
+  {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}</div>{%- endif -%}
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "List collections",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "All of your collections are listed by default. To customize your list, choose “Custom” and update the “Collection list” setting."
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "radio",
+      "id": "display",
+      "label": "Select collections to show",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "select",
+      "id": "sort",
+      "label": "Sort collections",
+      "options": [
+        {
+          "value": "alphabetical",
+          "label": "Alphabetically, A-Z"
+        },
+        {
+          "value": "alphabetical_reversed",
+          "label": "Alphabetically, Z-A"
+        },
+        {
+          "value": "products_high",
+          "label": "Product count, high to low"
+        },
+        {
+          "value": "products_low",
+          "label": "Product count, low to high"
+        },
+        {
+          "value": "date",
+          "label": "Date, old to new"
+        },
+        {
+          "value": "date_reversed",
+          "label": "Date, new to old"
+        }
+      ],
+      "default": "alphabetical",
+      "info": "Applicable when “All” is selected for “Collections to show”"
+    },
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collections",
+      "info": "Applicable when “Custom” is selected for “Collections to show”"
+    },
+    {
+      "type": "select",
+      "id": "columns_large",
+      "label": "Number of columns on large screens",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        },
+        {
+          "value": "5",
+          "label": "5 columns"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Number of columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Collection cards"
+    },
+    {
+      "type": "select",
+      "id": "card_layout",
+      "label": "Card layout",
+      "options": [
+        {
+          "value": "button",
+          "label": "Button"
+        },
+        {
+          "value": "outline-button",
+          "label": "Outline button"
+        },
+        {
+          "value": "below",
+          "label": "Button below"
+        },
+        {
+          "value": "frame",
+          "label": "Frame"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "overlay",
+          "label": "Overlay"
+        },
+        {
+          "value": "image-without-button",
+          "label": "Image without button"
+        }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "square",
+      "info": "Add images by editing your collections. [Learn more](https://loess.ticksy.com/article/18653/)"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "image_padding",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "%",
+      "label": "Image padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay on image",
+      "default": 50,
+      "info": "Applicable when the card layout is set to “Gradient” or “Overlay”"
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_title_arrow",
+      "label": "Remove arrow from collection title",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "inverse_colors",
+      "label": "Inverse colors",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ]
+}
+{% endschema %}

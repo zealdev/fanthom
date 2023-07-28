@@ -1,0 +1,115 @@
+{%- liquid
+  assign active_filters_count = 0
+  assign color_label_list = 'products.option.color' | t | replace: ', ', ',' | downcase | split: ','
+
+  for filter in filters
+    if filter.type == 'list'
+      assign active_filters_count = active_filters_count | plus: filter.active_values.size
+    elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value
+      assign active_filters_count = active_filters_count | plus: 1
+    endif
+  endfor
+-%}
+
+<div class='collection-active-filters button-group small-text'>
+  {%- for filter in filters -%}
+    {%- case filter.type -%}
+      {%- when 'list' -%}
+        {%- assign filter_label_downcase = filter.label | downcase -%}
+        {%- if section.settings.filter_color_type == 'swatch' and color_label_list contains filter_label_downcase -%}
+          {%- assign color_swatch_configuration = settings.color_swatch_configuration
+            | newline_to_br
+            | split: '<br />'
+          -%}
+
+          {%- for filter_value in filter.active_values -%}
+            {%- assign label = filter.label | append: ' ' | append: filter_value.label -%}
+            <a
+              is='loess-filters-clear'
+              href='{{ filter_value.url_to_remove }}'
+              class='collection-active-filter'
+              aria-label='{{ 'sections.collection.remove_filter' | t: filter: label }}'
+            >
+              <span
+                class='collection-active-filter__color'
+                style='{% render 'color-swatch', color_swatch_configuration: color_swatch_configuration, value: filter_value.label %}'
+              ></span>
+              {{ filter_value.label }}
+              <span>
+                {% render 'icon' with 'close-small' %}
+              </span>
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for filter_value in filter.active_values -%}
+            <a
+              is='loess-filters-clear'
+              href='{{ filter_value.url_to_remove }}'
+              class='collection-active-filter'
+              aria-label='{{ 'sections.collection.remove_filter' | t: filter: label }}'
+            >
+              {{ filter_value.label }}
+              <span>
+                {% render 'icon' with 'close-small' %}
+              </span>
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+      {%- when 'price_range' -%}
+        {%- liquid
+          assign min_value = filter.min_value.value | default: 0 | money_without_trailing_zeros
+          assign max_value = filter.max_value.value | default: filter.range_max | money_without_trailing_zeros
+        -%}
+
+        {%- if filter.min_value.value or filter.max_value.value -%}
+          <a
+            is='loess-filters-clear'
+            href='{{ filter.url_to_remove }}'
+            class='collection-active-filter'
+            aria-label='{{ 'sections.collection.remove_filter' | t: filter: filter.label }}'
+          >
+            {{ min_value }} - {{ max_value }}
+            <span>
+              {% render 'icon' with 'close-small' %}
+            </span>
+          </a>
+        {%- endif -%}
+    {%- endcase -%}
+  {%- endfor -%}
+
+  {%- if active_filters_count > 0 -%}
+    {%- liquid
+      if request.page_type == 'collection'
+        assign page_url = collection.url
+        assign sort_by = collection.sort_by | default: collection.default_sort_by
+      elsif request.page_type == 'search'
+        assign page_url = routes.search_url
+        assign sort_by = search.sort_by | default: search.default_sort_by
+      endif
+    -%}
+
+    {%- if request.page_type == 'collection' -%}
+      <a
+        is='loess-filters-clear'
+        href='{{ page_url }}?sort_by={{ sort_by }}'
+        class='collection-active-filter collection-active-filter--solid'
+      >
+        {{ 'sections.collection.clear_all' | t }}
+        <span>
+          {% render 'icon' with 'trash' %}
+        </span>
+      </a>
+    {%- else -%}
+      <a
+        is='loess-filters-clear'
+        href='{{ page_url }}?q={{ search.terms | escape }}&sort_by={{ sort_by }}'
+        class='collection-active-filter collection-active-filter--solid'
+      >
+        {{ 'sections.collection.clear_all' | t }}
+        <span>
+          {% render 'icon' with 'trash' %}
+        </span>
+      </a>
+    {%- endif -%}
+  {%- endif -%}
+</div>

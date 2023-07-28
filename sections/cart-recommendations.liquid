@@ -1,0 +1,282 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: 2;
+    --columns-tablet: 2;
+    --columns-large: 4;
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.fit_image_to_container -%}
+      --image-fit: contain;
+      --image-padding: {{ section.settings.image_padding }}%;
+    {%- endif -%}
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+<loess-product-recommendations id="CartRecommendations" section-id="{{ section.id }}" intent="related" product-id="{{ cart.items.first.product_id }}" limit="10">
+  {%- if section.settings.layout != 'full' -%}
+    {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+    <div class="section-vertical-spacer container container--capped">
+  {%- endif -%}
+
+  <div class="section {% unless section.settings.color_scheme == 'default' and section.settings.layout == 'fixed' and section.settings.custom_colors == false %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+    {%- liquid
+      assign recommendations_count = 0
+
+      for recommendation in recommendations.products
+        assign product_not_same_as_cart = cart.items | where: 'product_id', recommendation.id | first
+
+        if product_not_same_as_cart == blank
+          assign recommendations_count = recommendations_count | plus: 1
+        endif
+      endfor
+    -%}
+
+    {%- if recommendations.performed and recommendations_count > 0 -%}
+      {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}<div class="color-soft-background">{%- endif -%}
+      <div class="vertical-spacer container">
+        <header class="section-heading {% if section.settings.center_text %}section-heading--centered{% endif %}">
+          {%- if section.settings.title != blank -%}
+            <h2 class="section-heading__heading">
+              {{ section.settings.title | escape }}
+            </h2>
+          {%- endif -%}
+        </header>
+
+        {%- assign shown_products_count = 0 -%}
+
+        <loess-scroller {% if section.settings.slider_mobile %}columns-mobile="2"{% endif %} {% if section.settings.slider_large and recommendations.products_count > 4 %}columns-tablet="3" columns-large="4"{% endif %}>
+          <ul class="featured-collection {% if settings.product_card_enable_image_lift %}featured-collection--lift-on-hover-padding{% endif %} columns scroller scroller--fixed-columns {% if section.settings.slider_mobile %}scroller-mobile{% endif %} {% if section.settings.slider_large and recommendations.products_count > 4 %}scroller-large{% endif %} hide-scrollbar" role="list">
+            {%- liquid
+              for recommendation in recommendations.products
+                if shown_products_count >= 4
+                  break
+                endif
+
+                assign matching_product = cart.items | where: 'product_id', recommendation.id
+
+                if matching_product.size == 0
+                  assign shown_products_count = shown_products_count | plus: 1
+
+                  echo '<li>'
+                    render 'product-card', product: recommendation
+                  echo '</li>'
+                endif
+              endfor
+            -%}
+          </ul>
+        </loess-scroller>
+      </div>
+      {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}</div>{%- endif -%}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+  {%- endif -%}
+</loess-product-recommendations>
+
+{% schema %}
+{
+  "name": "Cart recommendations",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Dynamic recommendations are based on items in your cart. They change and improve with time. [Learn more](https://shopify.dev/themes/product-merchandising/recommendations?shpxid=5706b8c7-9868-4E7F-3A5A-360A1E7727FB#recommendation-logic)"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_large",
+      "label": "Enable slider on large screens",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_mobile",
+      "label": "Enable slider on mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_text",
+      "label": "Center heading text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "header",
+      "content": "Product cards"
+    },
+    {
+      "type": "select",
+      "id": "image_container_ratio",
+      "label": "Image container ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "checkbox",
+      "id": "fit_image_to_container",
+      "label": "Fit image to container",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "image_padding",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "%",
+      "label": "Image padding",
+      "default": 5,
+      "info": "Applicable when “Fit images to container” is enabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_second_image_on_hover",
+      "label": "Show second image on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "inverse"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ]
+}
+{% endschema %}

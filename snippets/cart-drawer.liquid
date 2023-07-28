@@ -1,0 +1,89 @@
+<loess-drawer
+  id='CartDrawer'
+  class='drawer drawer--menu block color color-{{ settings.cart_color_scheme }}'
+  position='right'
+>
+  <header class='drawer__header'>
+    <h2 class='h3'>{{ 'sections.cart.cart' | t }}</h2>
+    <button class='button button--plain button--icon tap' aria-label='Close sidebar menu' close>
+      {% render 'icon' with 'close' %}
+    </button>
+  </header>
+
+  <div class='drawer__inner'>
+    <div class='drawer__content'>
+      {% render 'cart-drawer-items' %}
+    </div>
+
+    <footer class='drawer-footer drawer-footer--sticky {% if cart == empty %}hide{% endif %}'>
+      <div class='drawer-footer__inner drawer-footer__inner--cart text-center'>
+        {%- if settings.cart_enable_order_notes -%}
+          <div class='cart-notes caption'>
+            <button
+              is='loess-button'
+              class='cart-notes__label button button--icon button--plain tap'
+              aria-expanded='false'
+              aria-controls='CartNotesPanel'
+            >
+              {{ 'sections.cart.add_order_note' | t }}
+              <span>
+                {% render 'icon' with 'caret' %}
+              </span>
+            </button>
+            <loess-collapsible-panel id='CartNotesPanel' class='collapsible-panel'>
+              <textarea
+                is='loess-cart-notes'
+                class='cart-notes__textarea input__field input__textarea'
+                name='note'
+                id='CartNotes'
+              >{{ cart.note }}</textarea>
+            </loess-collapsible-panel>
+          </div>
+        {%- endif -%}
+
+        <div class='cart-checkout-button'>
+          <div class='cart-errors small-caption'>
+            {% render 'icon' with 'red-exclamation' -%}
+            <span></span>
+          </div>
+
+          <span class='small-text'>
+            {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+              {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+            {%- elsif cart.taxes_included -%}
+              {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+            {%- elsif shop.shipping_policy.body != blank -%}
+              {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+            {%- else -%}
+              {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+            {%- endif -%}
+          </span>
+
+          <button
+            type='submit'
+            class='button button--primary button--full-width'
+            name='checkout'
+            form='MainCartDrawer'
+          >
+            <div class='cart-drawer__checkout-button'>
+              {{ 'sections.cart.checkout' | t }}
+              <span>·</span
+              ><loess-cart-drawer-checkout id='CartDrawerTotalPrice' class='cart-drawer__checkout-button-price'>
+                {%- render 'cart-total-price' -%}
+              </loess-cart-drawer-checkout>
+            </div>
+            <svg class='spinner hide' viewBox='0 0 24 24'>
+              <circle class="spinner__value" cx="12" cy="12" r="10" />
+            </svg>
+          </button>
+
+          {%- if additional_checkout_buttons and settings.cart_settings.show_dynamic_checkout_buttons -%}
+            <div class='additional-checkout-buttons'>
+              {{ content_for_additional_checkout_buttons }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </footer>
+  </div>
+</loess-drawer>

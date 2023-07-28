@@ -1,0 +1,250 @@
+<div class='main-product__media-gallery-wrapper'>
+  {%- liquid
+    assign selected_media = product.selected_variant.featured_media | default: product.featured_media
+    assign max_width = 0
+    assign largest_image_aspect_ratio = 99
+
+    for media in product.media
+      assign max_width = max_width | at_least: media.preview_image.width
+      assign largest_image_aspect_ratio = largest_image_aspect_ratio | at_most: media.preview_image.aspect_ratio
+    endfor
+  -%}
+
+  <div
+    class='main-product__media-gallery {% if section.settings.layout != 'full' %}main-product__media-gallery--fixed{% endif %} {% if section.settings.media_thumbnails_position_large == 'left' and product.media.size > 1 %}main-product__media--thumbnails-left{% elsif section.settings.media_thumbnails_position_large == 'right' and product.media.size > 1 %}main-product__media--thumbnails-right{% endif %}'
+    {% if section.settings.enable_sticky_media_large %}
+      sticky
+    {% endif %}
+    style='--largest-image-aspect-ratio: {{ largest_image_aspect_ratio }};'
+  >
+    <loess-product-gallery
+      class='main-product__media-gallery__inner {% if product.media.size == 1 %}main-product__media-gallery__inner--no-thumbnails{% endif %} hide-scrollbar'
+      animation-style='{{ section.settings.animation }}'
+      {% if selected_media.media_type == 'image' %}
+        style='--aspect-ratio: {{ 1 | divided_by: selected_media.aspect_ratio | times: 100 }}%; max-width: {{ max_width }}px'
+      {% endif %}
+      image-zoom='{{ section.settings.enable_image_zoom }}'
+    >
+      {%- for media in product.media -%}
+        <div
+          id='ProductMedia-{{ section.id }}-{{ media.id }}'
+          class='main-product__media-gallery__inner-media {% if media.media_type == 'image' %}main-product__media-gallery__inner-media--image{% endif %}'
+          media-type='{{ media.media_type }}'
+          {% if media.media_type == 'image' or media.media_type == 'video' %}
+            style='--aspect-ratio: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;'
+          {% endif %}
+          {% if selected_media.id == media.id %}
+            active
+          {% endif %}
+        >
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              {%- liquid
+                if selected_media.id != media.id or request.page_type != 'product'
+                  assign loading_type = 'lazy'
+                else
+                  assign loading_type = 'eager'
+                endif
+              -%}
+
+              {%- assign image_width = 3000 | at_most: media.width -%}
+              {{
+                media
+                | image_url: width: image_width
+                | image_tag:
+                  is: 'loess-image',
+                  widths: '200,300,400,500,600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200',
+                  reveal: true,
+                  loading: loading_type,
+                  preload: true
+              }}
+            {%- when 'video' -%}
+              <loess-video class='product-media__video' type='native'>
+                <template>
+                  {{
+                    media
+                    | video_tag:
+                      image_size: '1024x',
+                      controls: true,
+                      autoplay: false,
+                      muted: section.settings.enable_video_autoplay,
+                      loop: section.settings.enable_video_looping
+                  }}
+                </template>
+              </loess-video>
+            {%- when 'external_video' -%}
+              <loess-video class='product-media__video' type='{{ media.host }}'>
+                <template>
+                  {%- if media.host == 'youtube' -%}
+                    {{-
+                      media
+                      | external_video_url:
+                        enablejsapi: true,
+                        loop: section.settings.enable_video_looping,
+                        mute: '1',
+                        autoplay: '0',
+                        playlist: media.external_id
+                      | external_video_tag
+                    -}}
+                  {%- elsif media.host == 'vimeo' -%}
+                    {{-
+                      media
+                      | external_video_url:
+                        autopause: true,
+                        loop: section.settings.enable_video_looping,
+                        muted: false,
+                        autoplay: false
+                      | external_video_tag
+                    -}}
+                  {%- else -%}
+                    {{- media | external_video_tag: image_size: '1024x' -}}
+                  {%- endif -%}
+                </template>
+              </loess-video>
+            {%- when 'model' -%}
+              <loess-3d-model class='model-wrapper' model-id='{{ media.id }}'>
+                {{ media | model_viewer_tag: image_size: '1024x', reveal: 'interaction', toggleable: true }}
+              </loess-3d-model>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </loess-product-gallery>
+
+    {%- if section.settings.enable_image_zoom and product.media.size > 0 -%}
+      <button
+        is='loess-button'
+        class='main-product__media-zoom-button block color color-inverse'
+        aria-controls='ProductImageZoom-{{ section.id }}-{{ product.id }}'
+        aria-expanded='false'
+        aria-label='{{ 'products.product.media.image_zoom' | t }}'
+        target-focus='button.pswp__button--close'
+      >
+        {% render 'icon' with 'image-zoom' %}
+      </button>
+    {%- endif -%}
+
+    {%- if product.media.size > 1 -%}
+      <ul
+        is='loess-product-thumbnails'
+        class='main-product-media__thumbnails {% if section.settings.enable_thumbnails_mobile == false %}hide-mobile{% endif %} {% if section.settings.media_thumbnails_position_large == 'none' %}hide-tablet-and-up{% endif %}'
+        role='list'
+      >
+        {%- for media in product.media -%}
+          <li>
+            {%- liquid
+              if media.aspect_ratio == null
+                assign aspect_ratio = 1
+              else
+                assign aspect_ratio = media.aspect_ratio
+              endif
+            -%}
+            <button
+              {% if selected_media.id == media.id %}
+                aria-current='true'
+              {% endif %}
+              aria-controls='ProductMedia-{{ section.id }}-{{ media.id }}'
+              aria-label='{{ 'products.product.media.load_image' | t }}'
+              data-media-id='{{ media.id }}'
+            >
+              <div
+                class='main-product-media__thumbnail'
+                style='padding-bottom: {{ 1 | divided_by: aspect_ratio | times: 100 }}%'
+              >
+                {{ media.preview_image | image_url: width: 200 | image_tag: class: 'border-radius' }}
+
+                {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+                  <span class='main-product-media__thumbnail-icon main-product-media__thumbnail-icon--play button button--play-small block color color-default'>
+                    {% render 'icon' with 'play' %}
+                  </span>
+                {%- elsif media.media_type == 'model' -%}
+                  <span class='main-product-media__thumbnail-icon main-product-media__thumbnail-icon--model button button--play-small block color color-default'>
+                    {% render 'icon' with 'model' %}
+                  </span>
+                {%- endif -%}
+              </div>
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- liquid
+        if section.settings.enable_thumbnails_mobile != false or section.settings.media_thumbnails_position_large != 'none'
+          assign first_slide_active = false
+          assign last_slide_active = false
+
+          for media in product.media
+            if selected_media.id == media.id
+              if forloop.first
+                assign first_slide_active = true
+              elsif forloop.last
+                assign last_slide_active = true
+              endif
+            endif
+          endfor
+        endif
+      -%}
+
+      <div class='product-media__buttons {% if section.settings.enable_thumbnails_mobile %}hide-mobile{% endif %} {% if section.settings.media_thumbnails_position_large != 'none' %}hide-tablet-and-up{% endif %}'>
+        <loess-scroller-buttons class='slider-buttons'>
+          <button
+            class='slider-buttons__previous button button--secondary button--icon'
+            aria-label='{{ 'general.slider.previous_slide' | t }}'
+            {% if first_slide_active %}
+              disabled
+            {% endif %}
+          >
+            {% render 'icon' with 'arrow-minimal-previous' %}
+          </button>
+
+          <button
+            class='slider-buttons__next button button--secondary button--icon'
+            aria-label='{{ 'general.slider.next_slide' | t }}'
+            {% if last_slide_active %}
+              disabled
+            {% endif %}
+          >
+            {% render 'icon' with 'arrow-minimal-next' %}
+          </button>
+        </loess-scroller-buttons>
+
+        <div class='slider-dots' aria-hidden='true'>
+          <ol role='list'>
+            {%- for media in product.media -%}
+              <li
+                {% if selected_media.id == media.id %}
+                  active
+                {% endif %}
+              ></li>
+            {%- endfor -%}
+          </ol>
+        </div>
+      </div>
+
+      {%- if first_3d_model -%}
+        <div class='container'>
+          <button
+            class='button button--full-width button--icon-before button--subdued product__xr-button'
+            type='button'
+            aria-label='{{ 'products.product.xr_button_label' | t }}'
+            data-shopify-xr
+            data-shopify-model3d-id='{{ first_3d_model.id }}'
+            data-shopify-title='{{ product.title | escape }}'
+            data-shopify-xr-hidden
+          >
+            <span>
+              {% render 'icon' with 'model' %}
+            </span>
+            {{ 'products.product.xr_button' | t }}
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.enable_image_zoom and product.media.size > 0 -%}
+  <loess-product-image-zoom
+    id='ProductImageZoom-{{ section.id }}-{{ product.id }}'
+    class='hide'
+  ></loess-product-image-zoom>
+{%- endif -%}

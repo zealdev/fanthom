@@ -1,0 +1,222 @@
+{%- liquid
+  assign active_filters_count = 0
+  assign color_label_list = 'products.option.color' | t | replace: ', ', ',' | downcase | split: ','
+
+  for filter in filters
+    if filter.type == 'list'
+      assign active_filters_count = active_filters_count | plus: filter.active_values.size
+    elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value
+      assign active_filters_count = active_filters_count | plus: 1
+    endif
+  endfor
+-%}
+
+<div class='filters-mobile-header container'>
+  <div class='filters-mobile-header__top'>
+    <h2 class='h3'>
+      {{ 'sections.collection.filter_by' | t }}
+    </h2>
+
+    <button
+      type='button'
+      class='filters-mobile__close-button button button--plain button--icon tap'
+      aria-label='{{ 'sections.collection.close_filters' | t }}'
+      close
+    >
+      {% render 'icon' with 'close' %}
+    </button>
+  </div>
+
+  <loess-scroller-tabs class='scroller-tabs hide-scrollbar'>
+    <ul class='scroller-tabs__inner' role='list'>
+      {%- for filter in filters -%}
+        <li
+          class='scroller-tabs__item caption'
+          {% if forloop.first == true %}
+            active
+          {% endif %}
+        >
+          <button
+            class='button button--plain tap'
+            aria-controls='CollectionFilterPanelMobile-{{ forloop.index }}'
+            aria-expanded='{% if forloop.first %}true{% else %}false{% endif %}'
+          >
+            {{ filter.label }}
+          </button>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </loess-scroller-tabs>
+</div>
+
+<div class='drawer__content container'>
+  <form id='FiltersFormMobile'>
+    {%- for filter in filters -%}
+      <div
+        id='CollectionFilterPanelMobile-{{ forloop.index }}'
+        class='collection-filter'
+        {% if forloop.first %}
+          open
+        {% endif %}
+        {% if forloop.first == false %}
+          hidden
+        {% endif %}
+      >
+        {%- case filter.type -%}
+          {%- when 'list', 'boolean' -%}
+            {%- assign filter_label_downcase = filter.label | downcase -%}
+
+            <ul class='collection-filter__list small-caption' role='list'>
+              {%- if section.settings.filter_color_type == 'swatch'
+                and color_label_list contains filter_label_downcase
+              -%}
+                {%- assign color_swatch_configuration = settings.color_swatch_configuration
+                  | newline_to_br
+                  | split: '<br />'
+                -%}
+
+                {%- for value in filter.values -%}
+                  <li class='collection-filter__list-item'>
+                    <label
+                      for='FilterMobile-{{ filter.label | escape }}-{{ forloop.index }}'
+                      class='collection-filter__input collection-filter__input--color'
+                    >
+                      <div class='input__checkbox {% if value.count == 0 and value.active == false %}input__checkbox--disabled{% endif %}'>
+                        <input
+                          type='checkbox'
+                          name='{{ value.param_name }}'
+                          value='{{ value.value }}'
+                          id='FilterMobile-{{ filter.label | escape }}-{{ forloop.index }}'
+                          {% if value.active %}
+                            checked
+                          {% endif %}
+                          {% if value.count == 0 and value.active == false %}
+                            disabled
+                          {% endif %}
+                          style='{% render 'color-swatch', color_swatch_configuration: color_swatch_configuration, value: value.label %}'
+                        >
+                      </div>
+
+                      <span>{{ value.label | escape }}</span>
+                      <div class='collection-filter__count small-text'>
+                        {{ value.count }}
+                      </div>
+                    </label>
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for value in filter.values -%}
+                  <li class='collection-filter__list-item'>
+                    <label
+                      for='FilterMobile-{{ filter.label | escape }}-{{ forloop.index }}'
+                      class='collection-filter__input'
+                    >
+                      <div class='input__checkbox {% if value.count == 0 and value.active == false %}input__checkbox--disabled{% endif %}'>
+                        <input
+                          type='checkbox'
+                          name='{{ value.param_name }}'
+                          value='{{ value.value }}'
+                          id='FilterMobile-{{ filter.label | escape }}-{{ forloop.index }}'
+                          {% if value.active %}
+                            checked
+                          {% endif %}
+                          {% if value.count == 0 and value.active == false %}
+                            disabled
+                          {% endif %}
+                        >
+                        {% render 'icon' with 'checkmark-small' %}
+                      </div>
+
+                      <span>{{ value.label | escape }}</span>
+                      <div class='collection-filter__count small-text'>
+                        {{ value.count }}
+                      </div>
+                    </label>
+                  </li>
+                {%- endfor -%}
+              {%- endif -%}
+            </ul>
+          {%- when 'price_range' -%}
+            {%- liquid
+              assign min_value = filter.min_value.value | default: 0.0 | divided_by: 100.0
+              assign max_value = filter.max_value.value | default: filter.range_max | divided_by: 100.0
+              assign range_max = filter.range_max | divided_by: 100.0 | ceil
+            -%}
+
+            <loess-filters-price class='price-range'>
+              <div class='price-range__range-group'>
+                <div class='price-slider'>
+                  <div class='price-slider__progress'></div>
+                </div>
+                <div class='price-range'>
+                  <input
+                    type='range'
+                    class='price-range__range'
+                    value='{{ min_value | ceil }}'
+                    min='0'
+                    max='{{ range_max | ceil }}'
+                    input-min
+                  >
+                  <input
+                    type='range'
+                    class='price-range__range'
+                    value='{{ max_value | ceil }}'
+                    min='0'
+                    max='{{ range_max | ceil }}'
+                  >
+                </div>
+              </div>
+
+              <div class='price-range__inputs'>
+                <div class='price-range__input-group small-caption'>
+                  <span>{{ 'sections.collection.from' | t }}</span>
+                  <div class='price-range__input-wrapper'>
+                    <span class='price-range__symbol'>{{ cart.currency.symbol }}</span>
+                    <input
+                      class='price-range__input'
+                      type='number'
+                      name='{{ filter.min_value.param_name }}'
+                      {% if filter.min_value.value %}
+                        value='{{ min_value | ceil }}'
+                      {% endif %}
+                      min='0'
+                      max='{{ max_value | ceil }}'
+                      placeholder='0'
+                      input-min
+                    >
+                  </div>
+                </div>
+
+                <div class='price-range__input-group small-caption'>
+                  <span>{{ 'sections.collection.to' | t }}</span>
+                  <div class='price-range__input-wrapper'>
+                    <span class='price-range__symbol'>{{ cart.currency.symbol }}</span>
+                    <input
+                      class='price-range__input'
+                      type='number'
+                      name='{{ filter.max_value.param_name }}'
+                      {% if filter.max_value.value %}
+                        value='{{ max_value | ceil }}'
+                      {% endif %}
+                      min='{{ min_value | ceil }}'
+                      max='{{ range_max | ceil }}'
+                      placeholder='{{ range_max | ceil }}'
+                    >
+                  </div>
+                </div>
+              </div>
+            </loess-filters-price>
+        {%- endcase -%}
+      </div>
+    {%- endfor -%}
+  </form>
+
+  {%- if active_filters_count > 0 -%}
+    <div class='filters-mobile-footer'>
+      {% render 'active-filters', filters: filters %}
+      <button class='filters-mobile-footer__button button button--primary button--small' close>
+        {{ 'sections.collection.active_filters_count' | t: count: active_filters_count }}
+      </button>
+    </div>
+  {%- endif -%}
+</div>

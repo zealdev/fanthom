@@ -1,0 +1,74 @@
+{%- liquid
+  assign extra_button_margin = false
+  assign title = collection.title | default: 'Collection title' | escape
+  assign color_scheme = 'default'
+
+  case section.settings.card_layout
+    when 'below'
+      assign button = 'button--primary button--full-width'
+    when 'button'
+      assign button = 'button--primary'
+    when 'gradient', 'overlay'
+      assign button = 'button--secondary button--secondary-no-backdrop button--inverse'
+    when 'frame'
+      assign button = 'button--plain'
+    when 'outline-button'
+      assign button = 'button--secondary'
+  endcase
+
+  if section.settings.button_alignment == 'center'
+    if section.settings.card_layout == 'button' or section.settings.card_layout == 'outline-button'
+      assign extra_button_margin = true
+    endif
+  endif
+
+  if section.settings.inverse_colors
+    assign color_scheme = 'inverse'
+  endif
+
+  if section.settings.card_layout == 'outline-button'
+    if section.settings.inverse_colors == false
+      assign color_scheme = 'inverse'
+    else
+      assign color_scheme = 'default'
+    endif
+  endif
+-%}
+
+<li
+  {% if section.settings.card_layout == 'frame' and settings.styles_elements_corners == 'round' %}
+    style='--image-wrapper-radius: 4px;'
+  {% endif %}
+>
+  <a
+    href='{{ collection.url | default: '#' }}'
+    class='collection-card collection-card--{{ section.settings.card_layout }} block color color-{{ color_scheme }}'
+  >
+    <div class='collection-card__image-wrapper'>
+      <div class='collection-card__image collection-card__image--{{ section.settings.image_ratio }} {% if collection.featured_image == blank and section.settings.image_ratio == 'auto' %}collection-card__image--placeholder{% endif %} {% if section.settings.image_padding > 0 %}border-radius{% endif %}'>
+        {%- if collection.featured_image != blank -%}
+          {{
+            collection.featured_image
+            | image_url: width: 1380
+            | image_tag: is: 'loess-image', reveal: true, loading: 'lazy'
+          }}
+        {%- elsif placeholder != blank -%}
+          {{ 'collection-' | append: placeholder | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.card_layout != 'image-without-button' -%}
+      <div class='collection-card__title {% if extra_button_margin %}collection-card__title--margin{% endif %}'>
+        <span class='button {{ button }} small-caption'>
+          {{ title | default: collection.title | escape }}
+          {%- if section.settings.remove_title_arrow == false -%}
+            <span class='' aria-hidden='true'>
+              {% render 'icon' with 'arrow-small' %}
+            </span>
+          {%- endif -%}
+        </span>
+      </div>
+    {%- endif -%}
+  </a>
+</li>

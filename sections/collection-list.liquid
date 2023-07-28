@@ -1,0 +1,543 @@
+{%- liquid
+  assign columns_mobile = section.settings.columns_mobile | times: 1
+  assign columns_tablet = columns_mobile | plus: 1
+  assign columns_large = section.settings.columns_large | times: 1
+
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+
+  assign total_collections = 4
+
+  if section.settings.collection_list != blank
+    assign total_collections = section.settings.collection_list.count
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: {{ columns_mobile }};
+    --columns-tablet: {{ columns_tablet }};
+    --columns-large: {{ columns_large }};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+    --button-alignment: {{ section.settings.button_alignment }};
+    --scroller-alignment: {% if section.settings.center_heading_text %}center{% else %}start{% endif %};
+
+    {%- if section.settings.card_layout == 'below' -%}
+      --button-radius: var(--radius);
+    {%- endif -%}
+
+    {%- if section.settings.card_layout == 'overlay' or section.settings.card_layout == 'gradient' -%}
+      --overlay-opacity: {{ section.settings.overlay }}%;
+    {%- endif -%}
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+
+  #shopify-section-{{ section.id }} > .section {
+    --color-foreground-placeholder: var(--color-foreground);
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="section {% unless border %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}<div class="color-soft-background">{%- endif -%}
+
+    <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container">
+      {%- if section.settings.title != blank or section.settings.text != blank or section.settings.enable_view_all -%}
+        <header class="section-heading {% if section.settings.center_heading_text %}section-heading--centered{% endif %} {% if section.settings.title == blank and section.settings.text == blank and section.settings.enable_view_all %}{% if section.settings.view_all_mobile != 'top' %}hide-mobile-and-tablet{% endif %} {% if section.settings.view_all_large != 'top' %}hide-desktop{% endif %}{% endif %}">
+          {%- if section.settings.title != blank -%}
+            <h2 class="section-heading__heading {{ section.settings.heading_size }}">
+              {{ section.settings.title | escape }}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.text != blank -%}
+            <div class="section-heading__subheading">
+              <div class="rte {{ section.settings.text_style }} color-accent">
+                {{ section.settings.text }}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.enable_view_all -%}
+            <a href="{{ section.settings.view_all_link | default: routes.collections_url | default: '#' }}" class="section-heading__link button button--plain button--icon tap {% if section.settings.view_all_mobile != 'top' %}hide-mobile-and-tablet{% endif %} {% if section.settings.view_all_large != 'top' %}hide-desktop{% endif %}">
+              {%- if section.settings.view_all_label != blank -%}
+                {{ section.settings.view_all_label }}
+              {%- else -%}
+                {{ 'general.view_all' | t }}
+              {%- endif -%}
+
+              <span>
+                {% render 'icon' with 'arrow-medium' %}
+              </span>
+            </a>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+
+      <loess-scroller {% if section.settings.slider_mobile and total_collections > columns_mobile %}columns-mobile="{{ columns_mobile }}"{% endif %} {% if section.settings.slider_mobile and total_collections > columns_tablet %}columns-tablet="{{ columns_tablet }}"{% endif %} {% if section.settings.slider_large and total_collections > columns_large %}columns-large="{{ columns_large }}"{% endif %}>
+        <ul class="columns scroller {% if section.settings.slider_mobile %}scroller-mobile scroller-tablet{% endif %} {% if section.settings.slider_large %}scroller-large{% endif %} hide-scrollbar" role="list">
+          {%- liquid
+            for collection in section.settings.collection_list
+              render 'collection-card', collection: collection
+            else
+              for i in (1..total_collections)
+                capture collection_placeholder
+                  cycle 1, 2, 3, 4
+                endcapture
+
+                render 'collection-card', placeholder: collection_placeholder
+              endfor
+            endfor
+          -%}
+        </ul>
+
+        <div class="scroller-bar {% if section.settings.slider_mobile == false and total_collections <= columns_mobile %}hide-mobile{% endif %} {% if section.settings.slider_mobile == false and total_collections <= columns_tablet %}hide-tablet{% endif %} {% if section.settings.slider_large == false and total_collections <= columns_large %}hide-desktop{% endif %}">
+          <loess-scroller-dots class="scroller-dots slider-dots" aria-hidden="true">
+            <ol role="list"></ol>
+            <template>
+              <li></li>
+            </template>
+          </loess-scroller-dots>
+
+          <loess-scroller-buttons class="scroller-buttons slider-buttons hide-mobile">
+            <button class="slider-buttons__previous button button--icon" aria-label="{{ 'general.slider.previous_slide' | t }}" disabled>
+              {% render 'icon' with 'arrow-minimal-previous' %}
+            </button>
+            <button class="slider-buttons__next button button--icon" aria-label="{{ 'general.slider.next_slide' | t }}">
+              {% render 'icon' with 'arrow-minimal-next' %}
+            </button>
+          </loess-scroller-buttons>
+        </div>
+      </loess-scroller>
+
+      {%- if section.settings.enable_view_all -%}
+        <div class="{% if section.settings.view_all_mobile != 'bottom' %}hide-mobile-and-tablet{% endif %} {% if section.settings.view_all_large != 'bottom' %}hide-desktop{% endif %} view-all-bottom">
+          <a href="{{ section.settings.view_all_link | default: routes.collections_url | default: '#' }}" class="button button--primary button--center tap">
+            {%- if section.settings.view_all_label != blank -%}
+              {{ section.settings.view_all_label }}
+            {%- else -%}
+              {{ 'general.view_all' | t }}
+            {%- endif -%}
+
+            <span>
+              {% render 'icon' with 'arrow-medium' %}
+            </span>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+
+  {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}</div>{%- endif -%}
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection list",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_large",
+      "label": "Enable slider on large screens",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_mobile",
+      "label": "Enable slider on mobile",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "columns_large",
+      "label": "Number of columns on large screens",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        },
+        {
+          "value": "5",
+          "label": "5 columns"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Number of columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading_text",
+      "label": "Center heading text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collection list"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h0",
+          "label": "Extra large"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text style",
+      "options": [
+        {
+          "value": "small-subtext",
+          "label": "Subtext"
+        },
+        {
+          "value": "large-subtext",
+          "label": "Large subtext"
+        },
+        {
+          "value": "body-text",
+          "label": "Text"
+        },
+        {
+          "value": "large-body-text",
+          "label": "Large text"
+        }
+      ],
+      "default": "large-subtext"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_view_all",
+      "label": "Enable “View all” button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "view_all_large",
+      "label": "“View all” button on large screens",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "select",
+      "id": "view_all_mobile",
+      "label": "“View all” button on mobile",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "“View all” button link"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Custom button label",
+      "info": "Defaults to “View all” if left blank"
+    },
+    {
+      "type": "header",
+      "content": "Collection cards"
+    },
+    {
+      "type": "select",
+      "id": "card_layout",
+      "label": "Card layout",
+      "options": [
+        {
+          "value": "button",
+          "label": "Button"
+        },
+        {
+          "value": "outline-button",
+          "label": "Outline button"
+        },
+        {
+          "value": "below",
+          "label": "Button below"
+        },
+        {
+          "value": "frame",
+          "label": "Frame"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "overlay",
+          "label": "Overlay"
+        },
+        {
+          "value": "image-without-button",
+          "label": "Image without button"
+        }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "square",
+      "info": "Add images by editing your collections. [Learn more](https://loess.ticksy.com/article/18653/)"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay on image",
+      "default": 50,
+      "info": "Applicable when the card layout is set to “Gradient” or “Overlay”"
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_title_arrow",
+      "label": "Remove arrow from collection title",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "inverse_colors",
+      "label": "Inverse colors",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection list"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,126 @@
+{%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities
+  | where: 'pick_up_enabled', true
+-%}
+
+{%- if pick_up_availabilities.size > 0 -%}
+  <div class='pickup-availability-info'>
+    {%- liquid
+      assign closest_location = pick_up_availabilities.first
+
+      if closest_location.available
+        render 'icon' with 'green-check'
+      endif
+    -%}
+
+    {%- if closest_location.available -%}
+      <div>
+        <p class='small-caption'>
+          {{
+            'products.product.pickup_availability.pick_up_available_at_html'
+            | t: location_name: closest_location.location.name
+          }}
+        </p>
+
+        <p class='small-text'>{{ closest_location.pick_up_time }}</p>
+
+        <button
+          is='loess-button'
+          class='pickup-availability-button button button--plain'
+          aria-controls='ShowPickupAvailabilityDrawer'
+          aria-expanded='false'
+          aria-haspopup='dialog'
+        >
+          {%- if pick_up_availabilities.size == 1 -%}
+            {{ 'products.product.pickup_availability.view_store_info' | t }}
+          {%- else -%}
+            {{ 'products.product.pickup_availability.check_other_stores' | t }}
+          {%- endif -%}
+        </button>
+      </div>
+    {%- else -%}
+      <div>
+        <p class='small-caption'>
+          {{
+            'products.product.pickup_availability.pick_up_unavailable_at_html'
+            | t: location_name: closest_location.location.name
+          }}
+        </p>
+
+        {%- if pick_up_availabilities.size > 1 -%}
+          <button
+            is='loess-button'
+            class='pickup-availability-button button button--plain'
+            aria-controls='ShowPickupAvailabilityDrawer'
+            aria-expanded='false'
+            aria-haspopup='dialog'
+          >
+            {{ 'products.product.pickup_availability.check_other_stores' | t }}
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <loess-drawer
+    id='ShowPickupAvailabilityDrawer'
+    class='drawer drawer--menu block color color-default'
+    position='right'
+  >
+    <header class='drawer__header drawer__header--start'>
+      <div>
+        <h2 class='h3'>{{ product.title }}</h2>
+
+        {%- if product.has_only_default_variant == false -%}
+          <span class='small-text'>{{ product.selected_or_first_available_variant.title }}</span>
+        {%- endif -%}
+      </div>
+
+      <button
+        class='button button--plain button--icon tap'
+        aria-label='{{ 'products.product.pickup_availability.close_panel' | t }}'
+        close
+      >
+        {% render 'icon' with 'close' %}
+      </button>
+    </header>
+
+    <div class='drawer__inner'>
+      <div class='drawer__content'>
+        <ul class='pickup-availability-list' role='list'>
+          {%- for availability in pick_up_availabilities -%}
+            <li class='pickup-availability-list__item'>
+              {%- if availability.available -%}
+                {% render 'icon' with 'green-check' %}
+              {%- else -%}
+                {% render 'icon' with 'red-exclamation' %}
+              {%- endif -%}
+
+              <div class='pickup-availability-list__item-info'>
+                <h3 class='small-body-text'>
+                  {{ availability.location.name | escape }}
+                </h3>
+
+                <p class='small-text'>
+                  {%- if availability.available -%}
+                    {{ 'products.product.pickup_availability.pick_up_available' | t }},
+                    {{ availability.pick_up_time | downcase }}
+                  {%- else -%}
+                    {{ 'products.product.pickup_availability.pick_up_unavailable' | t }}
+                  {%- endif -%}
+                </p>
+
+                <address class='small-caption'>
+                  {{ availability.location.address | format_address }}
+
+                  {%- if availability.location.address.phone.size > 0 -%}
+                    <p>{{ availability.location.address.phone }}</p>
+                  {%- endif -%}
+                </address>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </loess-drawer>
+{%- endif -%}

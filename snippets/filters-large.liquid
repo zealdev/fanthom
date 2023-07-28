@@ -1,0 +1,178 @@
+{%- liquid
+  assign first_filter_expanded = false
+  assign color_label_list = 'products.option.color' | t | replace: ', ', ',' | downcase | split: ','
+
+  if section.settings.sidebar_style_large == '1st-open'
+    assign first_filter_expanded = true
+  elsif section.settings.sidebar_style_large == 'auto'
+    if filters.size > 5
+      assign first_filter_expanded = true
+    endif
+  endif
+
+  if request.page_type == 'collection'
+    assign sort_by = collection.sort_by | default: collection.default_sort_by
+  elsif request.page_type == 'search'
+    assign sort_by = search.sort_by | default: search.default_sort_by
+  endif
+-%}
+
+<button type="button" class="collection-aside__close-button button button--plain button--icon tap" aria-label="{{ 'sections.collection.close_filters' | t }}" close>
+  {% render 'icon' with 'close' %}
+</button>
+
+<h2 class="collection-aside__title large-body-text">
+  {{ 'sections.collection.filter_by' | t }}
+</h2>
+<div class="collection-filters">
+  <form id="FiltersFormLarge">
+    <input type="hidden" name="sort_by" value="{{ sort_by }}">
+
+    {%- for filter in filters -%}
+      {%- if filter.type != 'boolean' -%}
+        {%- assign filter_label_downcase = filter.label | downcase -%}
+
+        <div class="collection-filter {% if color_label_list contains filter_label_downcase %}collection-filter--color{% endif %}">
+          {%- if section.settings.sidebar_style_large != 'non-collapsible' or filters.size > 5 -%}
+            <button is="loess-button" type="button" class="collection-filter__label button button--plain button--icon tap caption" aria-expanded="{% if first_filter_expanded or section.settings.sidebar_style_large == 'auto' and filters.size <= 5 %}true{% else %}false{% endif %}" aria-controls="CollectionFilterPanelLarge-{{ forloop.index }}">
+          {%- else -%}
+            <div class="caption">
+          {%- endif -%}
+            {{ filter.label }}
+          {%- if section.settings.sidebar_style_large != 'non-collapsible' or filters.size > 5 -%}
+            <span>
+              {% render 'icon' with 'caret' %}
+            </span>
+            </button>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+
+          <loess-collapsible-panel id="CollectionFilterPanelLarge-{{ forloop.index }}" class="collapsible-panel" {% if section.settings.sidebar_style_large == 'non-collapsible' or first_filter_expanded or section.settings.sidebar_style_large == 'auto' and filters.size <= 5 %}open{% endif %}>
+            {%- case filter.type -%}
+            {%- when 'list' -%}
+              <ul class="collection-filter__list small-caption emil3" role="list">
+                {%- liquid
+                  assign truncate_list = false
+
+                  if filter.values.size > 20
+                    assign truncate_list = true
+                  endif
+                -%}
+                {%- if section.settings.filter_color_type == 'swatch' and color_label_list contains filter_label_downcase -%}
+                  {%- assign color_swatch_configuration = settings.color_swatch_configuration | newline_to_br | split: '<br />' -%}
+
+                  {%- for value in filter.values -%}
+                    <li class="collection-filter__list-item {% if truncate_list and forloop.index > 10 %}collection-filter__list-item--hidden{% endif %}" {% if truncate_list and forloop.index > 10 %}hidden{% endif %}>
+                      <label for="FilterLarge-{{ filter.label | escape }}-{{ forloop.index }}" class="collection-filter__input collection-filter__input--color">
+                        <div class="input__checkbox {% if value.count == 0 and value.active == false %}input__checkbox--disabled{% endif %}">
+                          <input type="checkbox"
+                            id="FilterLarge-{{ filter.label | escape }}-{{ forloop.index }}"
+                            name="{{ value.param_name }}"
+                            value="{{ value.value }}"
+                            {% if value.active %}checked{% endif %}
+                            {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                            style="{% render 'color-swatch', color_swatch_configuration: color_swatch_configuration, value: value.label %}"
+                          >
+                        </div>
+
+                        <span>{{ value.label | escape }}</span>
+                        <div class="collection-filter__count small-text">
+                          {{ value.count }}
+                        </div>
+                      </label>
+                    </li>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- for value in filter.values -%}
+                    <li class="collection-filter__list-item {% if truncate_list and forloop.index > 20 %}collection-filter__list-item--hidden{% endif %}" {% if truncate_list and forloop.index > 20 %}hidden{% endif %}>
+                      <label for="FilterLarge-{{ filter.label | escape }}-{{ forloop.index }}" class="collection-filter__input">
+                        <div class="input__checkbox {% if value.count == 0 and value.active == false %}input__checkbox--disabled{% endif %}">
+                          <input type="checkbox"
+                            name="{{ value.param_name }}"
+                            value="{{ value.value }}"
+                            id="FilterLarge-{{ filter.label | escape }}-{{ forloop.index }}"
+                            {% if value.active %}checked{% endif %}
+                            {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                          >
+                          {% render 'icon' with 'checkmark-small' %}
+                        </div>
+
+                        <span>{{ value.label | escape }}</span>
+                        <div class="collection-filter__count small-text">
+                          {{ value.count }}
+                        </div>
+                      </label>
+                    </li>
+                  {%- endfor -%}
+                {%- endif -%}
+              </ul>
+
+              {%- if truncate_list -%}
+                <button is="loess-filters-toggle" type="button" class="collection-filter__more-button button button--plain tap" aria-expanded="false" index="{{ forloop.index }}">
+                  <span>+ {{ 'sections.collection.show_more' | t }}</span>
+                  <span>- {{ 'sections.collection.show_less' | t }}</span>
+                </button>
+              {%- endif -%}
+
+            {%- when 'price_range' -%}
+              {%- liquid
+                assign min_value = filter.min_value.value | default: 0.0 | divided_by: 100.0
+                assign max_value = filter.max_value.value | default: filter.range_max | divided_by: 100.0
+                assign range_max = filter.range_max | divided_by: 100.0 | ceil
+              -%}
+
+              <loess-filters-price class="price-range">
+                <div class="price-range__range-group">
+                  <div class="price-slider">
+                    <div class="price-slider__progress"></div>
+                  </div>
+                  <div class="price-range">
+                    <input type="range" class="price-range__range" value="{{ min_value | ceil }}" min="0" max="{{ range_max | ceil }}" input-min>
+                    <input type="range" class="price-range__range" value="{{ max_value | ceil }}" min="0" max="{{ range_max | ceil }}">
+                  </div>
+                </div>
+
+                <div class="price-range__inputs">
+                  <div class="price-range__input-group small-caption">
+                    <span>{{ 'sections.collection.from' | t }}</span>
+                    <div class="price-range__input-wrapper">
+                      <span class="price-range__symbol">{{ cart.currency.symbol }}</span>
+                      <input class="price-range__input" type="number" name="{{ filter.min_value.param_name }}" {% if filter.min_value.value %}value="{{ min_value | ceil }}"{% endif %} min="0" max="{{ max_value | ceil }}" placeholder="0" input-min>
+                    </div>
+                  </div>
+
+                  <div class="price-range__input-group small-caption">
+                    <span>{{ 'sections.collection.to' | t }}</span>
+                    <div class="price-range__input-wrapper">
+                      <span class="price-range__symbol">{{ cart.currency.symbol }}</span>
+                      <input class="price-range__input" type="number" name="{{ filter.max_value.param_name }}" {% if filter.max_value.value %}value="{{ max_value | ceil }}"{% endif %} min="{{ min_value | ceil }}" max="{{ range_max | ceil }}" placeholder="{{ range_max | ceil }}">
+                    </div>
+                  </div>
+                </div>
+              </loess-filters-price>
+            {%- endcase -%}
+          </loess-collapsible-panel>
+
+          {%- assign first_filter_expanded = false -%}
+        </div>
+      {%- else -%}
+        <div class="collection-filter">
+          <label for="FilterLarge-{{ filter.label | escape }}-{{ forloop.index }}" class="collection-filter__input caption">
+            <div class="input__checkbox">
+              <input type="checkbox"
+                name="{{ filter.param_name }}"
+                value="1"
+                id="FilterLarge-{{ filter.label | escape }}-{{ forloop.index }}"
+                {% if filter.true_value.active %}checked{% endif %}
+              >
+              {% render 'icon' with 'checkmark-small' %}
+            </div>
+
+            <span>{{ filter.label | escape }}</span>
+          </label>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </form>
+</div>

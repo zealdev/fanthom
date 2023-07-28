@@ -1,0 +1,126 @@
+{%- assign items_requiring_shipping = cart.items | where: 'requires_shipping' -%}
+
+{%- if items_requiring_shipping.size > 0 -%}
+  <div class='vertical-spacer container'>
+    <div class='section block color color-default border-radius'>
+      <div class='vertical-spacer container color-soft-background'>
+        {%- if section.settings.heading != '' -%}
+          <div class='shipping-rates__title'>
+            <h2 class='large-body-text'>
+              {{ section.settings.heading | escape }}
+            </h2>
+            <button
+              is='loess-button'
+              class='shipping-rates__toggle button button--icon tap hide-tablet-and-up'
+              aria-expanded='false'
+              aria-controls='ShippingCalculator'
+            >
+              {% render 'icon' with 'collapse' %}
+              {% render 'icon' with 'expand' %}
+            </button>
+          </div>
+        {%- endif -%}
+
+        <loess-collapsible-panel id='ShippingCalculator' class='collapsible-panel'>
+          <loess-shipping-calculator class='shipping-rates__form' role='form'>
+            <div class='shipping-rates__inputs caption'>
+              <div class='input-group'>
+                <label class='input__label input__label--select' for='ShippingRatesCountry'>
+                  {{ 'customer.addresses.country' | t }}
+                </label>
+                <div class='input__select-wrapper'>
+                  <select
+                    is='loess-shipping-country-selector'
+                    id='ShippingRatesCountry'
+                    class='input__select'
+                    name='shipping-rates[country]'
+                    aria-owns='ShippingRatesProvinceSelector'
+                    data-default-option='{% if customer and customer.default_address %}{{ customer.default_address.country }}{% elsif section.settings.default_country != '' %}{{ section.settings.default_country }}{% endif %}'
+                  >
+                    {{ country_option_tags }}
+                  </select>
+                  <span>
+                    {% render 'icon' with 'caret' %}
+                  </span>
+                </div>
+              </div>
+              <div id='ShippingRatesProvinceSelector' class='input-group input-group--hidden'>
+                <label class='input__label input__label--select' for='ShippingRatesProvince'>
+                  {{ 'customer.addresses.province' | t }}
+                </label>
+                <div class='input__select-wrapper'>
+                  <select
+                    id='ShippingRatesProvince'
+                    class='input__select'
+                    name='shipping-rates[province]'
+                    {% if customer and customer.default_address %}
+                      data-default-option='{{ customer.default_address.province }}'
+                    {% endif %}
+                  ></select>
+                  <span>
+                    {% render 'icon' with 'caret' %}
+                  </span>
+                </div>
+              </div>
+              <div class='input-group'>
+                <input
+                  is='loess-input-field'
+                  id='ShippingRatesZipCode'
+                  type='text'
+                  name='shipping-rates[zip]'
+                  class='input__field'
+                  {% if customer and customer.default_address %}
+                    {{- customer.default_address.zip -}}
+                  {% endif %}
+                >
+                <label class='input__label' for='ShippingRatesZipCode'>
+                  {{ 'customer.addresses.zip' | t }}
+                </label>
+              </div>
+            </div>
+            <button type='button' class='shipping-rates__button button button--secondary'>
+              {{ 'customer.addresses.estimate' | t }}
+            </button>
+          </loess-shipping-calculator>
+          <div class='shipping-rates__spinner hide'>
+            <svg class='spinner' viewBox='0 0 24 24'>
+              <circle class="spinner__value" cx="12" cy="12" r="10" />
+            </svg>
+          </div>
+        </loess-collapsible-panel>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Shipping calculator",
+  "class": "shopify-section--shipping-calculator",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Only displays if there are items in the cart that require shipping."
+    },
+    {
+      "type": "checkbox",
+      "id": "collapse_on_mobile",
+      "label": "Collapse on mobile by default",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Estimate shipping rates"
+    },
+    {
+      "type": "text",
+      "id": "default_country",
+      "label": "Default country to use",
+      "default": "United States",
+      "info": "If the customer is logged in, the country of their shipping address will be used"
+    }
+  ]
+}
+{% endschema %}

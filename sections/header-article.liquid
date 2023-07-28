@@ -1,0 +1,307 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    {%- comment -%}Extract the values for the text position's x and y axis{%- endcomment -%}
+    {%- assign text_axis = section.settings.text_position_large | split: ' ' -%}
+    --text-y-axis: {{ text_axis | first }};
+    --text-x-axis: {{ text_axis | last }};
+
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if article.image != blank -%}
+      --overlay-opacity: {{ section.settings.overlay }}%;
+    {%- endif -%}
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- capture text -%}
+  <h1 class="{{ section.settings.heading_size }}">
+    {{ article.title | escape }}
+  </h1>
+
+  <div>
+    {%- if section.settings.show_date -%}
+      <span class="small-caption">
+        {{ article.created_at | time_tag: format: 'date' }}
+      </span>
+    {%- endif -%}
+
+    {%- if blog.comments_enabled? and article.comments_count > 0 -%}
+      {%- assign anchor_id = '#ArticleComments-' | append: article.id -%}
+
+      <a href="{{ anchor_id }}" class="rte small-caption">
+        {% if section.settings.show_date %}·{% endif %} {{ 'blogs.article.comments' | t: count: article.comments_count }}
+      </a>
+    {%- endif -%}
+  </div>
+{%- endcapture -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+  {% render 'header-template', text: text, image: article.image, settings: section.settings %}
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Article header",
+  "tag": "section",
+  "class": "shopify-section--header-template",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "fixed-soft"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Adapt to content"
+        },
+        {
+          "value": "x-small",
+          "label": "Extra small"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "small",
+      "info": "The section height may be overridden when the article image is displayed and set to “Expand full height”"
+    },
+    {
+      "type": "select",
+      "id": "text_position_large",
+      "label": "Text position on large screens",
+      "options": [
+        {
+          "value": "start start",
+          "label": "Top left"
+        },
+        {
+          "value": "start center",
+          "label": "Top center"
+        },
+        {
+          "value": "center start",
+          "label": "Middle left"
+        },
+        {
+          "value": "center center",
+          "label": "Middle center"
+        },
+        {
+          "value": "end start",
+          "label": "Bottom left"
+        },
+        {
+          "value": "end center",
+          "label": "Bottom middle"
+        }
+      ],
+      "default": "center start"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show article date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show article image",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h0",
+          "label": "Extra large"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "image_style",
+      "label": "Image style",
+      "options": [
+        {
+          "value": "fit",
+          "label": "Fit container"
+        },
+        {
+          "value": "fill",
+          "label": "Fill container"
+        },
+        {
+          "value": "expand",
+          "label": "Expand full height"
+        },
+        {
+          "value": "background",
+          "label": "Background"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_padding",
+      "label": "Enable image padding",
+      "default": false,
+      "info": "Not applicable when “Background” image style is enabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect on image",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Image overlay",
+      "default": 40,
+      "info": "Applicable when the image style is set to “Background”"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default",
+      "info": "Not applicable when “Background” image style is enabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ]
+}
+{% endschema %}

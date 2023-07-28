@@ -1,0 +1,182 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if settings.customers_custom_colors -%}
+      --color-foreground: {{ settings.customers_color_foreground.red }}, {{ settings.customers_color_foreground.green }}, {{ settings.customers_color_foreground.blue }};
+      --color-background: {{ settings.customers_color_background.red }}, {{ settings.customers_color_background.green }}, {{ settings.customers_color_background.blue }};
+      --color-gradient: {% if settings.customers_color_gradient != blank %}{{ settings.customers_color_gradient }}{% else %}{{ settings.customers_color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- if settings.customers_layout != 'full' -%}
+  {%- if settings.customers_layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="section-span-height-wrapper section {% unless settings.customers_color_scheme == 'default' and settings.customers_layout == 'fixed' and settings.customers_custom_colors == false %}block{% endunless %} {% if settings.customers_custom_colors %}color-custom{% else %}color color-{{ settings.customers_color_scheme }}{% endif %} color-gradient {% if settings.customers_layout != 'full' %}border-radius{% endif %}">
+  <div class="container {% if settings.customers_layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %}">
+    <div class="section-form">
+      <h1 class="h2 text-center" tabindex="-1">
+        {{ 'customer.register.title' | t }}
+      </h1>
+
+      <div class="section-form">
+        {%- form 'create_customer', class: 'customers-form' -%}
+          {%- if form.errors -%}
+            <small class="form-message small-text" autofocus>
+              {% render 'icon' with 'red-exclamation' %}
+              <span>{{ 'forms.please_adjust' | t }}:</span>
+
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>
+                    {%- if field == 'form' -%}
+                      {{ form.errors.messages[field] }}
+                    {%- else -%}
+                      <a href="#RegisterForm-{{ field }}">
+                        {{ form.errors.translated_fields[field] | capitalize }}
+                        {{ form.errors.messages[field] }}
+                      </a>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </small>
+          {%- endif -%}
+
+          <div class="input-group">
+            <input
+              is="loess-input-field"
+              id="RegisterForm-FirstName"
+              type="text"
+              name="customer[first_name]"
+              class="input__field"
+              value="{% if form.first_name %}{{ form.first_name }}{% endif %}"
+              autocomplete="given-name"
+            >
+
+            <label for="RegisterForm-FirstName" class="input__label">
+              {{ 'customer.register.first_name' | t }}
+            </label>
+          </div>
+
+          <div class="input-group">
+            <input
+              is="loess-input-field"
+              id="RegisterForm-LastName"
+              type="text"
+              name="customer[last_name]"
+              class="input__field"
+              value="{% if form.last_name %}{{ form.last_name }}{% endif %}"
+              autocomplete="family-name"
+            >
+
+            <label for="RegisterForm-LastName" class="input__label">
+              {{ 'customer.register.last_name' | t }}
+            </label>
+          </div>
+
+          {%- if form.errors contains 'email' -%}
+            <small class="form-message small-text" id="RegisterForm-email-error">
+              {% render 'icon' with 'red-exclamation' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+            </small>
+          {%- endif -%}
+
+          <div class="input-group">
+            <input
+              is="loess-input-field"
+              id="RegisterForm-email"
+              type="email"
+              name="customer[email]"
+              class="input__field"
+              value="{% if form.email %}{{ form.email }}{% endif %}"
+              spellcheck="false"
+              autocapitalize="off"
+              autocomplete="email"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="RegisterForm-email-error"
+              {% endif %}
+            >
+
+            <label for="RegisterForm-email" class="input__label">
+              {{ 'customer.register.email' | t }}
+            </label>
+          </div>
+
+          {%- if form.errors contains 'password' -%}
+            <small class="form-message small-text" id="RegisterForm-password-error">
+              {% render 'icon' with 'red-exclamation' %}{{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}
+            </small>
+          {%- endif -%}
+
+          <div class="input-group">
+            <input
+              is="loess-input-field"
+              id="RegisterForm-Password"
+              type="password"
+              name="customer[password]"
+              class="input__field"
+              aria-required="true"
+              {% if form.errors contains 'password' %}
+                aria-invalid="true"
+                aria-describedby="RegisterForm-password-error"
+              {% endif %}
+            >
+
+            <label for="RegisterForm-Password" class="input__label">
+              {{ 'customer.register.password' | t }}
+            </label>
+          </div>
+
+          <button class="button button--primary">
+            {{ 'customer.register.submit' | t }}
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if settings.customers_layout != 'full' -%}
+  </div>
+  {%- if settings.customers_layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Register",
+  "tag": "section",
+  "class": "shopify-section--span-height",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "For additional settings, navigate to the “Customers” tab in the theme settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    }
+  ]
+}
+{% endschema %}

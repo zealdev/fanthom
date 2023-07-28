@@ -1,0 +1,469 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if settings.customers_custom_colors -%}
+      --color-foreground: {{ settings.customers_color_foreground.red }}, {{ settings.customers_color_foreground.green }}, {{ settings.customers_color_foreground.blue }};
+      --color-background: {{ settings.customers_color_background.red }}, {{ settings.customers_color_background.green }}, {{ settings.customers_color_background.blue }};
+      --color-gradient: {% if settings.customers_color_gradient != blank %}{{ settings.customers_color_gradient }}{% else %}{{ settings.customers_color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- if settings.customers_layout != 'full' -%}
+  {%- if settings.customers_layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="section-span-height-wrapper section {% unless settings.customers_color_scheme == 'default' and settings.customers_layout == 'fixed' and settings.customers_custom_colors == false %}block{% endunless %} {% if settings.customers_custom_colors %}color-custom{% else %}color color-{{ settings.customers_color_scheme }}{% endif %} color-gradient {% if settings.customers_layout != 'full' %}border-radius{% endif %}">
+  <div class="container {% if settings.customers_layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %}">
+    {%- paginate customer.addresses by 5 -%}
+      <div class="section-form">
+        <header class="text-center">
+          <h2>{{ 'customer.addresses.title' | t }}</h2>
+          <br>
+          <a href="{{ routes.account_url }}" class="button button--plain button--icon tap">
+            {{ 'customer.account.return' | t }}
+            <span>
+              {% render 'icon' with 'arrow-small' %}
+            </span>
+          </a>
+        </header>
+
+        <div class="customer addresses" data-customer-addresses>
+          <div class="section-form" data-address>
+            <button type="button" class="button button--primary" aria-expanded="false" aria-controls="AddAddress">
+              {{ 'customer.addresses.add_new' | t }}
+            </button>
+
+            <div id="AddAddress" class="section-form">
+              <h2 class="h3">{{ 'customer.addresses.add_new' | t }}</h2>
+
+              {%- form 'customer_address', customer.new_address, class: 'customers-form', aria-labelledBy: 'AddressNewHeading' -%}
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressFirstNameNew"
+                    type="text"
+                    name="address[first_name]"
+                    class="input__field"
+                    value="{{ form.first_name }}"
+                    autocomplete="given-name"
+                  >
+
+                  <label for="AddressFirstNameNew" class="input__label">
+                    {{ 'customer.addresses.first_name' | t }}
+                  </label>
+                </div>
+
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressLastNameNew"
+                    type="text"
+                    name="address[last_name]"
+                    class="input__field"
+                    value="{{ form.last_name }}"
+                    autocomplete="family-name"
+                  >
+
+                  <label for="AddressLastNameNew" class="input__label">
+                    {{ 'customer.addresses.last_name' | t }}
+                  </label>
+                </div>
+
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressCompanyNew"
+                    type="text"
+                    name="address[company]"
+                    class="input__field"
+                    value="{{ form.company }}"
+                    autocomplete="organization"
+                  >
+
+                  <label for="AddressCompanyNew" class="input__label">
+                    {{ 'customer.addresses.company' | t }}
+                  </label>
+                </div>
+
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressAddress1New"
+                    type="text"
+                    name="address[address1]"
+                    class="input__field"
+                    value="{{ form.address1 }}"
+                    autocomplete="address-line1"
+                  >
+
+                  <label for="AddressAddress1New" class="input__label">
+                    {{ 'customer.addresses.address1' | t }}
+                  </label>
+                </div>
+
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressAddress2New"
+                    type="text"
+                    name="address[address2]"
+                    class="input__field"
+                    value="{{ form.address2 }}"
+                    autocomplete="address-line2"
+                  >
+
+                  <label for="AddressAddress2New" class="input__label">
+                    {{ 'customer.addresses.address2' | t }}
+                  </label>
+                </div>
+
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressCityNew"
+                    type="text"
+                    name="address[city]"
+                    class="input__field"
+                    value="{{ form.city }}"
+                    autocomplete="address-level2"
+                  >
+
+                  <label for="AddressCityNew" class="input__label">
+                    {{ 'customer.addresses.city' | t }}
+                  </label>
+                </div>
+
+                <div class="input-group">
+                  <label class="input__label input__label--select" for="AddressCountryNew">
+                    {{ 'customer.addresses.country' | t }}
+                  </label>
+
+                  <div class="input__select-wrapper">
+                    <select is="loess-shipping-country-selector" id="AddressCountryNew" class="input__select" name="address[country]" aria-owns="AddressProvinceContainerNew" autocomplete="country" data-default-option="{{ form.country }}">
+                      {{ all_country_option_tags }}
+                    </select>
+                    <span>
+                      {% render 'icon' with 'caret' %}
+                    </span>
+                  </div>
+                </div>
+
+                <div id="AddressProvinceContainerNew" class="input-group input-group--hidden">
+                  <label class="input__label input__label--select" for="AddressProvinceNew">
+                    {{ 'customer.addresses.province' | t }}
+                  </label>
+
+                  <div class="input__select-wrapper">
+                    <select id="AddressProvinceNew" class="input__select" name="address[province]" autocomplete="address-level1" data-default-option="{{ form.province }}">
+                    </select>
+                    <span>
+                      {% render 'icon' with 'caret' %}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressZipNew"
+                    type="text"
+                    name="address[zip]"
+                    class="input__field"
+                    value="{{ form.zip }}"
+                    autocomplete="postal-code"
+                    autocapitalize="characters"
+                  >
+
+                  <label for="AddressZipNew" class="input__label">
+                    {{ 'customer.addresses.zip' | t }}
+                  </label>
+                </div>
+
+                <div class="input-group">
+                  <input
+                    is="loess-input-field"
+                    id="AddressPhoneNew"
+                    type="tel"
+                    name="address[phone]"
+                    class="input__field"
+                    value="{{ form.phone }}"
+                    autocomplete="tel"
+                  >
+
+                  <label for="AddressPhoneNew" class="input__label">
+                    {{ 'customer.addresses.phone' | t }}
+                  </label>
+                </div>
+
+                <label for="address_default_address_new" class="collection-filter__input">
+                  <div class="input__checkbox">
+                    {{ form.set_as_default_checkbox }}
+                    {% render 'icon' with 'checkmark-small' %}
+                  </div>
+
+                  <span class="caption">{{ 'customer.addresses.set_default' | t }}</span>
+                </label>
+
+                <div class="button-group">
+                  <button class="button button--primary">{{ 'customer.addresses.add' | t }}</button>
+                  <button class="button button--secondary" type="reset">{{ 'customer.addresses.cancel' | t }}</button>
+                </div>
+              {%- endform -%}
+            </div>
+
+            <ul class="section-form" role="list">
+              {%- for address in customer.addresses -%}
+                <li data-address>
+                  {%- if address == customer.default_address -%}
+                    <h2 class="h3">{{ 'customer.addresses.default' | t }}</h2>
+                  {%- endif -%}
+
+                  <div class="caption">
+                    {{ address | format_address }}
+                  </div>
+
+                  <button type="button" class="button button--secondary" aria-label="Edit address {{ forloop.index }}" aria-controls="EditAddress_{{ address.id }}" aria-expanded="false" data-address-id="{{ address.id }}">
+                    {{ 'customer.addresses.edit' | t }}
+                  </button>
+
+                  <button type="button" class="button button--secondary" aria-label="Delete {{ forloop.index }}" data-target="{{ address.url }}" data-confirm-message="Are you sure you wish to delete this address?">
+                    {{ 'customer.addresses.delete' | t }}
+                  </button>
+
+                  <div id="EditAddress_{{ address.id }}" class="section-form">
+                    <h2 class="h3">{{ 'customer.addresses.update' | t }}</h2>
+
+                    {%- form 'customer_address', address, class: 'customers-form' -%}
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressFirstName_{{ form.id }}"
+                          type="text"
+                          name="address[first_name]"
+                          class="input__field {% if form.first_name != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.first_name }}"
+                          autocomplete="given-name"
+                        >
+
+                        <label for="AddressFirstName_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.first_name' | t }}
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressLastName_{{ form.id }}"
+                          type="text"
+                          name="address[last_name]"
+                          class="input__field {% if form.last_name != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.last_name }}"
+                          autocomplete="family-name"
+                        >
+
+                        <label for="AddressLastName_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.last_name' | t }}
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressCompany_{{ form.id }}"
+                          type="text"
+                          name="address[company]"
+                          class="input__field {% if form.company != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.company }}"
+                          autocomplete="organization"
+                        >
+
+                        <label for="AddressCompany_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.company' | t }}
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressAddress1_{{ form.id }}"
+                          type="text"
+                          name="address[address1]"
+                          class="input__field {% if form.address1 != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.address1 }}"
+                          autocomplete="address-line1"
+                        >
+
+                        <label for="AddressAddress1_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.address1' | t }}
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressAddress2_{{ form.id }}"
+                          type="text"
+                          name="address[address2]"
+                          class="input__field {% if form.address2 != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.address2 }}"
+                          autocomplete="address-line2"
+                        >
+
+                        <label for="AddressAddress2_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.address2' | t }}
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressCity_{{ form.id }}"
+                          type="text"
+                          name="address[city]"
+                          class="input__field {% if form.city != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.city }}"
+                          autocomplete="address-level2"
+                        >
+
+                        <label for="AddressCity_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.city' | t }}
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                        <label class="input__label input__label--select" for="AddressCountry_{{ form.id }}">
+                          {{ 'customer.addresses.country' | t }}
+                        </label>
+
+                        <div class="input__select-wrapper">
+                          <select is="loess-shipping-country-selector" id="AddressCountry_{{ form.id }}" class="input__select" name="address[country]" aria-owns="AddressProvinceContainer_{{ form.id }}" autocomplete="country" data-default-option="{{ form.country }}">
+                            {{ all_country_option_tags }}
+                          </select>
+                          <span>
+                            {% render 'icon' with 'caret' %}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div id="AddressProvinceContainer_{{ form.id }}" class="input-group input-group--hidden">
+                        <label class="input__label input__label--select" for="AddressProvince_{{ form.id }}">
+                          {{ 'customer.addresses.province' | t }}
+                        </label>
+
+                        <div class="input__select-wrapper">
+                          <select id="AddressProvince_{{ form.id }}" class="input__select" name="address[province]" autocomplete="address-level1" data-default-option="{{ form.province }}">
+                          </select>
+                          <span>
+                            {% render 'icon' with 'caret' %}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressZip_{{ form.id }}"
+                          type="text"
+                          name="address[zip]"
+                          class="input__field {% if form.zip != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.zip }}"
+                          autocomplete="postal-code"
+                          autocapitalize="characters"
+                        >
+
+                        <label for="AddressZip_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.zip' | t }}
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                        <input
+                          is="loess-input-field"
+                          id="AddressPhone_{{ form.id }}"
+                          type="tel"
+                          name="address[phone]"
+                          class="input__field {% if form.phone != blank %}input__field--has-input{% endif %}"
+                          value="{{ form.phone }}"
+                          autocomplete="tel"
+                        >
+
+                        <label for="AddressPhone_{{ form.id }}" class="input__label">
+                          {{ 'customer.addresses.phone' | t }}
+                        </label>
+                      </div>
+
+                      <label for="address_default_address_{{ form.id }}" class="collection-filter__input">
+                        <div class="input__checkbox">
+                          {{ form.set_as_default_checkbox }}
+                          {% render 'icon' with 'checkmark-small' %}
+                        </div>
+
+                        <span class="caption">{{ 'customer.addresses.set_default' | t }}</span>
+                      </label>
+
+                      <div class="button-group">
+                        <button class="button button--primary">{{ 'customer.addresses.update' | t }}</button>
+                        <button class="button button--secondary" type="reset">{{ 'customer.addresses.cancel' | t }}</button>
+                      </div>
+                    {%- endform -%}
+                  </div>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <div class="section-link-bottom">
+              {% render 'pagination', paginate: paginate %}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{%- if settings.customers_layout != 'full' -%}
+  </div>
+  {%- if settings.customers_layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+<script src="{{ 'customer.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Addresses",
+  "tag": "section",
+  "class": "shopify-section--span-height",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "For additional settings, navigate to the “Customers” tab in the theme settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,449 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --overlay-opacity: {{ section.settings.overlay }}%;
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- comment -%}Extract the values for the text position's x and y axis{%- endcomment -%}
+    {%- assign text_axis = section.settings.text_position | split: ' ' -%}
+    --text-y-axis: {{ text_axis | first }};
+    --text-x-axis: {{ text_axis | last }};
+
+    --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+    --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+    --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {% if section.settings.layout == 'fixed-soft' %}<div class="color-soft-background">{% endif %}
+    <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="banner banner-mobile--{{ section.settings.height_mobile }} banner-large--{{ section.settings.height_large }}">
+  <div class="banner__text banner__text--overlay {% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %}">
+    <div class="rich-text-wrapper container container--capped">
+      <div class="rich-text rich-text--large-contained">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'text' -%}
+              {%- if block.settings.text != blank -%}
+                <div class="{% if block.settings.style != 'text' %}{{ block.settings.style }}{% endif %} rte">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+            {%- when 'heading' -%}
+              {%- if block.settings.title != blank -%}
+                <h2 class="{{ block.settings.size }}">
+                  {{ block.settings.title | escape }}
+                </h2>
+              {%- endif -%}
+            {%- when 'buttons' -%}
+              <div class="button-group">
+                {%- if block.settings.video_button_link != blank -%}
+                  {%- if block.settings.video_button_label != blank -%}
+                    <button is="loess-button" class="button {% if block.settings.video_button_style %}button--secondary{% else %}button--primary{% endif %} button--color-overriden tap" aria-expanded="false" aria-controls="VideoModal-{{ section.id }}" aria-label="Play video">
+                      {{ block.settings.video_button_label | escape }}
+                      <span class="button button--play-small">
+                        {% render 'icon' with 'play' %}
+                      </span>
+                    </button>
+                  {%- else -%}
+                    <button is="loess-button" class="button {% if block.settings.video_button_style %}button--icon button--plain{% endif %} button--color-overriden button--play-large tap" aria-expanded="false" aria-controls="VideoModal-{{ section.id }}" aria-label="Play video">
+                      {% render 'icon' with 'play' %}
+                    </button>
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if block.settings.button_label != blank -%}
+                  <a href="{{ block.settings.button_link }}" class="button {% if block.settings.button_style %}button--secondary{% else %}button--primary{% endif %} button--color-overriden tap">
+                    {{ block.settings.button_label | escape }}
+                  </a>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <loess-video class="banner__media {% if section.settings.image == blank %}placeholder{% endif %} {% if section.settings.layout != 'full' %}border-radius{% endif %}" {% if section.settings.video != blank %}type="{{ section.settings.video.type }}"{% endif %}>
+    {%- if section.settings.video != blank -%}
+      <template>
+        {%- if section.settings.video.type == 'youtube' -%}
+          <iframe src="https://www.youtube.com/embed/{{ section.settings.video.id }}?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&playlist={{ section.settings.video.id }}&version=3&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" class="video-iframe" allow="autoplay; encrypted-media"></iframe>
+        {%- elsif section.settings.video.type == 'vimeo' -%}
+          <iframe src="https://player.vimeo.com/video/{{ section.settings.video.id }}?autoplay=1&autopause=1&color={{ settings.colors_default_text | remove_first: '#' }}&background=1&transparent=0&controls=0&loop=1&muted=1&portrait=0&title=0&byline=0" class="video-iframe" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+        {%- endif -%}
+      </template>
+    {%- endif -%}
+
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1920 | image_tag: loading: 'lazy' }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </loess-video>
+
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'buttons' and block.settings.video_button_link != blank -%}
+      <loess-modal-video id="VideoModal-{{ section.id }}" type="{{ block.settings.video_button_link.type }}" class="modal">
+        <div class="modal__inner modal__inner--fullscreen modal__inner--video border-radius">
+          <button class="modal__close-button {% if settings.styles_elements_corners != 'square' %}modal__close-button--padded{% endif %} button button--icon button--plain" aria-label="{{ 'general.close' | t }}" close>
+            {% render 'icon' with 'icon-close-small' %}
+          </button>
+          {%- if block.settings.video_button_link.type == 'youtube' -%}
+            <iframe data-src="https://www.youtube.com/embed/{{ block.settings.video_button_link.id }}?playsinline=1&autoplay=1&controls=1&mute=0&loop=0&playlist={{ block.settings.video_button_link.id }}&version=3&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" class="border-radius" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          {%- elsif block.settings.video_button_link.type == 'vimeo' -%}
+            <iframe data-src="https://player.vimeo.com/video/{{ block.settings.video_button_link.id }}?color={{ settings.colors_default_text | remove_first: '#' }}&transparent=0&portrait=0&title=0&byline=0" class="border-radius" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          {%- endif -%}
+          <svg class="modal__spinner spinner" viewBox="0 0 24 24">
+            <circle class="spinner__value" cx="12" cy="12" r="10" />
+          </svg>
+        </div>
+      </loess-modal>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {% if section.settings.layout == 'fixed-soft' %}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Video",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "fixed-soft"
+    },
+    {
+      "type": "select",
+      "id": "height_large",
+      "label": "Section height on large screens",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "16-9",
+          "label": "16:9 aspect ratio"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen height"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Section height on mobile",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "16-9",
+          "label": "16:9 aspect ratio"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen height"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        {
+          "value": "start start",
+          "label": "Top left"
+        },
+        {
+          "value": "start center",
+          "label": "Top center"
+        },
+        {
+          "value": "start end",
+          "label": "Top right"
+        },
+        {
+          "value": "center start",
+          "label": "Middle left"
+        },
+        {
+          "value": "center center",
+          "label": "Middle center"
+        },
+        {
+          "value": "center end",
+          "label": "Middle right"
+        },
+        {
+          "value": "end start",
+          "label": "Bottom left"
+        },
+        {
+          "value": "end center",
+          "label": "Bottom middle"
+        },
+        {
+          "value": "end end",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "video_url",
+      "id": "video",
+      "label": "Background video link",
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Cover image",
+      "info": "Displays on certain devices when auto play is not supported"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Video and image overlay",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#061C2F"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Tell your brand story"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Heading size",
+          "options": [
+            {
+              "value": "h3",
+              "label": "Small"
+            },
+            {
+              "value": "h2",
+              "label": "Medium"
+            },
+            {
+              "value": "h1",
+              "label": "Large"
+            },
+            {
+              "value": "h0",
+              "label": "Extra large"
+            }
+          ],
+          "default": "h1"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add defails on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Text style",
+          "options": [
+            {
+              "value": "small-subtext",
+              "label": "Subtext"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "large-body-text",
+              "label": "Large text"
+            }
+          ],
+          "default": "small-subtext"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_button_link",
+          "label": "Video link",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ],
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "type": "text",
+          "id": "video_button_label",
+          "label": "Optional label"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_button_style",
+          "label": "Use outline style",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Regular button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style",
+          "label": "Use outline style",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,61 @@
+{%- if paginate.parts.size > 0 -%}
+  <nav
+    is='loess-pagination'
+    class='pagination small-caption'
+    {% if async %}
+      async
+    {% endif %}
+  >
+    <ul class='pagination__nav' role='list'>
+      {%- if paginate.previous -%}
+        <li class='pagination__nav-item'>
+          <a
+            rel='prev'
+            aria-label='{{ 'pagination.previous_page' | t }}'
+            data-page='{{ paginate.current_page | minus: 1 }}'
+            href='{{ paginate.previous.url }}{{ hash }}'
+          >
+            {%- render 'icon' with 'arrow-small' -%}
+          </a>
+        </li>
+      {%- endif -%}
+
+      {%- for part in paginate.parts -%}
+        <li class='pagination__nav-item'>
+          {%- if part.is_link -%}
+            <a
+              href='{{ part.url }}{{ hash }}'
+              data-page='{{ part.title }}'
+              class='heading heading--small'
+              aria-label='{{ 'pagination.go_to' | t: number: part.title }}'
+            >
+              {{- part.title -}}
+            </a>
+          {%- else -%}
+            <span
+              class='pagination__nav-item heading heading--small'
+              {% if part.title == paginate.current_page %}
+                aria-current='page'
+              {% endif %}
+            >
+              {{ part.title }}
+            </span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      {%- if paginate.next -%}
+        <li class='pagination__nav-item'>
+          <a
+            rel='next'
+            aria-label='{{ 'pagination.next_page' | t }}'
+            data-page='{{ paginate.current_page | plus: 1 }}'
+            href='{{ paginate.next.url }}{{ hash }}'
+          >
+            {%- render 'icon' with 'arrow-small' -%}
+          </a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </nav>
+{%- endif -%}

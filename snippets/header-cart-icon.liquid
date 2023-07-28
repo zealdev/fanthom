@@ -1,0 +1,24 @@
+{%- if settings.cart_flow == 'drawer' and request.page_type != 'cart' -%}
+  <button
+    is='loess-button'
+    class='button button--plain tap'
+    aria-controls='CartDrawer'
+    aria-expanded='false'
+    aria-label='{{ 'sections.cart.cart' | t }}'
+  >
+    {% render 'icon' with 'cart' %}
+  </button>
+{%- else -%}
+  <a href='{{ routes.cart_url }}' class='tap'>
+    {% render 'icon' with 'cart' %}
+  </a>
+{%- endif -%}
+
+{%- if cart != empty -%}
+  <div class='header-cart-icon__count {% if section.settings.header_style == 'transparent' and section.settings.color_scheme == 'default' and section.settings.custom_colors == false %}header-cart-icon__count--default-background{% endif %} small-text'>
+    {%- if cart.item_count < 100 -%}
+      <span aria-hidden='true'>{{ cart.item_count }}</span>
+    {%- endif -%}
+    <span class='sr-only'>{{ 'sections.header.items_count' | t: count: cart.item_count }}</span>
+  </div>
+{%- endif -%}

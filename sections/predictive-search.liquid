@@ -1,0 +1,157 @@
+{%- if predictive_search.performed -%}
+  {%- comment -%}
+    Can't check for resources == empty/blank so unfortunately
+    we need to loop over resources instead
+  {%- endcomment -%}
+  {%- liquid
+    assign resources = false
+    assign show_category = 0
+
+    for resource in predictive_search.resources
+      if resource.last.size > 0
+        assign resources = true
+        assign show_category = show_category | plus: 1
+      endif
+    endfor
+  -%}
+
+  {%- if resources -%}
+    <div
+      {% if settings.search_predictive_search_soft_background %}
+        class='predictive-search-results__soft-background'
+      {% endif %}
+    >
+      {%- if predictive_search.resources.products.size > 0 -%}
+        {%- if show_category > 1 -%}
+          <h2 class='predictive-search-results__heading small-caption'>{{ 'search.products' | t }}</h2>
+        {%- endif -%}
+
+        <ul class='predictive-search__results-list' role='listbox'>
+          {%- for product in predictive_search.resources.products -%}
+            <li role='option' aria-selected='false'>
+              <a href='{{ product.url }}' class='predictive-search__item'>
+                {%- if product.selected_or_first_available_variant.featured_image != blank -%}
+                  {{
+                    product.selected_or_first_available_variant.featured_image
+                    | image_url: width: 220
+                    | image_tag:
+                      is: 'loess-image',
+                      reveal: true,
+                      class: 'predictive-search__image border-radius',
+                      loading: 'lazy'
+                  }}
+                {%- elsif product.featured_image != blank -%}
+                  {{
+                    product.featured_image
+                    | image_url: width: 220
+                    | image_tag:
+                      is: 'loess-image',
+                      reveal: true,
+                      class: 'predictive-search__image border-radius',
+                      loading: 'lazy'
+                  }}
+                {%- endif -%}
+
+                <div class='predictive-search__item-metadata'>
+                  {%- if settings.product_show_vendor and product.vendor != blank -%}
+                    <span class='small-text'>{{ product.vendor }}</span>
+                  {%- endif -%}
+                  <span class='predictive-search__item-title small-body-text'>{{ product.title }}</span>
+                  {% render 'product-price', product: product, small_font: true %}
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if predictive_search.resources.collections.size > 0 -%}
+        {%- if show_category > 1 -%}
+          <h2 class='predictive-search-results__heading small-caption'>{{ 'search.collections' | t }}</h2>
+        {%- endif -%}
+
+        <ul class='predictive-search__results-list' role='listbox'>
+          {%- for collection in predictive_search.resources.collections -%}
+            <li role='option' aria-selected='false'>
+              <a href='{{ collection.url }}' class='predictive-search__item' tabindex='-1'>
+                {%- if collection.featured_image != blank -%}
+                  {{
+                    collection.featured_image
+                    | image_url: width: 200
+                    | image_tag:
+                      is: 'loess-image',
+                      reveal: true,
+                      class: 'predictive-search__image border-radius',
+                      loading: 'lazy'
+                  }}
+                {%- endif -%}
+
+                <div class='predictive-search__item-metadata'>
+                  <span class='predictive-search__item-title small-body-text'>{{ collection.title }}</span>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if predictive_search.resources.articles.size > 0 -%}
+        {%- if show_category > 1 -%}
+          <h2 class='predictive-search-results__heading small-caption'>{{ 'search.articles' | t }}</h2>
+        {%- endif -%}
+
+        <ul class='predictive-search__results-list' role='listbox'>
+          {%- for article in predictive_search.resources.articles -%}
+            <li role='option' aria-selected='false'>
+              <a href='{{ article.url }}' class='predictive-search__item' tabindex='-1'>
+                {%- if article.image != blank -%}
+                  {{
+                    article.image
+                    | image_url: width: 200
+                    | image_tag:
+                      is: 'loess-image',
+                      reveal: true,
+                      class: 'predictive-search__image border-radius',
+                      loading: 'lazy'
+                  }}
+                {%- endif -%}
+
+                <div class='predictive-search__item-metadata'>
+                  <span class='predictive-search__item-title small-body-text'>{{ article.title }}</span>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if predictive_search.resources.pages.size > 0 -%}
+        {%- if show_category > 1 -%}
+          <h2 class='predictive-search-results__heading small-caption'>{{ 'search.pages' | t }}</h2>
+        {%- endif -%}
+
+        <ul class='predictive-search__results-list' role='listbox'>
+          {%- for page in predictive_search.resources.pages -%}
+            <li role='option' aria-selected='false'>
+              <a href='{{ page.url }}' class='predictive-search__item' tabindex='-1'>
+                <div class='predictive-search__item-metadata'>
+                  <span class='predictive-search__item-title small-body-text'>{{ page.title }}</span>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class='predictive-search__view-all'>
+      <button type='submit' form='PredictiveSearchForm' class='button button--primary'>
+        {{ 'search.view_all_results' | t: term: predictive_search.terms }}
+      </button>
+    </div>
+  {%- else -%}
+    <span class='caption'>
+      {{ 'search.no_results' | t: term: predictive_search.terms }}
+    </span>
+  {%- endif -%}
+{%- endif -%}

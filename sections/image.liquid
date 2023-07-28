@@ -1,0 +1,185 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {% if section.settings.layout == 'fixed-soft' %}<div class="color-soft-background">{% endif %}
+    <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="banner banner-mobile--{{ section.settings.height_mobile }} banner-large--{{ section.settings.height_large }}">
+  <{% if section.settings.link != blank %}a href="{{ section.settings.link }}"{% else %}div{% endif %} class="image banner__media {% if section.settings.image == blank %}image--placeholder{% endif %} {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+    {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}min({{ settings.styles_max_width }}px, 100vw){% endif %}{%- endcapture -%}
+
+    {%- if section.settings.image != blank -%}
+      {%- if section.settings.image_mobile == blank -%}
+        {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '200,300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200' -}}
+      {%- else -%}
+        {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '200,300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', class: 'hide-mobile' -}}
+        {{- section.settings.image_mobile | image_url: width: section.settings.image_mobile.width | image_tag: loading: 'lazy', sizes: sizes, widths: '200,300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', class: 'hide-tablet-and-up' -}}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag }}
+    {%- endif -%}
+
+  </{% if section.settings.link != blank %}a{% else %}div{% endif %}>
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {% if section.settings.layout == 'fixed-soft' %}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Image",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "fixed-soft"
+    },
+    {
+      "type": "select",
+      "id": "height_large",
+      "label": "Image height on large screens",
+      "options": [
+        {
+          "value": "x-small",
+          "label": "Extra small"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "x-large",
+          "label": "Extra large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen height"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Image height on mobile",
+      "options": [
+        {
+          "value": "x-small",
+          "label": "Extra small"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "x-large",
+          "label": "Extra large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen height"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1,
+      "info": "Only applicable when layout is set to “Fixed width“"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1,
+      "info": "Only applicable when layout is set to “Fixed width“"
+    },
+    {
+      "type": "header",
+      "content": "Link on image"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image override on small screens"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image"
+    }
+  ]
+}
+{% endschema %}

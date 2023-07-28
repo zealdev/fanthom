@@ -1,0 +1,205 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+{%- endstyle -%}
+
+<div class='main-gift-card container'>
+  <div class='block {% if section.settings.custom_colors %}color-custom{% else %}color {% if section.settings.color_scheme != 'soft-background' %}color-{{ section.settings.color_scheme }}{% else %}color-default-with-accent-1{% endif %}{% endif %} color-gradient border-radius'>
+    <div class='rich-text-wrapper {% if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false %}rich-text-wrapper--background{% endif %}'>
+      <div class='rich-text rich-text--large-contained container'>
+        <h1 class='h2'>{{ 'sections.gift_card.your_gift_card' | t -}}</h1>
+        <div class='gift-cards {% if section.settings.orientation == 'vertical' %}gift-cards--vertical{% endif %}'>
+          <div class='gift-card'>
+            {%- if section.settings.image != blank -%}
+              {{ section.settings.image | image_url: width: 1000 | image_tag }}
+            {%- else -%}
+              {%- if section.settings.orientation == 'horizontal' -%}
+                {% render 'icon' with 'gift-card-horizontal' %}
+              {%- else -%}
+                {% render 'icon' with 'gift-card-vertical' %}
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          <div class='gift-card'>
+            <div class='gift-card__code-wrapper'>
+              <input
+                class='gift-card__code'
+                value='{{ gift_card.code | format_code }}'
+                readonly
+                onclick='this.select()'
+              >
+              <loess-qr-code class='gift-card__qr-code' identifier='{{ gift_card.qr_identifier }}'></loess-qr-code>
+            </div>
+          </div>
+        </div>
+        {%- if gift_card.enabled or gift_card.expired == false -%}
+          {% if settings.currency_show_codes %}
+            {%- assign gift_card_balance = gift_card.balance | money_with_currency -%}
+          {% else %}
+            {%- assign gift_card_balance = gift_card.balance | money -%}
+          {% endif %}
+          {%- assign gift_card_initial_value = gift_card.initial_value | money -%}
+
+          <p class='large-body-text'>
+            {{
+              'sections.gift_card.remaining_amount'
+              | t: balance: gift_card_balance, initial_value: gift_card_initial_value
+            }}
+          </p>
+        {%- endif -%}
+        {%- if gift_card.enabled and gift_card.expired == false -%}
+          <p>
+            {{ 'sections.gift_card.use_this_code' | t }}
+            {% if gift_card.enabled and gift_card.expired == false and gift_card.expires_on -%}
+              {%- assign expires_on_date = gift_card.expires_on | date: format: 'date' -%}
+              {{ 'sections.gift_card.expires_on' | t: date: expires_on_date -}}
+            {%- endif %}
+          </p>
+        {%- else -%}
+          <div class='gift-card__expired-message small-caption'>
+            {% render 'icon' with 'alert' %}
+            {%- assign expired_on_date = gift_card.expires_on | date: format: 'date' -%}
+            {{ 'sections.gift_card.expired_on' | t: date: expired_on_date -}}
+          </div>
+        {%- endif -%}
+
+        {% if gift_card.pass_url %}
+          <a href='{{ gift_card.pass_url }}'>
+            <img
+              id='apple-wallet-badge'
+              src='{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}'
+              width='120'
+              height='40'
+              alt='{{ 'sections.gift_card.add_to_apple_wallet' | t }}'
+              loading='lazy'
+            >
+          </a>
+        {% endif %}
+
+        <div class='button-group'>
+          <button class='button button--secondary button--x-small hide-print' onclick='window.print();'>
+            {{ 'sections.gift_card.print' | t -}}
+          </button>
+
+          <a href='{{ routes.root_url }}' class='button button--primary button--x-small hide-print'>
+            {{ 'sections.gift_card.go_to_store' | t -}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gift card page",
+  "class": "shopify-section--main-gift-card",
+  "settings": [
+    {
+      "type": "select",
+      "id": "orientation",
+      "label": "Card orientation",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image override"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ]
+}
+{% endschema %}

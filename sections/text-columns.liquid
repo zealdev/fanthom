@@ -1,0 +1,459 @@
+{%- liquid
+  assign columns_tablet = section.settings.columns_large | minus: 1 | at_least: 2
+  assign columns_large = section.settings.columns_large | times: 1
+
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --columns-mobile: 1;
+    --columns-tablet: {{ columns_tablet }};
+    --columns-large: {{ columns_large }};
+    --text-x-axis: {% if section.settings.center_body_text %}center{% else %}start{% endif %};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+
+  {% comment %} Design requested a "slightly round" corner depending on certain conditions {% endcomment %}
+  {%- if section.settings.image_ratio != 'circle' and settings.styles_elements_corners == 'round' -%}
+    #shopify-section-{{ section.id }} .text-column-image {
+      {%- if section.settings.image_padding and section.settings.image_width == '1' %}
+        --image-wrapper-radius: 4px;
+      {%- elsif section.settings.image_padding == false and section.settings.image_width != '1' %}
+        --image-wrapper-radius: 4px;
+      {%- endif -%}
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="{% unless border %}block{% endunless %} {% if section.settings.soft_background != 'section' %}section {% if section.settings.custom_colors %}color-custom color-gradient{% else %}color color-{{ section.settings.color_scheme }} color-gradient{% endif %}{% else %}color-soft-background{% endif %} {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container">
+    {%- if section.settings.title != blank or section.settings.subheading != blank -%}
+      <header class="section-heading {% if section.settings.center_heading_text %}section-heading--centered{% endif %}">
+        {%- if section.settings.title != blank -%}
+          <h2 class="section-heading__heading">
+            {{ section.settings.title | escape }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <div class="section-heading__subheading color-accent">
+            <p class="large-subtext">
+              {{ section.settings.subheading | escape }}
+            </p>
+          </div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <loess-scroller {% if section.settings.slider_mobile and section.blocks.size > 1 %}columns-mobile="1"{% endif %} {% if section.settings.slider_mobile and section.blocks.size > columns_tablet %}columns-tablet="{{ columns_tablet }}"{% endif %} {% if section.settings.slider_large and section.blocks.size > columns_large %}columns-large="{{ columns_large }}"{% endif %}>
+      <ul class="columns scroller {% if section.settings.slider_mobile %}scroller-mobile scroller-tablet{% endif %} {% if section.settings.slider_large %}scroller-large{% endif %} hide-scrollbar" role="list">
+        {%- for block in section.blocks -%}
+          <li class="column-wrapper {% unless border %}block{% endunless %} {% if section.settings.soft_background == 'column' %}column-wrapper--soft-background{% elsif section.settings.soft_background == 'section' %}block color-gradient color-gradient--fixed {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %}{% endif %}" {{ block.shopify_attributes }}>
+            <div class="column">
+              <div class="rich-text">
+                {%- if block.settings.image != blank -%}
+                  <div class="text-column-image-wrapper {% if section.settings.center_body_text %}text-column-image-wrapper--centered{% endif %}" style="--image-width: {{ section.settings.image_width }}">
+                    <div class="text-column-image text-column-image--{{ section.settings.image_ratio }} {% if section.settings.image_ratio == 'circle' %}text-column-image--circle{% endif %} {% if section.settings.image_padding == false %}text-column-image--no-padding{% endif %} {% if section.settings.image_padding == false and section.settings.image_width != '1' %}text-column-image--margin-reset{% endif %}" {% if section.settings.image_ratio == 'auto' %}style="--aspect-ratio: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;"{% endif %}>
+                      {{ block.settings.image | image_url: width: 1380 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+                    </div>
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.title != blank -%}
+                  <h3 class="text-column-heading large-body-text">
+                    {{ block.settings.title | escape }}
+                  </h3>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <div class="rte">
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.button_label != blank -%}
+                  <a href="{{ block.settings.button_link }}" class="text-column__button button button--plain button--icon color-accent tap">
+                    {{ block.settings.button_label | escape }}
+                    <span>
+                      {% render 'icon' with 'arrow-small' %}
+                    </span>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="scroller-bar {% if section.settings.slider_large == false and section.blocks.size <= columns_tablet %}hide-tablet{% endif %} {% if section.settings.slider_large == false and section.blocks.size <= columns_large %}hide-desktop{% endif %}">
+        <loess-scroller-dots class="scroller-dots slider-dots {% if section.settings.soft_background == 'section' %}scroller-dots--color-alternate{% endif %}" aria-hidden="true">
+          <ol role="list"></ol>
+          <template>
+            <li></li>
+          </template>
+        </loess-scroller-dots>
+
+        <loess-scroller-buttons class="scroller-buttons slider-buttons hide-mobile">
+          <button class="slider-buttons__previous button button--icon" aria-label="{{ 'general.slider.previous_slide' | t }}" disabled>
+            {% render 'icon' with 'arrow-minimal-previous' %}
+          </button>
+          <button class="slider-buttons__next button button--icon" aria-label="{{ 'general.slider.next_slide' | t }}">
+            {% render 'icon' with 'arrow-minimal-next' %}
+          </button>
+        </loess-scroller-buttons>
+      </div>
+    </loess-scroller>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="section-link-bottom">
+        <a href="{{ section.settings.button_link }}" class="button {% if section.settings.button_style %}button--secondary{% else %}button--primary{% endif %} tap">
+          {{ section.settings.button_label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Text columns with images",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_large",
+      "label": "Enable slider on large screens",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_mobile",
+      "label": "Enable slider on mobile",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "columns_large",
+      "label": "Number of columns on large screens",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        }
+      ],
+      "default": "3",
+      "info": "Set to 1 column on mobile"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "select",
+      "id": "image_width",
+      "label": "Image width",
+      "options": [
+        {
+          "value": "1/3",
+          "label": "One-third of column"
+        },
+        {
+          "value": "1/2",
+          "label": "Half width of column"
+        },
+        {
+          "value": "1",
+          "label": "Full width of column"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_padding",
+      "label": "Enable image padding",
+      "default": false,
+      "info": "Only applicable when “Image width” is set to “Full width of column”."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading_text",
+      "label": "Center heading text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_body_text",
+      "label": "Center column text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_style",
+      "label": "Use outline style",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "soft_background",
+      "label": "Soft background",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "section",
+          "label": "Show as section background"
+        },
+        {
+          "value": "column",
+          "label": "Show as column background"
+        }
+      ],
+      "default": "column"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1",
+      "info": "Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text-column",
+      "name": "Text column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Text column"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text columns with images",
+      "blocks": [
+        {
+          "type": "text-column"
+        },
+        {
+          "type": "text-column"
+        },
+        {
+          "type": "text-column"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

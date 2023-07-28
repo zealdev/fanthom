@@ -1,0 +1,64 @@
+{%- liquid
+  if image == blank
+    assign image = settings.image
+  endif
+
+  if border == null and settings.color_scheme == 'default' or settings.color_scheme == 'default-with-accent-1'
+    if settings.layout == 'fixed' and settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- if image == blank -%}
+  <div class='header-template section {% if settings.height != 'auto' %}section--{{ settings.height }}{% endif %} {% if remove_background != true %}{% unless border %}block{% endunless %} {% if settings.custom_colors %}color-custom{% else %}color color-{{ settings.color_scheme }}{% endif %} color-gradient{% endif %} {% if settings.layout != 'full' or settings.layout == nil %}border-radius{% endif %}'>
+    <div class='container container--capped'>
+      <div class='rich-text-wrapper {% if settings.layout != 'full' %}vertical-spacer--inherit{% endif %}'>
+        <div class='rich-text rich-text--large-contained'>
+          {{ text }}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- else -%}
+  {%- if settings.image_style == 'background' -%}
+    <div class='header-template banner {% if settings.height != 'auto' %}banner--{{ settings.height }}{% endif %} {% if settings.layout != 'full' %}border-radius{% endif %}'>
+      <div class='banner__text banner__text--overlay'>
+        <div class='rich-text-wrapper {% if settings.layout != 'full' %}vertical-spacer--inherit{% endif %} container'>
+          <div class='rich-text rich-text--large-contained'>
+            {{ text }}
+          </div>
+        </div>
+      </div>
+
+      <div class='banner__media' parallax='{{ settings.enable_parallax }}'>
+        {{
+          image
+          | image_url: width: 2500
+          | image_tag: widths: '1000, 1500, 2000, 2500', is: 'loess-image', reveal: true, loading: 'lazy'
+        }}
+      </div>
+    </div>
+  {%- else -%}
+    <div class='section {% if settings.layout == 'full' %}section-vertical-spacer{% endif %} block {% if remove_background != true %}{% if settings.custom_colors %}color-custom{% else %}color color-{{ settings.color_scheme }}{% endif %} color-gradient{% endif %} {% if settings.layout != 'full' %}border-radius{% endif %}'>
+      <div class='media-with-text {% if settings.height != 'auto' %}media-with-text--{{ settings.height }}{% endif %} {% if settings.layout == 'full' %}container{% endif %}'>
+        <div class='media-with-text__text'>
+          <div class='rich-text-wrapper {% if settings.layout != 'full' %}container{% endif %}'>
+            <div class='rich-text'>
+              {{ text }}
+            </div>
+          </div>
+        </div>
+
+        <div class='media-with-text__media-wrapper {% if settings.image_padding %}media-with-text__media-wrapper--padding{% endif %} {% if settings.layout == 'full' or settings.layout == nil %}border-radius{% endif %}'>
+          <div
+            class='media-with-text__media media-with-text__media--{{ settings.image_style }} {% if settings.image_padding %}media-with-text__media--padding border-radius{% endif %}'
+            parallax='{{ settings.enable_parallax }}'
+          >
+            {{ image | image_url: width: 1500 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}

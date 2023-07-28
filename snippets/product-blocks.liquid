@@ -1,0 +1,578 @@
+<div class="main-product__blocks">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when '@app' -%}
+        <div>
+          {% render block %}
+        </div>
+
+      {%- when 'text' -%}
+        <span class="main-product__block-text {% if block.settings.uppercase %}main-product__block-text--uppercase{% endif %} {{ block.settings.text_style }} color-accent" {{ block.shopify_attributes }}>
+          {{ block.settings.text | escape }}
+        </span>
+
+      {%- when 'title' -%}
+        <div>
+          {%- if settings.product_show_breadcrumbs -%}
+            <nav aria-label="{{ 'breadcrumbs.label' | t }}" class="small-text">
+              <ol class="breadcrumb" role="list">
+                <li class="breadcrumb__item">
+                  <a href="{{ routes.root_url }}" class="breadcrumb__link">
+                    {{ 'breadcrumbs.home' | t }}
+                  </a>
+                </li>
+
+                {%- if collection -%}
+                  <li class="breadcrumb__item">
+                    <a href="{{ collection.url }}" class="breadcrumb__link">
+                      {{- collection.title -}}
+                    </a>
+                  </li>
+                {%- else -%}
+                  <li class="breadcrumb__item">
+                    <a href="{{ routes.all_products_collection_url }}" class="breadcrumb__link">
+                      {{ 'breadcrumbs.all_products' | t }}
+                    </a>
+                  </li>
+                {%- endif -%}
+
+                <li class="breadcrumb__item"></li>
+              </ol>
+            </nav>
+          {%- endif -%}
+
+          {%- if is_product_page -%}
+            <h1 class="h2" {{ block.shopify_attributes }}>
+              {{ product.title | escape }}
+            </h1>
+          {%- else -%}
+            <h2  {{ block.shopify_attributes }}>
+              {{ product.title | escape }}
+            </h2>
+          {%- endif -%}
+        </div>
+
+      {%- when 'description' -%}
+        {%- if product.description != blank -%}
+          <div class="rte small-body-text" {{ block.shopify_attributes }}>
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+      {%- when 'price' -%}
+        <div id="ProductPrice-{{ section.id }}" class="main-product__block-price" {{ block.shopify_attributes }}>
+          <div role="status">
+            {% render 'product-price', product: product, product_section: true, use_variant: true, show_badges: true %}
+          </div>
+
+          {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
+          {%- form 'product', product, id: product_form_installment_id, class: 'main-product__block-price-installments-banner small-caption' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            {{ form | payment_terms }}
+          {%- endform -%}
+        </div>
+
+      {%- when 'buy-buttons' -%}
+        <div class="main-product__block-buy-buttons" {{ block.shopify_attributes }}>
+          <loess-product-form class="product-form" redirect-type="{{ settings.cart_flow }}">
+            <small class="form-message small-text hidden" role="alert">
+              {% render 'icon' with 'red-exclamation' %}
+              <span class="form-message__text"></span>
+            </small>
+
+            {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+              <div class="rte small-text">
+                {%- if cart.taxes_included -%}
+                  {{ 'products.product.include_taxes' | t }}
+                {%- endif -%}
+
+                {%- if shop.shipping_policy.body != blank -%}
+                  {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- form 'product', product, id: product_form_id -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+
+              <div class="product-form__buttons">
+              
+                 <button type="submit" name="add" class="product-form__submit button button--primary button--full-width tap" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                  <span>
+                    {%- if product.selected_or_first_available_variant.available -%}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+
+                  <svg class="spinner hide" viewBox="0 0 24 24">
+                    <circle class="spinner__value" cx="12" cy="12" r="10" />
+                  </svg>
+                </button> 
+              
+                {%- if block.settings.show_dynamic_checkout_buttons -%}
+                  {{ form | payment_button }}
+                {%- endif -%}
+
+                <a class="button button--full-width button--appointment" href="/pages/contact-us">Book an appointment</a>
+
+              </div>
+            {%- endform -%}
+          </loess-product-form>
+
+          {%- if template.suffix != 'quick-view' -%}
+            <div id="PickupAvailability-{{ section.id }}">
+              {% render 'pickup-availability', product: product %}
+            </div>
+          {%- endif -%}
+        </div>
+
+      {%- when 'rating' -%}
+        {%- if product.metafields.reviews.rating.value != blank -%}
+          <div class="card__reviews stars" style="--star-rating: {{ product.metafields.reviews.rating.value.rating }}" {{ block.shopify_attributes }}>
+            <span class="sr-only">{{ 'general.rating' | t: rating: product.metafields.reviews.rating.value.rating }}</span>
+          </div>
+        {%- endif -%}
+
+      {%- when 'variant-picker' -%}
+        {%- assign english_color_labels = 'Color,Colour' | replace: ', ', ',' | downcase | split: ',' -%}
+        {%- assign color_labels = 'products.option.color' | t | replace: ', ', ',' | downcase | split: ',' -%}
+
+        <div {{ block.shopify_attributes }}>
+          {%- unless product.has_only_default_variant -%}
+            <loess-variant-picker id="VariantPickers-{{ section.id }}" class="main-product__block-variant-picker" section-id="{{ section.id }}" product-url="{{ product.url }}" {% unless is_product_page %}should-update-url="false"{% endunless %}>
+              {%- liquid
+                assign color_swatch_configuration = settings.color_swatch_configuration | newline_to_br | split: '<br />'
+
+                for option in product.options_with_values
+                  assign option_name = option.name | downcase
+
+                  if color_labels contains option_name or english_color_labels contains option_name
+                    render 'product-variant-options', product: product, option: option, block: block, forloop: forloop, type: block.settings.color_option_type, color_swatch_configuration: color_swatch_configuration
+                  else
+                    render 'product-variant-options', product: product, option: option, block: block, forloop: forloop, type: block.settings.option_type
+                  endif
+                endfor
+              -%}
+            </loess-variant-picker>
+
+            <script id="ProductVariantData-{{ section.id }}" type="application/json">
+              {{ product.variants | json }}
+            </script>
+          {%- endunless -%}
+        </div>
+
+      {%- when 'quantity-selector' -%}
+        {%- if product.available -%}
+          <div class="main-product__block-quantity-selector small-caption">
+            <label class="small-text " for="Quantity-{{ section.id }}">
+              {{ 'products.product.quantity.label' | t }}
+            </label>
+
+            <loess-quantity-input class="quantity" {{ block.shopify_attributes }}>
+              <button class="quantity__button" name="minus" type="button">
+                <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title }}</span>
+                {% render 'icon' with 'minus-small' %}
+              </button>
+
+              <input class="quantity__input"
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                aria-label="{{ 'products.product.quantity.input_label' | t: product: product.title }}"
+                id="Quantity-{{ section.id }}"
+                data-index="{{ section.id }}"
+                form="{{ product_form_id }}"
+              >
+
+              <button class="quantity__button" name="plus" type="button">
+                <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title }}</span>
+                {% render 'icon' with 'plus-small' %}
+              </button>
+            </loess-quantity-input>
+          </div>
+        {%- endif -%}
+
+      {%- when 'stock-availability' -%}
+        <div id="StockAvailability-{{ section.id }}" class="main-product__block-inventory small-caption" {{ block.shopify_attributes }}>
+          {%- if product.available or product.selected_or_first_available_variant.incoming -%}
+            {%- if product.selected_or_first_available_variant.available -%}
+              {%- if product.selected_or_first_available_variant.inventory_policy == 'deny' and product.selected_or_first_available_variant.inventory_management and block.settings.low_inventory_threshold > 0 and product.selected_or_first_available_variant.inventory_quantity <= block.settings.low_inventory_threshold -%}
+                <div class="main-product__block-inventory__inner">
+                  {%- if block.settings.icon_style != 'none' -%}
+                    {%- if block.settings.icon_style == 'emoji' -%}
+                      <span class="small-body-text">😱</span>
+                    {%- else -%}
+                      {% render 'icon' with 'yellow-exclamation' %}
+                    {%- endif -%}
+                  {%- endif -%}
+                  <span {% if block.settings.enable_label_colors %}style="color: {{ block.settings.color_low_stock }}"{% endif %}>{{ 'products.product.inventory.low_stock' | t: count: product.selected_or_first_available_variant.inventory_quantity }}</span>
+                </div>
+              {%- else -%}
+                {%- if product.selected_or_first_available_variant.inventory_policy == 'continue' and product.selected_or_first_available_variant.inventory_quantity <= 0 and product.selected_or_first_available_variant.requires_shipping -%}
+                  <div class="main-product__block-inventory__inner">
+                    {%- if block.settings.icon_style != 'none' -%}
+                      {%- if block.settings.icon_style == 'emoji' -%}
+                        <span class="small-body-text">😌</span>
+                      {%- else -%}
+                        {% render 'icon' with 'red-exclamation' %}
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if product.selected_or_first_available_variant.incoming and product.selected_or_first_available_variant.next_incoming_date -%}
+                      {%- assign next_incoming_date = product.selected_or_first_available_variant.next_incoming_date | date: format: 'date' -%}
+                      <span {% if block.settings.enable_label_colors %}style="color: {{ block.settings.color_no_stock }}"{% endif %}>{{ 'products.product.inventory.incoming_stock' | t: next_incoming_date: next_incoming_date }}</span>
+                    {%- else -%}
+                      <span {% if block.settings.enable_label_colors %}style="color: {{ block.settings.color_no_stock }}"{% endif %}>{{ 'products.product.inventory.oversell_stock' | t }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- elsif block.settings.hide_in_stock_label == false -%}
+                  <div class="main-product__block-inventory__inner">
+                    {%- if block.settings.icon_style != 'none' -%}
+                      {%- if block.settings.icon_style == 'emoji' -%}
+                        <span class="small-body-text">😊</span>
+                      {%- else -%}
+                        {% render 'icon' with 'green-check' %}
+                      {%- endif -%}
+                    {%- endif -%}
+                    <span {% if block.settings.enable_label_colors %}style="color: {{ block.settings.color_in_stock }}"{% endif %}>{{ 'products.product.inventory.in_stock' | t }}</span>
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            {%- elsif product.selected_or_first_available_variant.incoming -%}
+              <div class="main-product__block-inventory__inner">
+                {%- if block.settings.icon_style != 'none' -%}
+                  {%- if block.settings.icon_style == 'emoji' -%}
+                    <span class="small-body-text">😌</span>
+                  {%- else -%}
+                    {% render 'icon' with 'red-exclamation' %}
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if product.selected_or_first_available_variant.next_incoming_date -%}
+                  {%- assign next_incoming_date = product.selected_or_first_available_variant.next_incoming_date | date: format: 'date' -%}
+                  <span {% if block.settings.enable_label_colors %}style="color: {{ block.settings.color_no_stock }}"{% endif %}>{{ 'products.product.inventory.incoming_stock' | t: next_incoming_date: next_incoming_date }}</span>
+                {%- else -%}
+                  <span {% if block.settings.enable_label_colors %}style="color: {{ block.settings.color_no_stock }}"{% endif %}>{{ 'products.product.inventory.oversell_stock' | t }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+
+      {%- when 'line-item-property' -%}
+        <div class="main-product__block-line-item-property main-product__block-line-item-property--{{ block.settings.type }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.text != blank -%}
+            {%- case block.settings.type -%}
+              {%- when 'text' -%}
+                <div class="input-group">
+                  <input
+                    type="text"
+                    id="LineItemProperty-{{ section.id }}-{{ block.id }}"
+                    class="input__field input__field--has-input"
+                    name="properties[{{ block.settings.text | escape }}]"
+                    form="{{ product_form_id }}"
+                    {% if block.settings.required %}required{% endif %}
+                  >
+                  <label for="LineItemProperty-{{ section.id }}-{{ block.id }}" class="input__label">
+                    {{ block.settings.text | escape }}{% if block.settings.required %}*{% endif %}
+                  </label>
+                </div>
+              {%- when 'multi_line_field' -%}
+                <div class="input-group">
+                  <textarea id="LineItemProperty-{{ section.id }}-{{ block.id }}"
+                    class="input__field input__textarea"
+                    name="properties[{{ block.settings.text | escape }}]"
+                    placeholder="{{ block.settings.text | escape }}{% if block.settings.required %}*{% endif %}"
+                    {% if block.settings.required %}required{% endif %}
+                    form="{{ product_form_id }}"
+                  ></textarea>
+                  <label class="sr-only" for="LineItemProperty-{{ section.id }}-{{ block.id }}">
+                    {{ block.settings.text | escape }}
+                  </label>
+                </div>
+              {%- else -%}
+                <label for="LineItemProperty-{{ section.id }}-{{ block.id }}" class="input__checkbox-wrapper small-caption">
+                  <div class="input__checkbox">
+                    <input type="hidden"
+                      value="{{ block.settings.unchecked_value }}"
+                      name="properties[{{ block.settings.text | escape }}]"
+                      form="{{ product_form_id }}"
+                    >
+                    <input type="checkbox"
+                      id="LineItemProperty-{{ section.id }}-{{ block.id }}"
+                      name="properties[{{ block.settings.text | escape }}]"
+                      value="{{ block.settings.checked_value }}"
+                      form="{{ product_form_id }}"
+                    >
+                    {% render 'icon' with 'checkmark-small' %}
+                  </div>
+
+                  <span>{{ block.settings.text | escape }}</span>
+                </label>
+            {%- endcase -%}
+          {%- endif -%}
+        </div>
+
+      {%- when 'collapsible-tab' -%}
+        <div class="main-product__block-collapsible-tab caption" {{ block.shopify_attributes }}>
+          {%- if block.settings.style != 'non-collapsible' -%}
+            <button is="loess-button" class="collapsible-content-title button button--icon button--plain tap" aria-expanded="{% if block.settings.style == 'expanded' %}true{% else %}false{% endif %}" aria-controls="MainProductCollapsibleTab-{{ section.id }}-{{ block.id }}">
+              {{ block.settings.title | escape }}
+
+              {% render 'icon' with 'collapse' %}
+              {% render 'icon' with 'expand' %}
+            </button>
+          {%- else -%}
+            <div class="collapsible-content-title">
+              {{ block.settings.title | escape }}
+            </div>
+          {%- endif -%}
+
+          <loess-collapsible-panel id="MainProductCollapsibleTab-{{ section.id }}-{{ block.id }}" class="collapsible-content-text collapsible-panel" {% if block.settings.style != 'collapsed' %}open{% endif %}>
+            <div class="rte">
+              {%- if block.settings.page == blank -%}
+                {{ block.settings.text }}
+              {%- else -%}
+                <div class="collapsible-content-text__page">
+                  {{ block.settings.page.content }}
+                </div>
+              {%- endif -%}
+            </div>
+          </loess-collapsible-panel>
+        </div>
+
+      {%- when 'linkable-variants' -%}
+        <div {{ block.shopify_attributes }}>
+          {%- liquid
+            assign contains_product = false
+
+            for product_variation in block.settings.products
+              if product_variation == product
+                assign contains_product = true
+              endif
+            endfor
+          -%}
+
+          {%- if contains_product -%}
+              <div class="product-variation__wrapper">
+                {%- assign color_swatch_configuration = settings.color_swatch_configuration | newline_to_br | split: '<br />' -%}
+
+                {%- assign color_label_list = 'products.option.color' | t | replace: ', ', ',' | downcase | split: ',' | first -%}
+
+                <span class="small-caption">
+                  {{ color_label_list | capitalize }}: {{ product.metafields.custom.color_value.value | capitalize }}
+                </span>
+
+                <div class="product-variation__list input__select-wrapper">
+                  {%- for product_variation in block.settings.products -%}
+                    {%- assign value = product_variation.metafields.custom.color_value.value -%}
+
+                    {%- if product_variation == product %}
+                      {%- assign selected = true -%}
+                    {%- else -%}
+                      {%- assign selected = false -%}
+                    {%- endif -%}
+
+                    <a href="{{ product_variation.url }}" class="card-swatches__button card-swatches__button--large {% if selected %}card-swatches__button--active{% endif %}" style="{% render 'color-swatch', color_swatch_configuration: color_swatch_configuration, value: value %}">
+                      <span class="sr-only">{{ value }}</span>
+                    </a>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </loess-variant-radios>
+          {%- endif -%}
+        </div>
+
+      {%- when 'related-products' -%}
+        <loess-product-recommendations class="main-product__block-related-products" section-id="{{ section.id }}" product-id="{{ product.id }}" limit="4" intent="complementary" {{ block.shopify_attributes }}>
+          {%- if recommendations.performed and recommendations.products_count > 0 -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="small-subtext">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+
+            <ul class="main-product__block-related-products__inner" role="list">
+              {%- for current_product in recommendations.products -%}
+                <li>
+                  <a href="{{ current_product.url }}" tabindex="-1">
+                    {%- if current_product.featured_image != blank -%}
+                      {{ current_product.featured_image | image_url: width: 220 | image_tag: class: 'predictive-search__image predictive-search__image--large' }}
+                    {%- endif -%}
+
+                    <div>
+                      {%- if settings.product_show_vendor and current_product.vendor != blank -%}
+                        <span class="small-caption">
+                          {{ current_product.vendor }}
+                        </span>
+                      {%- endif -%}
+
+                      <span class="predictive-search__item-title small-caption">
+                        {{ current_product.title }}
+                      </span>
+
+                      {% render 'product-price', product: current_product, small_font: true %}
+                    </div>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </loess-product-recommendations>
+
+      {%- when 'label' -%}
+        {%- if block.settings.page != blank -%}
+          <{% if block.settings.behavior != 'popup' %}a href="{{ block.settings.page.url }}"{% elsif block.settings.behavior == 'popup' %}button is="loess-button" aria-controls="LabelBlockModal-{{ block.id }}" aria-expanded="false"{% endif %} class="main-product__block-label {% if block.settings.icon == 'none' %}main-product__block-label--no-icon{% endif %} {% if block.settings.behavior == 'popup' %}button button--small button--plain{% endif %} small-caption" {% if block.settings.behavior == 'new-browser-window' %}target="_blank"{% endif %} {{ block.shopify_attributes }}>
+        {%- else -%}
+          <div class="main-product__block-label {% if block.settings.icon == 'none' %}main-product__block-label--no-icon{% endif %} small-caption" {{ block.shopify_attributes }}>
+        {%- endif -%}
+
+          <div class="main-product__block-label__inner">
+            {%- if block.settings.icon != 'none' -%}
+              {%- render 'icon' with block.settings.icon -%}
+            {%- endif -%}
+
+            {%- if block.settings.text != blank -%}
+              <span class="{% if block.settings.page != blank and block.settings.style == 'underline' %}main-product__block-label-underline{% endif %}">
+                {{ block.settings.text | escape }}
+              </span>
+            {%- endif -%}
+
+            {%- if block.settings.page != blank and block.settings.style != 'underline' -%}
+              {%- render 'icon' with block.settings.style -%}
+            {%- endif -%}
+          </div>
+
+        {%- if block.settings.page != blank -%}
+          </{% if block.settings.behavior != 'popup' %}a{% else %}button{% endif %}>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.page != blank and block.settings.behavior == 'popup' -%}
+          <loess-modal id="LabelBlockModal-{{ block.id }}" class="modal">
+            <div class="modal__inner modal__inner--fit block color color-default border-radius">
+              <button type="button" class="modal__close-button {% if settings.styles_elements_corners != 'square' %}modal__close-button--padded{% endif %} button button--icon button--plain" aria-label="{{ 'general.close' | t }}" close>
+                {% render 'icon' with 'icon-close-small' %}
+              </button>
+
+              <div class="modal__inner-dynamic-content rte">
+                {{ block.settings.page.content }}
+              </div>
+            </div>
+          </loess-modal>
+        {%- endif -%}
+
+      {%- when 'share' -%}
+        <div id="Share-{{ section.id }}" class="main-product__block-share" {{ block.shopify_attributes }}>
+          <div class="main-product__block-share__inner">
+            {%- if block.settings.style != 'icons' -%}
+              <button is="loess-share-button" class="button button--icon-before {% if block.settings.style != 'icons' %}button--{{ block.settings.button_style }}{% else %}button--plain{% endif %} button--small button--narrow tap" aria-controls="ShowShareLink" aria-expanded="false">
+                <span>
+                  {% render 'icon' with 'share' %}
+                </span>
+
+                {{ block.settings.text | escape }}
+              </button>
+            {%- else -%}
+              <span class="button button--icon-before button--plain button--small button--narrow button--no-cursor">
+                {{ block.settings.text | escape }}
+              </span>
+            {%- endif -%}
+
+            {%- if block.settings.style != 'button' -%}
+              {%- liquid
+                assign product_to_share = product.selected_variant | default: product
+                assign share_url = shop.url | append: product_to_share.url
+                assign twitter_text = product_to_share.title | url_param_escape
+                assign pinterest_image = product_to_share.featured_image | image_url: width: 800 | prepend: 'https:'
+                assign pinterest_description = product_to_share.description | strip_html | truncatewords: 15 | url_param_escape
+              -%}
+
+              <ul class="main-product__block-share__icons social-media" role="list">
+                <li>
+                  <a href="https://www.facebook.com/sharer.php?u={{ share_url }}" class="social-media__link tap" target="_blank" rel="noopener" aria-label="{{ 'social.share_on_facebook' | t }}">
+                    {%- render 'icon' with 'facebook' -%}
+                  </a>
+                </li>
+
+                <li>
+                  <a href="https://pinterest.com/pin/create/button/?url={{ share_url }}{% if pinterest_image != blank %}&media={{ pinterest_image }}{% endif %}&description={{ pinterest_description }}" class="social-media__link tap" target="_blank" rel="noopener" aria-label="{{ 'social.pin_on_pinterest' | t }}">
+                    {%- render 'icon' with 'pinterest' -%}
+                  </a>
+                </li>
+
+                <li>
+                  <a href="https://twitter.com/share?{% if twitter_text != blank %}text={{ twitter_text }}&{% endif %}url={{ share_url }}" class="social-media__link tap" target="_blank" rel="noopener" aria-label="{{ 'social.tweet_on_twitter' | t }}">
+                    {%- render 'icon' with 'twitter' -%}
+                  </a>
+                </li>
+
+                <li>
+                  <a href="mailto:?&subject={{ product.title | escape }}&body={{ share_url }}" class="social-media__link tap" aria-label="{{ 'social.share_by_email' | t }}">
+                    {%- render 'icon' with 'share-email' -%}
+                  </a>
+                </li>
+              </ul>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.style != 'icons' -%}
+            <loess-collapsible-panel id="ShowShareLink" class="collapsible-panel">
+              <div class="main-product__block-share__input input-group">
+                <input
+                  is="loess-input-field"
+                  id="ShareLinkInput"
+                  type="text"
+                  class="input__field input__field--has-input input__field--has-button"
+                  value="{{ product_to_share.url | prepend: request.origin }}"
+                  onclick="this.select()"
+                  readonly
+                >
+
+                <label for="ShareLinkInput" class="input__label">
+                  {{ 'products.product.share.link' | t }}
+                </label>
+
+                <button class="button button--plain input__button" aria-label="{{ 'products.product.share.copy_to_clipboard' | t }}">
+                  {% render 'icon' with 'clipboard' %}
+                </button>
+              </div>
+            </loess-collapsible-panel>
+          {%- endif -%}
+        </div>
+
+      {%- when 'images' -%}
+        <div {{ block.shopify_attributes }}>
+          <div class="main-product__block-images">
+            {%- for i in (1..4) -%}
+              {%- assign current_image = 'image_' | append: i -%}
+
+              {%- if block.settings[current_image] != blank -%}
+                {{ block.settings[current_image] | image_url: width: 200 | image_tag }}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+      {%- when 'custom-liquid' -%}
+        <div {{ block.shopify_attributes }}>
+          {%- if block.settings.custom_liquid != blank -%}
+            {{ block.settings.custom_liquid }}
+          {%- endif -%}
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+
+  {%- unless is_product_page -%}
+    <div>
+      <a href="{{ product.url | default: '#' }}" id="ProductFullDetailsLinks-{{ section.id }}" class="button button--plain tap">
+        {{ 'products.product.view_details' | t }}
+        <span>
+          {% render 'icon' with 'arrow-medium' %}
+        </span>
+      </a>
+    </div>
+  {%- endunless -%}
+</div>

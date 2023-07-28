@@ -1,0 +1,24 @@
+{%- liquid
+  assign value_downcase = value | downcase
+  assign swatch_style = 'background-color: ' | append: value_downcase
+
+  for swatch in color_swatch_configuration
+    assign swatch_parts = swatch | split: ':'
+    assign swatch_name = swatch_parts.first | downcase | strip
+
+    if value_downcase == swatch_name
+      assign swatch_value = swatch_parts.last | strip
+
+      if swatch_value contains '#'
+        assign swatch_style = 'background-color: ' | append: swatch_value
+      elsif images[swatch_value] != blank
+        assign swatch_image = images[swatch_value] | image_url: width: 50
+        assign swatch_style = 'background-image: url(' | append: swatch_image | append: ')'
+      endif
+
+      break
+    endif
+  endfor
+
+  echo swatch_style
+-%}

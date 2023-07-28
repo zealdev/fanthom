@@ -1,0 +1,90 @@
+{%- liquid
+  assign variants_available_arr = product.variants | map: 'available'
+  assign variants_option1_arr = product.variants | map: 'option1'
+  assign variants_option2_arr = product.variants | map: 'option2'
+  assign variants_option3_arr = product.variants | map: 'option3'
+
+  assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+{%- if type == 'button' or type == 'swatch' -%}
+  <loess-variant-radios {{ block.shopify_attributes }}>
+    <fieldset class="js">
+      <legend class="input__label input__label--radio">{{ option.name }}{% if type == 'swatch' %}: {{ option.selected_value | capitalize }}{% endif %}</legend>
+        <div class="input__list">
+{%- elsif type == 'dropdown' %}
+  <loess-variant-selects id="variant-selects-{{ section.id }}-Option-{{ forloop.index0 }}" class="input-group" {{ block.shopify_attributes }}>
+    <label class="input__label input__label--select" for="VariantSelects-{{ section.id }}-Option-{{ forloop.index0 }}">
+      {{ option.name }}
+    </label>
+
+    <div class="input__select-wrapper">
+      <select id="VariantSelects-{{ section.id }}-Option-{{ forloop.index0 }}" class="input__select" name="options[{{ option.name | escape }}]" form="{{ product_form_id }}">
+{%- endif -%}
+
+  {%- for value in option.values -%}
+    {%- liquid
+      assign option_disabled = true
+      for option1_name in variants_option1_arr
+        case option.position
+          when 1
+            if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+              assign option_disabled = false
+            endif
+          when 2
+            if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+              assign option_disabled = false
+            endif
+          when 3
+            if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+              assign option_disabled = false
+            endif
+        endcase
+      endfor
+    -%}
+
+    {%- if type == 'button' -%}
+      <input type="radio"
+        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        class="sr-only {% if option_disabled and block.settings.show_unavailable_variants_indicator %}disabled{% endif %}"
+        name="{{ option.name }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        {% if option.selected_value == value %}checked{% endif %}
+        {% if option_disabled %}aria-label="{{ 'products.product.variant_sold_out_or_unavailable' | t }}"{% endif %}
+      >
+      <label class="small-caption" for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+        {{ value }}
+      </label>
+    {%- elsif type == 'swatch' -%}
+      <input type="radio"
+        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        class="sr-only {% if option_disabled and block.settings.show_unavailable_variants_indicator %}disabled{% endif %}"
+        name="{{ option.name }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        {% if option.selected_value == value %}checked{% endif %}
+        {% if option_disabled %}aria-label="{{ 'products.product.variant_sold_out_or_unavailable' | t }}"{% endif %}
+      >
+      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="card-swatches__button card-swatches__button--large" style="{% render 'color-swatch', color_swatch_configuration: color_swatch_configuration, value: value %}">
+        <span class="sr-only">{{ value | capitalize }}</span>
+      </label>
+    {%- elsif type == 'dropdown' -%}
+      <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %} {% if option_disabled and block.settings.show_unavailable_variants_indicator %}aria-label="{{ 'products.product.variant_sold_out_or_unavailable' | t }}"{% endif %}>
+        {{ value }}{% if option_disabled and block.settings.show_unavailable_variants_indicator %} [{{ 'products.product.unavailable' | t }}]{% endif %}
+      </option>
+    {%- endif -%}
+  {%- endfor -%}
+
+{%- if type == 'button' or type == 'swatch' -%}
+      </div>
+    </fieldset>
+  </loess-variant-radios>
+{%- elsif type == 'dropdown' %}
+      </select>
+      <span>
+        {% render 'icon' with 'caret' %}
+      </span>
+    </div>
+  </loess-variant-selects>
+{%- endif -%}

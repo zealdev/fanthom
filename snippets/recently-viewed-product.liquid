@@ -1,0 +1,56 @@
+{%- if product.featured_media != blank -%}
+  <div class='recent-product'>
+    {%- if section.settings.enable_quick_view -%}
+      {%- liquid
+        if product.url contains '?'
+          assign product_url_has_query = true
+        else
+          assign product_url_has_query = false
+        endif
+      -%}
+
+      <button
+        is='loess-button'
+        class='button button--plain'
+        aria-controls='RecentlyViewedQuickView-{{ section.id }}-{{ product.id }}'
+        aria-expanded='false'
+      >
+        {{
+          product.featured_media
+          | image_url: width: 200
+          | image_tag: is: 'loess-image', reveal: true, loading: 'lazy'
+        }}
+      </button>
+
+      <loess-modal-product
+        id='RecentlyViewedQuickView-{{ section.id }}-{{ product.id }}'
+        class='product-modal modal'
+        href='{{ product.url }}{% if product_url_has_query %}&{% else %}?{% endif %}view=quick-view'
+      >
+        <div class='modal__inner modal__inner--fullscreen modal__inner--fullscreen-quick-view block color color-default border-radius'>
+          <button
+            class='modal__close-button {% if settings.styles_elements_corners != 'square' %}modal__close-button--padded{% endif %} modal__close-button--sticky button button--icon button--plain'
+            aria-label='{{ 'general.close' | t }}'
+            close
+          >
+            {% render 'icon' with 'icon-close-small' %}
+          </button>
+
+          <div class='modal__inner-dynamic-content'></div>
+
+          <svg class='modal__spinner spinner' viewBox='0 0 24 24'>
+            <circle class="spinner__value" cx="12" cy="12" r="10" />
+          </svg>
+        </div>
+      </loess-modal-product>
+    {%- else -%}
+      <a href='{{ product.url }}'>
+        {{
+          product.featured_media
+          | image_url: width: 200
+          | image_tag: is: 'loess-image', reveal: true, loading: 'lazy'
+        }}
+      </a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

@@ -1,0 +1,58 @@
+{% comment %}
+  Renders a country currency selector
+  Accepts:
+  - id: {String} ID for form and list. Defaults to section.id if none  passed (optional)
+  - position: {String} Position of the dropdown relative to the button. Defaults to 'center' (optional)
+  - above_button: {Boolean} Renders the dropdown above the button trigger. Defaults to false (optional)
+  Usage:
+  {% render 'country-selector', id: 'UtilityBar', position: 'right', above_button: true %}
+{% endcomment %}
+{%- liquid
+  assign formId = id | default: section.id | append: 'CountryCurrencyForm'
+  assign listId = id | default: section.id | append: 'CountryCurrencyList'
+-%}
+
+<loess-localization-form>
+  {%- form 'localization', id: formId -%}
+    <div class='popover-wrapper popover-wrapper--{{ position | default: 'center' }}'>
+      <button
+        is='loess-button'
+        type='button'
+        class='button button--small button--icon button--plain tap'
+        aria-expanded='false'
+        aria-controls='{{ listId }}'
+      >
+        {{ localization.country.currency.iso_code }}
+        {{ localization.country.currency.symbol }}
+        <span>
+          {% render 'icon' with 'caret' %}
+        </span>
+      </button>
+
+      <loess-popover id='{{ listId }}' class='popover {% if above_button %}popover--top{% endif %}'>
+        <ul class='popover-menu-list' role='list'>
+          {%- for country in localization.available_countries -%}
+            <li class='popover-menu-list__item button button--plain' tabindex='-1'>
+              <a
+                class='popover-menu-list__link{% if country.iso_code == localization.country.iso_code %} popover-menu-list__link--active{% endif %}'
+                href='#'
+                {% if country.iso_code == localization.country.iso_code %}
+                  aria-current='true'
+                {% endif %}
+                data-value='{{ country.iso_code }}'
+              >
+                {{ country.name }}
+                <span
+                  >({{ country.currency.iso_code }}
+                  {{ country.currency.symbol }})</span
+                >
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </loess-popover>
+    </div>
+
+    <input type='hidden' name='country_code' value='{{ localization.country.iso_code }}'>
+  {%- endform -%}
+</loess-localization-form>

@@ -1,0 +1,85 @@
+{%- liquid
+  if settings.cart_show_free_shipping_bar and settings.cart_free_shipping_min_amount != ''
+    assign free_shipping_thresholds = settings.cart_free_shipping_min_amount | remove: '' | split: ','
+    assign has_found_matching_threshold = false
+
+    if free_shipping_thresholds.size > 1
+      for threshold in free_shipping_thresholds
+        assign threshold_parts = threshold | split: ':'
+        assign currency_code = threshold_parts | first | upcase
+
+        if currency_code == cart.currency.iso_code
+          assign free_shipping_calculated_threshold = threshold_parts | last
+          assign has_found_matching_threshold = true
+          break
+        endif
+      endfor
+    else
+      assign free_shipping_calculated_threshold = free_shipping_thresholds | last
+      assign has_found_matching_threshold = true
+    endif
+
+    assign threshold_in_cents = free_shipping_calculated_threshold | times: 100
+  endif
+-%}
+
+<loess-cart-notification-popup
+  class='cart-notification-wrapper'
+  aria-modal='true'
+  aria-label='{{ 'cart_notification.item_added' | t }}'
+  role='dialog'
+  tabindex='-1'
+>
+  <div class='cart-notification-wrapper__inner container'>
+    <div class='cart-notification block color color-{{ settings.cart_color_scheme }} border-radius'>
+      <button
+        type='button'
+        class='popup__close-button {% if settings.styles_elements_corners != 'square' %}popup__close-button--padded{% endif %} button button--icon button--plain tap'
+        close
+      >
+        {% render 'icon' with 'icon-close-small' %}
+      </button>
+
+      <loess-cart-notification class='cart-notification__inner'>
+        <div class='small-caption'>
+          {% render 'icon' with 'checkmark-large' %}
+          {{ 'cart_notification.item_added' | t }}
+        </div>
+
+        {%- if has_found_matching_threshold -%}
+          <div class='cart-progress text-center'>
+            <div id='FreeShippingText'>
+              {% render 'free-shipping-text', threshold: free_shipping_calculated_threshold %}
+            </div>
+
+            <loess-free-shipping-bar
+              class='free-shipping-bar'
+              style='--progress: {{ cart.total_price | times: 1.0 | divided_by: threshold_in_cents | at_most: 1 }}'
+              threshold='{{ threshold_in_cents }}'
+            ></loess-free-shipping-bar>
+          </div>
+        {%- endif -%}
+
+        <div id='CartNotificationProduct'></div>
+
+        <div class='cart-notification__buttons'>
+          <a
+            href='{{ routes.cart_url }}'
+            id='CartNotificationButton'
+            class='button button--secondary button--full-width'
+          ></a>
+
+          <form action='{{ routes.cart_url }}' method='post' id='cart-notification-form'>
+            <button class='button button--primary button--large button--full-width' name='checkout'>
+              {{ 'sections.cart.checkout' | t }}
+            </button>
+          </form>
+
+          <button type='button' class='button button--plain color-accent' close>
+            {{ 'sections.cart.continue_shopping' | t }}
+          </button>
+        </div>
+      </loess-cart-notification>
+    </div>
+  </div>
+</loess-cart-notification-popup>

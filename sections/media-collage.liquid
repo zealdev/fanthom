@@ -1,0 +1,475 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --text-x-axis: {% if section.settings.center_text %}center{% else %}start{% endif %};
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.content_position_large == 'overlaid' or section.settings.content_position_mobile == 'overlaid' -%}
+      --overlay-opacity: {{ section.settings.overlay }}%;
+      --overlay-blur: {{ section.settings.blur | divided_by: 2 }}px;
+    {%- endif -%}
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- capture text -%}
+  {%- liquid
+    case section.settings.text_size
+      when 'medium'
+        assign heading_size = 'h2'
+        assign text_size = 'body-text'
+      when 'large'
+        assign heading_size = 'h1'
+        assign text_size = 'body-text'
+      when 'x-large'
+        assign heading_size = 'h0'
+        assign text_size = 'large-body-text'
+    endcase
+  -%}
+
+  {%- if section.settings.title != blank -%}
+    <h2 class="{{ heading_size }}">
+      {{ section.settings.title | escape }}
+    </h2>
+  {%- endif -%}
+
+  {%- if section.settings.text != blank -%}
+    <div class="rte {{ text_size }} color-accent">
+      {{ section.settings.text }}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.button_label != blank -%}
+    <div class="button-group">
+      <a href="{{ section.settings.button_link }}" class="button {% if section.settings.button_style %}button--secondary{% else %} button--primary{% endif %} tap">
+        {{ section.settings.button_label | escape }}
+      </a>
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="section {% unless section.settings.color_scheme == 'default' and section.settings.layout == 'fixed' and section.settings.custom_colors == false %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+
+  {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}<div class="color-soft-background color-soft-background--default-color">{%- endif -%}
+
+    {%- if section.settings.content_position_mobile == 'above' or section.settings.content_position_large == 'above' -%}
+      <div class="{% if section.settings.content_position_mobile != 'above' %}hide-mobile{% endif %} {% if section.settings.content_position_large != 'above' %}hide-tablet-and-up{% endif %}">
+        <div class="rich-text-wrapper rich-text-wrapper--flush container">
+          <div class="rich-text rich-text--large-contained">
+            {{ text }}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+  <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container">
+    <div class="media-collage media-collage--{{ section.settings.height }} media-collage--blocks-{{ section.blocks.size }} {% if section.settings.first_media_position_large == 'right' %}media-collage--reverse-blocks-large{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- capture placeholder_image -%}{%- cycle 1, 2, 3 -%}{%- endcapture -%}
+
+        <div class="media-collage-block media-collage-block--{{ forloop.index }} border-radius" {{ block.shopify_attributes }}>
+          <div class="media-collage-block__media {% if forloop.first == true and section.settings.content_position_mobile == 'overlaid' or section.settings.content_position_large == 'overlaid' %}media-collage-block__media--overlaid{% endif %}" parallax="{{ block.settings.enable_parallax }}">
+            {%- case block.type -%}
+              {%- when 'image' -%}
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+                {%- else -%}
+                  {{ 'collection-' | append: placeholder_image | placeholder_svg_tag }}
+                {%- endif -%}
+              {%- else -%}
+                <loess-video {% if block.settings.video != blank %}type="{{ block.settings.video.type }}"{% endif %} class="border-radius">
+                  {%- if block.settings.video != blank -%}
+                    <template>
+                      {%- if block.settings.video.type == 'youtube' -%}
+                        <iframe src="https://www.youtube.com/embed/{{ block.settings.video.id }}?playsinline=1&autoplay=1&showinfo=0&controls=0&mute=1&loop=1&playlist={{ block.settings.video.id }}&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" allow="autoplay; encrypted-media" class="video-iframe-full"></iframe>
+                      {%- elsif block.settings.video.type == 'vimeo' -%}
+                        <iframe src="https://player.vimeo.com/video/{{ block.settings.video.id }}?autoplay=1&autopause=1&color={{ settings.colors_default_text | remove_first: '#' }}&background=1&transparent=0&controls=0&loop=1&muted=1&portrait=0&title=0&byline=0" class="video-iframe-full" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+                      {%- endif -%}
+                    </template>
+                  {%- endif -%}
+
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+                  {%- else -%}
+                    {{ 'collection-' | append: placeholder_image | placeholder_svg_tag }}
+                  {%- endif -%}
+                </loess-video>
+            {%- endcase -%}
+          </div>
+
+          {% comment %}
+            The 'overlaid' and 'below' content positions only apply to the first media block
+          {% endcomment %}
+          {%- if forloop.first == true -%}
+            {%- if section.settings.content_position_mobile == 'overlaid' or section.settings.content_position_large == 'overlaid' -%}
+              <div class="media-collage-block__overlaid-text block color {% if section.settings.inverse_colors %}color-inverse{% else %}color-default{% endif %} border-radius {% if section.settings.content_position_mobile != 'overlaid' %}hide-mobile{% endif %} {% if section.settings.content_position_large != 'overlaid' %}hide-tablet-and-up{% endif %}">
+                <div class="rich-text-wrapper container">
+                  <div class="rich-text">
+                    {{ text }}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.content_position_mobile == 'below' -%}
+              <div class="color {% if section.settings.inverse_colors %}color-inverse{% else %}color-default{% endif %} block hide-tablet-and-up">
+                <div class="rich-text-wrapper container">
+                  <div class="rich-text">
+                    {{ text }}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if section.settings.color_scheme == 'soft-background' and section.settings.custom_colors == false -%}</div>{%- endif -%}
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Media collage",
+  "tag": "section",
+  "class": "shopify-section--media-collage",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "x-large",
+          "label": "Extra large"
+        }
+      ],
+      "default": "large",
+      "info": "If the content exceeds the value of “Section height”, the section height will be based on its content"
+    },
+    {
+      "type": "select",
+      "id": "first_media_position_large",
+      "label": "First media position on large screens",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "info": "Only applies when two or more blocks are added"
+    },
+    {
+      "type": "select",
+      "id": "content_position_large",
+      "label": "Content position on large screens",
+      "options": [
+        {
+          "value": "above",
+          "label": "Above media"
+        },
+        {
+          "value": "overlaid",
+          "label": "Overlaid on first media"
+        }
+      ],
+      "default": "overlaid"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "label": "Content position on mobile",
+      "options": [
+        {
+          "value": "above",
+          "label": "Above media"
+        },
+        {
+          "value": "overlaid",
+          "label": "Overlaid on first media"
+        },
+        {
+          "value": "below",
+          "label": "Below first media"
+        }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 20,
+      "info": "Applicable when content is overlaid on media"
+    },
+    {
+      "type": "range",
+      "id": "blur",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Blurred glass effect",
+      "default": 40,
+      "info": "Applicable when content is overlaid on media"
+    },
+    {
+      "type": "checkbox",
+      "id": "inverse_colors",
+      "label": "Inverse colors",
+      "default": true,
+      "info": "Not applicable when content position is set to “Above media”"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_text",
+      "label": "Center text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Media collage"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "options": [
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "x-large",
+          "label": "Extra large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave the label blank to hide the button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_style",
+      "label": "Use outline style",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_parallax",
+          "label": "Enable parallax effect",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video",
+          "label": "Video",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ],
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "The image is used on some devices when videos don't auto play"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media collage",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

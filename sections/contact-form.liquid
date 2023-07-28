@@ -1,0 +1,483 @@
+{%- liquid
+  if section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+{%- endif -%}
+
+<div class="{% unless border %}block{% endunless %} {% if section.settings.soft_background != 'section' %}section {% if section.settings.custom_colors %}color-custom color-gradient{% else %}color color-{{ section.settings.color_scheme }} color-gradient{% endif %}{% else %}color-soft-background{% endif %} {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  <div class="{% if section.settings.layout == 'full' %}section-vertical-spacer{% else %}vertical-spacer{% endif %} container container--capped">
+    {%- if section.settings.title != blank or section.settings.text != blank -%}
+      <header class="section-heading section-heading--capped {% if section.settings.center_heading_text %}section-heading--centered{% endif %}">
+        {%- if section.settings.title != blank -%}
+          <h2 class="section-heading__heading {{ section.settings.heading_size }}">
+            {{ section.settings.title | escape }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <div class="section-heading__subheading">
+            <div class="rte {{ section.settings.text_style }}">
+              {{ section.settings.text }}
+            </div>
+          </div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- form 'contact', class: 'contact-form__form' -%}
+      <div class="contact-form {% if section.settings.image != blank %}contact-form-mobile--{{ section.settings.image_height_mobile }} contact-form-large--{{ section.settings.image_height_large }}{% endif %} {% if section.settings.image == blank %}contact-form--no-image{% endif %} {% if section.settings.form_first %}contact-form--reverse{% endif %} block {% if section.settings.soft_background == 'column' %}contact--soft-background{% elsif section.settings.soft_background == 'section' %}{% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient{% else %}contact-form--margin-top contact-form--bordered{% endif %} border-radius">
+        {%- if section.settings.image != blank -%}
+          <div class="contact-form__image">
+            {{ section.settings.image | image_url: width: 1920 | image_tag: loading: 'lazy' }}
+          </div>
+        {%- endif -%}
+
+        <div class="form {% if section.settings.image == blank %}form--no-image{% endif %}">
+          {%- if form.posted_successfully? -%}
+            <span class="form-message small-text" id="Contact-success--{{ section.id }}" tabindex="-1" autofocus>
+              {% render 'icon' with 'green-check' %}
+              <span>{{ 'sections.newsletter.success' | t }}</span>
+            </span>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <small class="form-message small-text" id="Contact-error--{{ section.id }}">
+              {% render 'icon' with 'red-exclamation' %}{{ form.errors | default_errors }}
+            </small>
+          {%- endif -%}
+
+          <div class="input-group">
+            <input is="loess-input-field" type="email" class="input__field {% if customer.email != blank %}input__field--has-input{% endif %}" name="contact[email]" id="ContactEmail-{{ section.id }}" {% if customer %}value="{{ customer.email }}"{% endif %} required>
+            <label for="ContactEmail-{{ section.id }}" class="input__label">
+              {{ 'sections.newsletter.email' | t }}<span aria-hidden="true">*</span>
+            </label>
+          </div>
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign count = 0
+              assign input_label = block.settings.title | escape
+
+              if input_label == blank
+                assign count = count | plus: 1
+                assign input_label = 'Label ' | append: count
+              endif
+            -%}
+
+            <div class="input-group">
+              <div {{ block.shopify_attributes }}>
+                {%- case block.type -%}
+                  {%- when 'text-field' -%}
+                    {%- if block.settings.multi_line_field == false -%}
+                      <input is="loess-input-field" type="text" class="input__field" name="contact[{{ input_label | escape }}]" id="Contact-{{ input_label | handle }}-{{ section.id }}" {% if block.settings.required %}required{% endif %}>
+                      <label for="Contact-{{ input_label | handle }}-{{ section.id }}" class="input__label">
+                        {{ input_label }}{% if block.settings.require %}*{% endif %}
+                      </label>
+                    {%- else -%}
+                      <textarea class="input__field input__textarea" name="contact[{{ input_label | escape }}]" id="Contact-{{ input_label | handle }}-{{ section.id }}" placeholder="{{ input_label }}{% if block.settings.required %}*{% endif %}" {% if block.settings.required %}required{% endif %}></textarea>
+                      <label class="sr-only" for="Contact-{{ input_label | handle }}-{{ section.id }}">
+                        {{ input_label }}
+                      </label>
+                    {%- endif -%}
+
+                  {%- when 'dropdown-menu' -%}
+                    {%- assign options = block.settings.options | split: ',' -%}
+
+                    {%- if options == blank -%}
+                      {%- continue -%}
+                    {%- endif -%}
+
+                    <label class="input__label input__label--select" for="Contact-{{ input_label | handle }}-{{ section.id }}">
+                      {{ input_label | escape }}{% if block.settings.required %}*{% endif %}
+                    </label>
+                    <div class="input__select-wrapper">
+                      <select id="Contact-{{ input_label | handle }}-{{ section.id }}" class="input__select" name="contact[{{ input_label | escape }}]"{% if block.settings.required %}required{% endif %}>
+                        <option selected disabled>---</option>
+
+                        {%- for option in options -%}
+                          <option value="{{ option | strip | escape }}">
+                            {{ option | strip | escape }}
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                      <span>
+                        {% render 'icon' with 'caret' %}
+                      </span>
+                    </div>
+                {%- endcase -%}
+              </div>
+            </div>
+          {%- endfor -%}
+
+          <div class="contact-form__textarea input-group">
+            <textarea class="input__field input__textarea caption" name="contact[body]" id="ContactComment-{{ section.id }}" placeholder="{{ 'blogs.article.comment_placeholder' | t }}*" required></textarea>
+            <label class="sr-only" for="ContactComment-{{ section.id }}">{{ 'sections.newsletter.comment' | t }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-link-bottom">
+        <button type="submit" class="button button--primary tap">
+          {{ 'sections.newsletter.send' | t }}
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "“Email” and “Comment” text fields are required and cannot be removed"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading_text",
+      "label": "Center heading text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Contact"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h0",
+          "label": "Extra large"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text style",
+      "options": [
+        {
+          "value": "small-subtext",
+          "label": "Subtext"
+        },
+        {
+          "value": "large-subtext",
+          "label": "Large subtext"
+        },
+        {
+          "value": "body-text",
+          "label": "Text"
+        },
+        {
+          "value": "large-body-text",
+          "label": "Large text"
+        }
+      ],
+      "default": "large-subtext"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_height_large",
+      "label": "Image height on large screens",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "medium",
+      "info": "If the form height exceeds the image height, the section height will be based on its form"
+    },
+    {
+      "type": "select",
+      "id": "image_height_mobile",
+      "label": "Image height on mobile",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "form_first",
+      "label": "Display form before image",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "soft_background",
+      "label": "Soft background",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "section",
+          "label": "As section background"
+        },
+        {
+          "value": "column",
+          "label": "As content background"
+        }
+      ],
+      "default": "column"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text-field",
+      "name": "Text field",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required field",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "multi_line_field",
+          "label": "Multi-line field",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label"
+        }
+      ]
+    },
+    {
+      "type": "dropdown-menu",
+      "name": "Dropdown menu",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required field",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "options",
+          "label": "Options",
+          "default": "Option 1, Option 2, Option 3",
+          "info": "Separate each option with a comma"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form",
+      "blocks": [
+        {
+          "type": "text-field",
+          "settings": {
+            "title": "Name",
+            "required": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

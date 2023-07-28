@@ -1,0 +1,658 @@
+{%- liquid
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.full_width == false and section.settings.soft_background == false and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.image != blank -%}
+    --overlay-opacity: {{ section.settings.overlay }}%;
+    {%- endif -%}
+
+    {%- comment -%}Extract the values for the text position's x and y axis{%- endcomment -%}
+    {%- assign text_axis = section.settings.text_position | split: ' ' -%}
+    --text-y-axis: {{ text_axis | first }};
+    --text-x-axis: {{ text_axis | last }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- capture text -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'text' -%}
+        {%- if block.settings.text != blank -%}
+          <div class="{% if block.settings.style != 'text' %}{{ block.settings.style }}{% endif %} rte">
+            {{ block.settings.text }}
+          </div>
+        {%- endif -%}
+      {%- when 'heading' -%}
+        {%- if block.settings.title != blank -%}
+          <h1 class="{{ block.settings.size }}">{{ block.settings.title | escape }}</h1>
+        {%- endif -%}
+      {%- when 'buttons' -%}
+        {%- if block.settings.first_button_label != blank or block.settings.second_button_label != blank -%}
+          <div class="button-group">
+            {%- if block.settings.first_button_label != blank -%}
+              <a href="{{ block.settings.first_button_link }}" class="button {% if block.settings.first_button_style %}button--secondary{% else %} button--primary{% endif %} {% if section.settings.custom_colors %}button--color-overriden{% endif %} tap">
+                {{ block.settings.first_button_label | escape }}
+              </a>
+            {%- endif -%}
+            {%- if block.settings.second_button_label != blank -%}
+              <a href="{{ block.settings.second_button_link }}" class="button {% if block.settings.second_button_style %}button--secondary{% else %} button--primary{% endif %} {% if section.settings.custom_colors %}button--color-overriden{% endif %} tap">
+                {{ block.settings.second_button_label | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- when 'icon' -%}
+        <loess-icon class="color-accent" {% if block.settings.reveal %}reveal{% endif %}>
+          {%- render 'icon' with block.settings.icon -%}
+        </loess-icon>
+    {%- endcase -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture text_with_image -%}
+  <div class="banner banner-mobile--{{ section.settings.image_height_mobile }} banner-large--{{ section.settings.image_height_large }}">
+    <div class="banner__text banner__text--overlay {% if section.settings.full_width %}section-vertical-spacer{% else %}vertical-spacer{% endif %}">
+      <div class="rich-text-wrapper container">
+        <div class="rich-text rich-text--large-contained">
+          {{ text }}
+        </div>
+      </div>
+    </div>
+
+    <div class="banner__media {% if section.settings.full_width == false %}border-radius{% endif %}" parallax="{{ section.settings.enable_parallax }}">
+      {{ section.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', loading: 'lazy' }}
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- if section.settings.full_width and section.settings.image != blank -%}
+  {{ text_with_image }}
+{%- else -%}
+  {%- if section.settings.full_width == false -%}
+    <div class="{% if section.settings.soft_background %}color-soft-background{% endif %}">
+      <div class="section-vertical-spacer container container--capped">
+  {%- endif -%}
+
+  {%- if section.settings.image == blank -%}
+    <div class="section {% unless border %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.full_width == false %}border-radius{% endif %}">
+      <div class="container container--capped {% if section.settings.full_width %}section-vertical-spacer{% else %}vertical-spacer{% endif %}">
+        <div class="rich-text-wrapper rich-text-wrapper--no-padding {% if section.settings.full_width and section.settings.soft_background %}rich-text-wrapper--background{% endif %} border-radius {% if section.settings.full_width %}container{% endif %}">
+          <div class="rich-text rich-text--large-contained">
+            {{ text }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    {{ text_with_image }}
+  {%- endif -%}
+
+  {%- if section.settings.full_width == false -%}
+    </div>
+    {%- if section.settings.soft_background -%}</div>{%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Rich text",
+  "class": "shopify-section--rich-text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Enable full width layout",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        {
+          "value": "start start",
+          "label": "Top left"
+        },
+        {
+          "value": "start center",
+          "label": "Top center"
+        },
+        {
+          "value": "start end",
+          "label": "Top right"
+        },
+        {
+          "value": "center start",
+          "label": "Middle left"
+        },
+        {
+          "value": "center center",
+          "label": "Middle center"
+        },
+        {
+          "value": "center end",
+          "label": "Middle right"
+        },
+        {
+          "value": "end start",
+          "label": "Bottom left"
+        },
+        {
+          "value": "end center",
+          "label": "Bottom middle"
+        },
+        {
+          "value": "end end",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Image overlay",
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "image_height_large",
+      "label": "Image height on large screens",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "image_height_mobile",
+      "label": "Image height on mobile",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "soft_background",
+      "label": "Enable soft background",
+      "default": false,
+      "info": "Not applicable with a full width background image"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1",
+      "info": "Not applicable when an image is displayed. Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Text style",
+          "options": [
+            {
+              "value": "small-subtext",
+              "label": "Subtext"
+            },
+            {
+              "value": "large-subtext",
+              "label": "Large subtext"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "large-body-text",
+              "label": "Large text"
+            }
+          ],
+          "default": "small-subtext"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Tell your brand story"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Heading size",
+          "options": [
+            {
+              "value": "h3",
+              "label": "Small"
+            },
+            {
+              "value": "h2",
+              "label": "Medium"
+            },
+            {
+              "value": "h1",
+              "label": "Large"
+            },
+            {
+              "value": "h0",
+              "label": "Extra large"
+            }
+          ],
+          "default": "h1"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "settings": [
+        {
+          "type": "header",
+          "content": "First button"
+        },
+        {
+          "type": "text",
+          "id": "first_button_label",
+          "label": "First button label",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "first_button_link",
+          "label": "First button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "first_button_style",
+          "label": "Use outline style",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Second button"
+        },
+        {
+          "type": "text",
+          "id": "second_button_label",
+          "label": "Second button label",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "second_button_link",
+          "label": "Second button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "second_button_style",
+          "label": "Use outline style",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "icon",
+      "name": "Icon",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "icon-24-7",
+              "label": "24/7"
+            },
+            {
+              "value": "icon-alert",
+              "label": "Alert"
+            },
+            {
+              "value": "icon-bikini",
+              "label": "Bikini"
+            },
+            {
+              "value": "icon-box",
+              "label": "Box"
+            },
+            {
+              "value": "icon-calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "icon-cash",
+              "label": "Cash"
+            },
+            {
+              "value": "icon-coupon",
+              "label": "Coupon"
+            },
+            {
+              "value": "icon-credit-card",
+              "label": "Credit card"
+            },
+            {
+              "value": "icon-currency-dollar",
+              "label": "Currency: Dollar"
+            },
+            {
+              "value": "icon-currency-euro",
+              "label": "Currency: Euro"
+            },
+            {
+              "value": "icon-currency-pounds",
+              "label": "Currency: Pounds"
+            },
+            {
+              "value": "icon-currency-yen",
+              "label": "Currency: Yen"
+            },
+            {
+              "value": "icon-dollar-bill",
+              "label": "Dollar bill"
+            },
+            {
+              "value": "icon-email",
+              "label": "Email"
+            },
+            {
+              "value": "icon-gift",
+              "label": "Gift"
+            },
+            {
+              "value": "icon-globe",
+              "label": "Globe"
+            },
+            {
+              "value": "icon-handshake",
+              "label": "Handshake"
+            },
+            {
+              "value": "icon-heart",
+              "label": "Heart"
+            },
+            {
+              "value": "icon-highheel",
+              "label": "Highheel"
+            },
+            {
+              "value": "icon-leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "icon-map-pin",
+              "label": "Map pin"
+            },
+            {
+              "value": "icon-megaphone",
+              "label": "Megaphone"
+            },
+            {
+              "value": "icon-open-24",
+              "label": "Open 24 hours"
+            },
+            {
+              "value": "icon-phone",
+              "label": "Phone"
+            },
+            {
+              "value": "icon-piggybank",
+              "label": "Piggybank"
+            },
+            {
+              "value": "icon-price-tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "icon-promotion",
+              "label": "Promotion"
+            },
+            {
+              "value": "icon-recycle",
+              "label": "Recycle"
+            },
+            {
+              "value": "icon-returns",
+              "label": "Returns"
+            },
+            {
+              "value": "icon-ruler",
+              "label": "Ruler"
+            },
+            {
+              "value": "icon-running-shoe",
+              "label": "Running shoe"
+            },
+            {
+              "value": "icon-shield",
+              "label": "Shield"
+            },
+            {
+              "value": "icon-shirt",
+              "label": "Shirt"
+            },
+            {
+              "value": "icon-shopping-cart",
+              "label": "Shopping cart"
+            },
+            {
+              "value": "icon-stars",
+              "label": "Stars"
+            },
+            {
+              "value": "icon-store",
+              "label": "Store"
+            },
+            {
+              "value": "icon-thumbs-up",
+              "label": "Thumbs up"
+            },
+            {
+              "value": "icon-truck",
+              "label": "Truck"
+            },
+            {
+              "value": "icon-virus",
+              "label": "Virus"
+            },
+            {
+              "value": "icon-wave",
+              "label": "Wave"
+            }
+          ],
+          "default": "icon-store"
+        },
+        {
+          "type": "checkbox",
+          "id": "reveal",
+          "label": "Reveal on scroll",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "blocks": [
+        {
+          "type": "icon"
+        },
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

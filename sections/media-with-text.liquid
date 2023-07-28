@@ -1,0 +1,556 @@
+{%- liquid
+  if section.settings.color_scheme == 'default' or section.settings.color_scheme == 'default-with-accent-1'
+    if section.settings.layout == 'fixed' and section.settings.custom_colors == false
+      assign border = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --text-x-axis: start;
+    --padding-top: {{ section.settings.padding_top }};
+    --padding-bottom: {{ section.settings.padding_bottom }};
+
+    {%- if section.settings.custom_colors -%}
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+{%- capture tabs -%}
+  {%- if section.blocks.size > 1 and section.settings.stack_blocks == false -%}
+    {%- if section.settings.layout == 'full' -%}<div class="container">{%- endif -%}
+      <loess-scroller-tabs class="scroller-tabs {% if section.settings.center_tabs %}scroller-tabs--centered{% endif %} {% if section.settings.layout != 'full' %}color-default{% endif %} hide-scrollbar">
+        <ul class="scroller-tabs__inner" role="list">
+          {%- for block in section.blocks -%}
+            {% capture tab_label %}
+              {%- if block.settings.tab_label == blank -%}
+                {{ 'Tab ' | append: forloop.index }}
+              {%- endif -%}
+            {% endcapture %}
+
+            <li class="scroller-tabs__item caption" {% if forloop.first == true %}active{% endif %}>
+              <button class="button button--plain tap" aria-controls="ImageWithText-{{ block.id }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
+                {{ block.settings.tab_label | default: tab_label }}
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </loess-scroller-tabs>
+    {%- if section.settings.layout == 'full' -%}</div>{%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if section.settings.layout != 'full' -%}
+  {%- if section.settings.layout == 'fixed-soft' -%}<div class="color-soft-background">{% endif %}
+  <div class="section-vertical-spacer container container--capped">
+    {{ tabs }}
+{%- endif -%}
+
+<div class="section {% if section.settings.layout == 'full' %}section-vertical-spacer{% endif %} {% unless border %}block{% endunless %} {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %} color-gradient {% if section.settings.layout != 'full' %}border-radius{% endif %}">
+  {%- if section.settings.layout == 'full' -%}
+    {{ tabs }}
+  {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    {%- liquid
+      case block.settings.text_size
+       when 'small'
+          assign heading_size = 'h3'
+          assign text_size = 'body-text'
+        when 'medium'
+          assign heading_size = 'h2'
+          assign text_size = 'body-text'
+        when 'large'
+          assign heading_size = 'h1'
+          assign text_size = 'body-text'
+        when 'x-large'
+          assign heading_size = 'h0'
+          assign text_size = 'large-body-text'
+      endcase
+
+      capture placeholder_image
+        cycle 1, 2
+      endcapture
+    -%}
+
+    <div id="ImageWithText-{{ block.id }}" class="media-with-text media-with-text--{{ section.settings.height }} {% if block.settings.mobile_layout == 'image-first' %}media-with-text--reverse-mobile{% endif %} {% if block.settings.large_layout == 'image-first' %}media-with-text--reverse-large{% endif %} {% if section.settings.layout == 'full' %}container{% endif %}" {% if forloop.first == false and section.settings.stack_blocks == false %}hidden{% endif %} {{ block.shopify_attributes }}>
+      <div class="media-with-text__text">
+        <div class="rich-text-wrapper container">
+          <div class="rich-text rich-text-width-{{ block.settings.text_width }}">
+            {%- if block.settings.subheading != blank -%}
+              <span class="large-subtext color-accent">
+                {{ block.settings.subheading | escape }}
+              </span>
+            {%- endif -%}
+
+            {%- if block.settings.title != blank -%}
+              <h2 class="{{ heading_size }} media-with-text__heading">
+                {{ block.settings.title | escape }}
+              </h2>
+            {%- endif -%}
+
+            <div class="{% if block.settings.add_icons %} media-with-text__icon-wrapper{% endif %}">
+               {%- if block.settings.text != blank -%}
+                <div class="rte {{ text_size }}">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+            </div>
+
+            {% if block.settings.first_button_label != blank or block.settings.second_button_label != blank %}
+              <div class="button-group">
+                {% if block.settings.first_button_label != blank %}
+                  <a href="{{ block.settings.first_button_link }}" class="button {% if block.settings.first_button_outline_style %} button--secondary{% else %}button--primary{% endif %}">
+                    {{ block.settings.first_button_label | escape }}
+                  </a>
+                {% endif %}
+
+                {% if block.settings.second_button_label != blank %}
+                  <a href="{{ block.settings.second_button_link }}" class="button {% if block.settings.second_button_outline_style %} button--secondary{% else %}button--primary{% endif %}">
+                    {{ block.settings.second_button_label | escape }}
+                  </a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="media-with-text__media-wrapper {% if block.settings.image_padding %}media-with-text__media-wrapper--padding{% endif %} {% if section.settings.layout == 'full' %}border-radius{% endif %}">
+        <div class="media-with-text__media {% if section.settings.height != 'auto' %}media-with-text__media--fill{% else %}media-with-text__media--expand{% endif %} {% if block.settings.image.src contains '.png' %}media-with-text__media--transparent{% endif %} {% if block.settings.image_padding %}border-radius{% endif %}" parallax="{{ block.settings.enable_parallax }}">
+          {%- if block.settings.video != blank -%}
+            {%- if block.settings.video_style != 'image-play' -%}
+              <loess-video {% if block.settings.video != blank %}type="{{ block.settings.video.type }}"{% endif %}>
+                {%- if block.settings.video != blank -%}
+                  <template>
+                    {%- if block.settings.video.type == 'youtube' -%}
+                      <iframe src="https://www.youtube.com/embed/{{ block.settings.video.id }}?playsinline=1&autoplay=1&showinfo=0&controls=0&mute=1&loop=1&playlist={{ block.settings.video.id }}&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" allow="autoplay; encrypted-media" class="video-iframe-full"></iframe>
+                    {%- elsif block.settings.video.type == 'vimeo' -%}
+                      <iframe src="https://player.vimeo.com/video/{{ block.settings.video.id }}?autoplay=1&autopause=1&color={{ settings.colors_default_text | remove_first: '#' }}&background=1&transparent=0&controls=0&loop=1&muted=1&portrait=0&title=0&byline=0" class="video-iframe-full" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+                    {%- endif -%}
+                  </template>
+                {%- endif -%}
+              </loess-video>
+            {%- endif -%}
+
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1920 | image_tag: is: 'loess-image', reveal: true, loading: 'lazy' }}
+            {%- else -%}
+              {{ 'lifestyle-' | append: placeholder_image | placeholder_svg_tag }}
+            {%- endif -%}
+
+            {%- if block.settings.video_style == 'background-play' or block.settings.video_style == 'image-play' -%}
+              <div class="media-with-text__play">
+                <div class="button-group">
+                  <button is="loess-button" class="button button--play-large tap" aria-expanded="false" aria-controls="VideoModal-{{ block.id }}">
+                    {% render 'icon' with 'play' %}
+                  </button>
+                </div>
+              </div>
+
+              <loess-modal-video id="VideoModal-{{ block.id }}" type="{{ block.settings.video.type }}" class="modal">
+                <div class="modal__inner modal__inner--fullscreen modal__inner--video border-radius">
+                  <button class="modal__close-button {% if settings.styles_elements_corners != 'square' %}modal__close-button--padded{% endif %} button button--icon button--plain" close>
+                    {% render 'icon' with 'icon-close-small' %}
+                  </button>
+
+                  {%- if block.settings.video.type == 'youtube' -%}
+                    <iframe data-src="https://www.youtube.com/embed/{{ block.settings.video.id }}?playsinline=1&autoplay=0&controls=1&mute=0&loop=0&playlist={{ block.settings.video.id }}&version=3&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" class="border-radius" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  {%- elsif block.settings.video.type == 'vimeo' -%}
+                    <iframe data-src="https://player.vimeo.com/video/{{ block.settings.video.id }}?color={{ settings.colors_default_text | remove_first: '#' }}&transparent=0&portrait=0&title=0&byline=0" class="border-radius" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                  {%- endif -%}
+
+                  <svg class="modal__spinner spinner" viewBox="0 0 24 24">
+                    <circle class="spinner__value" cx="12" cy="12" r="10" />
+                  </svg>
+                </div>
+              </loess-modal>
+            {%- endif -%}
+          {%- elsif block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 1600 | image_tag: widths: '200, 400, 600, 700, 800, 1000, 1200, 1400, 1600', sizes: '(min-width: 751px) calc(1600px / 2), calc(100vw - 32px)', is: 'loess-image', reveal: true, loading: 'lazy' }}
+          {%- else -%}
+            {{ 'lifestyle-' | append: placeholder_image | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+{%- if section.settings.layout != 'full' -%}
+  </div>
+  {%- if section.settings.layout == 'fixed-soft' -%}</div>{% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Media with text",
+  "tag": "section",
+  "class": "shopify-section--media-with-text",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed width"
+        },
+        {
+          "value": "fixed-soft",
+          "label": "Fixed width with soft background"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "fixed-soft"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "x-small",
+          "label": "Extra small"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "stack_blocks",
+      "label": "Stack blocks",
+      "default": true,
+      "info": "Displays tabs when this setting is disabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_tabs",
+      "label": "Center tabs",
+      "default": true,
+      "info": "Applicable when “Stack blocks” is disabled"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "x",
+      "label": "Padding bottom",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "default-with-accent-1",
+          "label": "Default with accent 1"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "inverse-with-accent-2",
+          "label": "Inverse with accent 2"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "default-with-accent-1",
+      "info": "Not applicable when a background image is displayed. Learn more about [color schemes](https://loess.ticksy.com/article/18637/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Custom accent color",
+      "default": "#0D91BD"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Media with text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "large_layout",
+          "label": "Large screen layout",
+          "options": [
+            {
+              "value": "text-first",
+              "label": "Text first"
+            },
+            {
+              "value": "image-first",
+              "label": "Image first"
+            }
+          ],
+          "default": "text-first"
+        },
+        {
+          "type": "select",
+          "id": "mobile_layout",
+          "label": "Mobile layout",
+          "options": [
+            {
+              "value": "text-first",
+              "label": "Text first"
+            },
+            {
+              "value": "image-first",
+              "label": "Image first"
+            }
+          ],
+          "default": "text-first"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_padding",
+          "label": "Enable image padding",
+          "default": false
+        },
+        {
+          "type": "video_url",
+          "id": "video",
+          "label": "Optional video",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ],
+          "info": "The image is used on some devices when videos don't auto play"
+        },
+        {
+          "type": "select",
+          "id": "video_style",
+          "label": "Video style",
+          "options": [
+            {
+              "value": "background",
+              "label": "Background"
+            },
+            {
+              "value": "background-play",
+              "label": "Background with play button"
+            },
+            {
+              "value": "image-play",
+              "label": "Image with play button"
+            }
+          ],
+          "default": "image-play"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_parallax",
+          "label": "Enable parallax effect",
+          "default": false
+        },
+        {
+      "type": "range",
+      "id": "text_width",
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Text Content Width",
+      "default": 100
+    },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "info": "Displayed when “stack blocks” is disabled and section has more than one block"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Media with text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "add_icons",
+          "label": "Add Numbered Icons to text after every line break",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "label": "Text size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            },
+            {
+              "value": "x-large",
+              "label": "Extra large"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "text",
+          "id": "first_button_label",
+          "label": "First button label",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "first_button_link",
+          "label": "First button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "first_button_outline_style",
+          "label": "Use outline button style",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "second_button_label",
+          "label": "Second button label",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "second_button_link",
+          "label": "Second button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "second_button_outline_style",
+          "label": "Use outline button style",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media with text",
+      "blocks": [
+        {
+          "type": "block"
+        },
+        {
+          "type": "block",
+          "settings": {
+            "large_layout": "image-first"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

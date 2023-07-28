@@ -1,0 +1,39 @@
+<script>
+  window.LoessTheme = {
+    animations: {
+      multiplier: {{ settings.animations_style }}
+    },
+
+    cartStrings: {
+      addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+      soldOut: `{{ 'products.product.sold_out' | t }}`,
+      unavailable: `{{ 'products.product.unavailable' | t }}`,
+      error: `There was an error while updating your cart. Please try again.`,
+      quantityError: `You can only add {quantity} of this item to your cart.`
+    },
+
+    routes: {
+      cart_add_url: '{{ routes.cart_add_url }}',
+      cart_change_url: '{{ routes.cart_change_url }}',
+      cart_update_url: '{{ routes.cart_update_url }}',
+      cart_url: '{{ routes.cart_url }}',
+      product_recommendations_url: '{{ routes.product_recommendations_url }}'
+    },
+
+    scripts: {
+      QRCode: `{{ 'vendor/qrcode.js' | shopify_asset_url }}`
+    },
+
+    strings: {
+      copiedToClipboard: {{ 'products.product.share.copied_to_clipboard' | t | json }},
+      shippingCalculatorError: {{ 'sections.shipping_calculator.error' | t | json }},
+      shippingCalculatorMultipleResults: {{ 'sections.shipping_calculator.multiple_results' | t | json }},
+      shippingCalculatorNoResults: {{ 'sections.shipping_calculator.no_results' | t | json }},
+      shippingCalculatorOneResult: {{ 'sections.shipping_calculator.one_result' | t | json }}
+    },
+
+    styles: {
+      modelViewerUiStyles: 'https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css'
+    }
+  };
+</script>
