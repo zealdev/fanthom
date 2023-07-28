@@ -133,8 +133,10 @@
                               class="input__select"
                               name="sort_by">
                               {%- for option in collection.sort_options -%}
-                                <option value="{{ option.value | strip | escape }}" {% if option.value == collection_sort_by %}selected="selected"{% endif %}></option>
-                              {{ option.name | strip | escape }}
+                                <option value="{{ option.value | strip | escape }}" {% if option.value == collection_sort_by %}selected="selected"{% endif %}>
+
+                                  {{ option.name | strip | escape }}
+                                </option>
                             </option>
                           {%- endfor -%}
                         </select>
