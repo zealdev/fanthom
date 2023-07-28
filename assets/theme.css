@@ -852,6 +852,7 @@ button.shopify-payment-button__button--unbranded,
   flex-wrap: wrap;
   gap: 10px;
   justify-content: var(--text-x-axis, center);
+  
 }
 
 button.shopify-payment-button__button--unbranded {
@@ -9502,6 +9503,10 @@ input[type=radio].disabled + label {
 
   .rich-text {
     justify-items: var(--text-x-axis-mobile, var(--x-axis));
+  }
+
+  .rich-text > .button-group:not(:only-child):last-child {
+    background-color: #000;
   }
 }
 
