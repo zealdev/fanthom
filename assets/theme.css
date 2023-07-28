@@ -4453,7 +4453,7 @@ iframe.video-iframe-full {
 } */
 
 .banner__text--overlay .button--color-overriden.button--primary {
-  background-color: var(--color-accent, var(--color-default-text)));
+  background-color: var(--color-accent, var(--color-default-text));
   transition: background-color .2s ease-in-out;
 }
 
@@ -9794,7 +9794,7 @@ font-family: proxima-nova, sans-serif !important
 }
 
 .large-body-text {
-font-family: proxima-nova, sans-serif !important
+font-family: proxima-nova, sans-serif !important;
 font-weight: 700;
 font-style: normal;
 }
@@ -9882,17 +9882,4 @@ font-style: normal;
 
 .shopify-section--promotion > .section {
   overflow-x: hidden;
-}
-
-.scroll {
-  display: flex;
-  flex-direction: row;
-}
-
-.scroll-loop {
-  display: grid;
-  grid-template-columns: repeat(var(--columns), 1fr);
-  gap: calc(3 * var(--container-gap)) var(--container-gap);
-  padding: 20px 0;
-  margin: 0;
 }
