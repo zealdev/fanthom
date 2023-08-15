@@ -15,7 +15,7 @@
             "text_position_large": "center start",
             "text_position_mobile": "start",
             "first_button_label": "BOOK AN APPOINTMENT",
-            "first_button_link": "shopify:\/\/pages\/contact-us",
+            "first_button_link": "shopify:\/\/pages\/calendly",
             "first_button_arrow_style": false,
             "second_button_label": "",
             "second_button_link": "",
@@ -90,7 +90,7 @@
             "text": "<p>At our St Paul's showroom, you can try our entire collection and we'll consult with you to find your perfect vintage watch.<br\/><br\/>So, whether you have a watch in mind, or you just want to explore, book an appointment to visit us.<\/p>",
             "add_icons": false,
             "text_size": "medium",
-            "first_button_label": "BOOK AN APPOINTMENT",
+            "first_button_label": "",
             "first_button_link": "shopify:\/\/pages\/contact-us",
             "first_button_outline_style": false,
             "second_button_label": "",
@@ -115,6 +115,19 @@
         "color_accent": "#000000",
         "color_background": "#ffffff",
         "color_gradient": ""
+      }
+    },
+    "e4019dc3-e599-4ecb-87f9-f6f63dfc0365": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [
+        ".calendar {background-color: rgba(68, 64, 66, 0.15);}"
+      ],
+      "settings": {
+        "liquid": "<!-- Calendly inline widget begin -->\n<div class=\"calendly-inline-widget calendar\" data-url=\"https:\/\/calendly.com\/fathomwatches\/test\" style=\"min-width:320px;height:700px;\"><\/div>\n<script type=\"text\/javascript\" src=\"https:\/\/assets.calendly.com\/assets\/external\/widget.js\" async><\/script>\n<!-- Calendly inline widget end -->",
+        "layout": "full",
+        "padding_top": 1,
+        "padding_bottom": 1
       }
     },
     "756633b5-cf44-45c4-a776-eebf4a0c7063": {
@@ -207,6 +220,7 @@
     "634da63b-1af6-448e-ac54-d7aa8b801182",
     "main",
     "95adb119-2130-4882-9863-49bf072c77b1",
+    "e4019dc3-e599-4ecb-87f9-f6f63dfc0365",
     "756633b5-cf44-45c4-a776-eebf4a0c7063",
     "location-map",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"

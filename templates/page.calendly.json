@@ -1,6 +1,6 @@
 {
   "sections": {
-    "84b3c54d-e490-4706-947d-cf34f54754d3": {
+    "c196253f-056f-485d-b7a0-d80831098b27": {
       "type": "custom-liquid",
       "settings": {
         "liquid": "<!-- Calendly inline widget begin -->\n<div class=\"calendly-inline-widget\" data-url=\"https:\/\/calendly.com\/fathomwatches\/test\" style=\"min-width:320px;height:700px;\"><\/div>\n<script type=\"text\/javascript\" src=\"https:\/\/assets.calendly.com\/assets\/external\/widget.js\" async><\/script>\n<!-- Calendly inline widget end -->",
@@ -14,7 +14,6 @@
       "blocks": {
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-0": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "image": "shopify:\/\/shop_images\/gettyimages-1229872783-1024x1024.jpg",
             "subheading": "",
@@ -40,6 +39,7 @@
         },
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-1": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "subheading": "Subheading",
             "title": "Hero",
@@ -111,7 +111,6 @@
       "blocks": {
         "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1": {
           "type": "block",
-          "disabled": true,
           "settings": {
             "large_layout": "image-first",
             "mobile_layout": "image-first",
@@ -224,7 +223,6 @@
       "blocks": {
         "template--17660417704242__7f17b5bd-6a8f-4a31-888a-54008bdf8d48-167708449443417491-0": {
           "type": "block",
-          "disabled": true,
           "settings": {
             "large_layout": "text-first",
             "mobile_layout": "text-first",
@@ -273,7 +271,6 @@
       "blocks": {
         "template--17660417704242__4d79ec15-9c94-4374-a946-3e13ce9d1745-16770848644a296017-0": {
           "type": "block",
-          "disabled": true,
           "settings": {
             "large_layout": "image-first",
             "mobile_layout": "image-first",
@@ -344,7 +341,7 @@
     }
   },
   "order": [
-    "84b3c54d-e490-4706-947d-cf34f54754d3",
+    "c196253f-056f-485d-b7a0-d80831098b27",
     "4b61c44c-6cd0-4151-8722-816f7bf1e6c3",
     "main",
     "95adb119-2130-4882-9863-49bf072c77b1",

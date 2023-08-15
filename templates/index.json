@@ -1,1 +1,353 @@
-{"sections":{"e9a5da85-0be2-4e50-ae1d-6e42e720853a":{"type":"hero","blocks":{"template--17440688701746__e9a5da85-0be2-4e50-ae1d-6e42e720853a-1673263322ef7ae9ed-0":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/ZENITH_1.png","subheading":"","title":"A vintage watch tells more than just time","text":"<p>Discover a watch unlike any other<\/p>","text_size":"large","text_color":"hero-color-black","text_position_large":"center start","text_position_mobile":"center","first_button_label":"BROWSE OUR COLLECTION","first_button_link":"shopify:\/\/collections\/all","first_button_arrow_style":false,"second_button_label":"","second_button_link":"","second_button_arrow_style":false,"color_scheme":"default","custom_colors":false,"color_foreground":"#000000","color_accent":"#ffffff","color_background":"#ffffff","color_gradient":""}}},"block_order":["template--17440688701746__e9a5da85-0be2-4e50-ae1d-6e42e720853a-1673263322ef7ae9ed-0"],"settings":{"fixed_width":false,"soft_background":false,"height_large":"fullscreen","height_mobile":"medium","padding_top":1,"padding_bottom":1,"text_width":40,"text_below_image_mobile":true,"image_padding":false,"image_offset":false,"enable_parallax":false,"image_background":true,"overlay":0,"animation":"fade","maintain_text_first_slide":true,"maintain_background_color_first_slide":false,"auto_play":false,"auto_play_delay":5}},"collection-list":{"type":"collection-list","settings":{"layout":"full","collection_list":["omega","tudor","rolex"],"slider_large":false,"slider_mobile":false,"columns_large":"3","columns_mobile":"1","padding_top":1,"padding_bottom":1,"center_heading_text":false,"title":"Collections","heading_size":"h2","text":"","text_style":"large-subtext","enable_view_all":false,"view_all_large":"bottom","view_all_mobile":"top","view_all_link":"shopify:\/\/collections","view_all_label":"VIEW ALL","card_layout":"image-without-button","image_ratio":"square","button_alignment":"center","overlay":50,"remove_title_arrow":false,"inverse_colors":false,"color_scheme":"default","custom_colors":true,"color_foreground":"#000000","color_background":"#ffffff","color_gradient":""}},"featured-products":{"type":"featured-products","custom_css":[".price__regular {font-size: 1rem; color: #565656;}"],"settings":{"layout":"full","products":["tudor-submariner-date-blue-dial","rolex-explorer-ii-chicchi-di-mais-2","omega-speedmaster-ed-white-1","heuer-autavia-gmt"],"slider_large":false,"slider_mobile":true,"columns_large":"4","columns_mobile":"1","padding_top":1,"padding_bottom":1,"center_text":false,"title":"FEATURED WATCHES","heading_size":"h2","text":"","text_style":"small-subtext","button_large":"bottom","button_mobile":"top","button_label":"","button_link":"","image_container_ratio":"square","fit_image_to_container":false,"image_padding":5,"enable_second_image_on_hover":true,"color_scheme":"default","custom_colors":true,"color_foreground":"#000000","color_background":"#ffffff","color_gradient":""}},"a9c9dda8-6ed3-4102-b402-3f6263f7d37c":{"type":"promotion","blocks":{"template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-0":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/KENNEDY.jpg","link":""}},"template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-1":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/TOP_RIGHT.jpg","link":""}},"template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-2":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BOTTOM_LEFT.jpg","link":""}},"template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-3":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BOTTOM_RIGHT.jpg","link":""}}},"block_order":["template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-0","template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-1","template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-2","template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-3"],"settings":{"layout":"full","soft_background_top":false,"soft_background_bottom":false,"content_overflow":"none","large_layout":"text-first","mobile_layout":"text-first","text_position_large":"center","text_position_mobile":"start","image_ratio":"square","padding_top":1,"padding_bottom":1,"text_width":70,"subheading":"","title":"EVERY WATCH TELLS A STORY","text":"<p>There are few objects that tell a story like a vintage watch - and no new watch can ever come close. Whether it’s the purpose for which the model was made, the incredible character it was designed for, or the feeling of a watch that’s lived a life before you, Fathom will help you discover a watch unlike any other.<\/p>","text_size":"medium","first_button_label":"READ MORE","first_button_link":"shopify:\/\/pages\/about-us","first_button_outline_style":false,"second_button_label":"","second_button_link":"","second_button_outline_style":true,"color_scheme":"inverse-with-accent-2","custom_colors":true,"color_foreground":"#061c2f","color_accent":"#000000","color_background":"#f7eee5","color_gradient":""}},"5d726844-28fc-45ef-98e6-d82345b42d95":{"type":"hero","blocks":{"template--17660417507634__5d726844-28fc-45ef-98e6-d82345b42d95-1678789263627ba4e7-0":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/FINAL_SPACE_SHOT_b1cccb64-dfb4-45ca-9743-7eec256613d0.jpg","subheading":"","title":"THE FATHOM SHOWROOM","text":"<p>For some, buying a vintage watch means you need to hold it in your hands and that’s why we have the Fathom Showroom in St Paul’s London.<\/p><p>Whether you’re a watch enthusiast or a dealer, just book an appointment to visit us, and we’ll help you find the vintage piece that’s right for you.  <\/p>","text_size":"medium","text_color":"t-color-white","text_position_large":"center start","text_position_mobile":"start","first_button_label":"BOOK AN APPOINTMENT","first_button_link":"shopify:\/\/pages\/contact-us","first_button_arrow_style":false,"second_button_label":"","second_button_link":"","second_button_arrow_style":true,"color_scheme":"default-with-accent-1","custom_colors":false,"color_foreground":"#061c2f","color_accent":"#0d91bd","color_background":"#ffffff","color_gradient":""}}},"block_order":["template--17660417507634__5d726844-28fc-45ef-98e6-d82345b42d95-1678789263627ba4e7-0"],"settings":{"fixed_width":false,"soft_background":false,"height_large":"medium","height_mobile":"medium","padding_top":1,"padding_bottom":1,"text_width":30,"text_below_image_mobile":true,"image_padding":false,"image_offset":false,"enable_parallax":false,"image_background":true,"overlay":26,"animation":"swipe","maintain_text_first_slide":true,"maintain_background_color_first_slide":false,"auto_play":false,"auto_play_delay":5}},"64bbe5d5-bc57-48db-aefe-4275d427e313":{"type":"rich-text","disabled":true,"blocks":{"template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-0":{"type":"icon","disabled":true,"settings":{"icon":"icon-store","reveal":true}},"template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-1":{"type":"heading","settings":{"title":"The Fathom Showroom","size":"h2"}},"template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-2":{"type":"text","settings":{"text":"<p>For some, buying a vintage watch means you need to hold and wear it to know it’s right for you, and that’s why we have the Fathom Showroom in London’s St Paul’s. <\/p><p>So, whether you have a watch in mind, or you just want to explore our collection, simply book an appointment to visit us, and we’ll help you discover a watch unlike any other.<\/p>","style":"text"}},"template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-3":{"type":"buttons","settings":{"first_button_label":"BOOK AN APPOINTMENT","first_button_link":"shopify:\/\/pages\/contact-us","first_button_style":false,"second_button_label":"","second_button_link":"","second_button_style":true}}},"block_order":["template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-0","template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-1","template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-2","template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-3"],"settings":{"full_width":true,"text_position":"center start","image":"shopify:\/\/shop_images\/FINAL_SPACE_SHOT.jpg","overlay":59,"image_height_large":"small","image_height_mobile":"medium","enable_parallax":true,"padding_top":0.5,"padding_bottom":0.5,"soft_background":false,"color_scheme":"default-with-accent-1","custom_colors":true,"color_foreground":"#ffffff","color_accent":"#000000","color_background":"#000000","color_gradient":""}},"newsletter":{"type":"newsletter","settings":{"layout":"full","padding_top":0.6,"padding_bottom":0.3,"center_text":true,"icon":"icon-email","title":"","text":"<p>SUBSCRIBE TO OUR NEWSLETTER<\/p>","form_subtext":"Unsubscribe easily, whenever you like.","text_size":"medium","image_height_large":"small","image_height_mobile":"medium","text_position_large":"right","text_position_mobile":"top","enable_parallax":false,"color_scheme":"inverse","custom_colors":true,"color_foreground":"#ffffff","color_accent":"#c99952","color_background":"#000000","color_gradient":""}}},"order":["e9a5da85-0be2-4e50-ae1d-6e42e720853a","collection-list","featured-products","a9c9dda8-6ed3-4102-b402-3f6263f7d37c","5d726844-28fc-45ef-98e6-d82345b42d95","64bbe5d5-bc57-48db-aefe-4275d427e313","newsletter"]}
+{
+  "sections": {
+    "e9a5da85-0be2-4e50-ae1d-6e42e720853a": {
+      "type": "hero",
+      "blocks": {
+        "template--17440688701746__e9a5da85-0be2-4e50-ae1d-6e42e720853a-1673263322ef7ae9ed-0": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/ZENITH_1.png",
+            "subheading": "",
+            "title": "A vintage watch tells more than just time",
+            "text": "<p>Discover a watch unlike any other<\/p>",
+            "text_size": "large",
+            "text_color": "hero-color-black",
+            "text_position_large": "center start",
+            "text_position_mobile": "center",
+            "first_button_label": "BROWSE OUR COLLECTION",
+            "first_button_link": "shopify:\/\/collections\/all",
+            "first_button_arrow_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_arrow_style": false,
+            "color_scheme": "default",
+            "custom_colors": false,
+            "color_foreground": "#000000",
+            "color_accent": "#ffffff",
+            "color_background": "#ffffff",
+            "color_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--17440688701746__e9a5da85-0be2-4e50-ae1d-6e42e720853a-1673263322ef7ae9ed-0"
+      ],
+      "settings": {
+        "fixed_width": false,
+        "soft_background": false,
+        "height_large": "fullscreen",
+        "height_mobile": "medium",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "text_width": 40,
+        "text_below_image_mobile": true,
+        "image_padding": false,
+        "image_offset": false,
+        "enable_parallax": false,
+        "image_background": true,
+        "overlay": 0,
+        "animation": "fade",
+        "maintain_text_first_slide": true,
+        "maintain_background_color_first_slide": false,
+        "auto_play": false,
+        "auto_play_delay": 5
+      }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "settings": {
+        "layout": "full",
+        "collection_list": [
+          "omega",
+          "tudor",
+          "rolex"
+        ],
+        "slider_large": false,
+        "slider_mobile": false,
+        "columns_large": "3",
+        "columns_mobile": "1",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "center_heading_text": false,
+        "title": "Collections",
+        "heading_size": "h2",
+        "text": "",
+        "text_style": "large-subtext",
+        "enable_view_all": false,
+        "view_all_large": "bottom",
+        "view_all_mobile": "top",
+        "view_all_link": "shopify:\/\/collections",
+        "view_all_label": "VIEW ALL",
+        "card_layout": "image-without-button",
+        "image_ratio": "square",
+        "button_alignment": "center",
+        "overlay": 50,
+        "remove_title_arrow": false,
+        "inverse_colors": false,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "custom_css": [
+        ".price__regular {font-size: 1rem; color: #565656;}"
+      ],
+      "settings": {
+        "layout": "full",
+        "products": [
+          "tudor-submariner-date-blue-dial",
+          "rolex-explorer-ii-chicchi-di-mais-2",
+          "omega-speedmaster-ed-white-1",
+          "heuer-autavia-gmt"
+        ],
+        "slider_large": false,
+        "slider_mobile": true,
+        "columns_large": "4",
+        "columns_mobile": "1",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "center_text": false,
+        "title": "FEATURED WATCHES",
+        "heading_size": "h2",
+        "text": "",
+        "text_style": "small-subtext",
+        "button_large": "bottom",
+        "button_mobile": "top",
+        "button_label": "",
+        "button_link": "",
+        "image_container_ratio": "square",
+        "fit_image_to_container": false,
+        "image_padding": 5,
+        "enable_second_image_on_hover": true,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "a9c9dda8-6ed3-4102-b402-3f6263f7d37c": {
+      "type": "promotion",
+      "blocks": {
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/KENNEDY.jpg",
+            "link": ""
+          }
+        },
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/TOP_RIGHT.jpg",
+            "link": ""
+          }
+        },
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/BOTTOM_LEFT.jpg",
+            "link": ""
+          }
+        },
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/BOTTOM_RIGHT.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-0",
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-1",
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-2",
+        "template--17660417507634__a9c9dda8-6ed3-4102-b402-3f6263f7d37c-16770639701dce5908-3"
+      ],
+      "settings": {
+        "layout": "full",
+        "soft_background_top": false,
+        "soft_background_bottom": false,
+        "content_overflow": "none",
+        "large_layout": "text-first",
+        "mobile_layout": "text-first",
+        "text_position_large": "center",
+        "text_position_mobile": "start",
+        "image_ratio": "square",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "text_width": 70,
+        "subheading": "",
+        "title": "EVERY WATCH TELLS A STORY",
+        "text": "<p>There are few objects that tell a story like a vintage watch - and no new watch can ever come close. Whether it’s the purpose for which the model was made, the incredible character it was designed for, or the feeling of a watch that’s lived a life before you, Fathom will help you discover a watch unlike any other.<\/p>",
+        "text_size": "medium",
+        "first_button_label": "READ MORE",
+        "first_button_link": "shopify:\/\/pages\/about-us",
+        "first_button_outline_style": false,
+        "second_button_label": "",
+        "second_button_link": "",
+        "second_button_outline_style": true,
+        "color_scheme": "inverse-with-accent-2",
+        "custom_colors": true,
+        "color_foreground": "#061c2f",
+        "color_accent": "#000000",
+        "color_background": "#f7eee5",
+        "color_gradient": ""
+      }
+    },
+    "5d726844-28fc-45ef-98e6-d82345b42d95": {
+      "type": "hero",
+      "blocks": {
+        "template--17660417507634__5d726844-28fc-45ef-98e6-d82345b42d95-1678789263627ba4e7-0": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/FINAL_SPACE_SHOT_b1cccb64-dfb4-45ca-9743-7eec256613d0.jpg",
+            "subheading": "",
+            "title": "THE FATHOM SHOWROOM",
+            "text": "<p>For some, buying a vintage watch means you need to hold it in your hands and that’s why we have the Fathom Showroom in St Paul’s London.<\/p><p>Whether you’re a watch enthusiast or a dealer, just book an appointment to visit us, and we’ll help you find the vintage piece that’s right for you.  <\/p>",
+            "text_size": "medium",
+            "text_color": "t-color-white",
+            "text_position_large": "center start",
+            "text_position_mobile": "start",
+            "first_button_label": "BOOK AN APPOINTMENT",
+            "first_button_link": "shopify:\/\/pages\/contact-us",
+            "first_button_arrow_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_arrow_style": true,
+            "color_scheme": "default-with-accent-1",
+            "custom_colors": false,
+            "color_foreground": "#061c2f",
+            "color_accent": "#0d91bd",
+            "color_background": "#ffffff",
+            "color_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--17660417507634__5d726844-28fc-45ef-98e6-d82345b42d95-1678789263627ba4e7-0"
+      ],
+      "settings": {
+        "fixed_width": false,
+        "soft_background": false,
+        "height_large": "medium",
+        "height_mobile": "medium",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "text_width": 30,
+        "text_below_image_mobile": true,
+        "image_padding": false,
+        "image_offset": false,
+        "enable_parallax": false,
+        "image_background": true,
+        "overlay": 26,
+        "animation": "swipe",
+        "maintain_text_first_slide": true,
+        "maintain_background_color_first_slide": false,
+        "auto_play": false,
+        "auto_play_delay": 5
+      }
+    },
+    "64bbe5d5-bc57-48db-aefe-4275d427e313": {
+      "type": "rich-text",
+      "blocks": {
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-0": {
+          "type": "icon",
+          "disabled": true,
+          "settings": {
+            "icon": "icon-store",
+            "reveal": true
+          }
+        },
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-1": {
+          "type": "heading",
+          "settings": {
+            "title": "The Fathom Showroom",
+            "size": "h2"
+          }
+        },
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>For some, buying a vintage watch means you need to hold and wear it to know it’s right for you, and that’s why we have the Fathom Showroom in London’s St Paul’s. <\/p><p>So, whether you have a watch in mind, or you just want to explore our collection, simply book an appointment to visit us, and we’ll help you discover a watch unlike any other.<\/p>",
+            "style": "text"
+          }
+        },
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-3": {
+          "type": "buttons",
+          "settings": {
+            "first_button_label": "BOOK AN APPOINTMENT",
+            "first_button_link": "shopify:\/\/pages\/contact-us",
+            "first_button_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-0",
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-1",
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-2",
+        "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "text_position": "center start",
+        "image": "shopify:\/\/shop_images\/FINAL_SPACE_SHOT.jpg",
+        "overlay": 59,
+        "image_height_large": "small",
+        "image_height_mobile": "medium",
+        "enable_parallax": true,
+        "padding_top": 0.5,
+        "padding_bottom": 0.5,
+        "soft_background": false,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#ffffff",
+        "color_accent": "#000000",
+        "color_background": "#000000",
+        "color_gradient": ""
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "layout": "full",
+        "padding_top": 0.6,
+        "padding_bottom": 0.3,
+        "center_text": true,
+        "icon": "icon-email",
+        "title": "",
+        "text": "<p>SUBSCRIBE TO OUR NEWSLETTER<\/p>",
+        "form_subtext": "Unsubscribe easily, whenever you like.",
+        "text_size": "medium",
+        "image_height_large": "small",
+        "image_height_mobile": "medium",
+        "text_position_large": "right",
+        "text_position_mobile": "top",
+        "enable_parallax": false,
+        "color_scheme": "inverse",
+        "custom_colors": true,
+        "color_foreground": "#ffffff",
+        "color_accent": "#c99952",
+        "color_background": "#000000",
+        "color_gradient": ""
+      }
+    }
+  },
+  "order": [
+    "e9a5da85-0be2-4e50-ae1d-6e42e720853a",
+    "collection-list",
+    "featured-products",
+    "a9c9dda8-6ed3-4102-b402-3f6263f7d37c",
+    "5d726844-28fc-45ef-98e6-d82345b42d95",
+    "64bbe5d5-bc57-48db-aefe-4275d427e313",
+    "newsletter"
+  ]
+}

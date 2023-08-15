@@ -9899,3 +9899,7 @@ font-style: normal;
   padding: 20px 0;
   margin: 0;
 }
+
+.price-font {
+  font-style: normal;
+}
