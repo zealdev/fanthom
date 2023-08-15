@@ -63,7 +63,6 @@
         <div id="ProductPrice-{{ section.id }}" class="main-product__block-price" {{ block.shopify_attributes }}>
           <div role="status">
             {% render 'product-price', product: product, product_section: true, use_variant: true, show_badges: true %}
-            <p>TEST</p>
           </div>
 
           {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}

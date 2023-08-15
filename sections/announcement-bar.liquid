@@ -1,19 +1,9 @@
 {%- if section.settings.custom_colors -%}
   {%- style -%}
     #UtilityBar {
-      --color-foreground: {{ section.settings.color_foreground.red }}
-      , {{ section.settings.color_foreground.green }}
-      , {{ section.settings.color_foreground.blue }}
-      ;
-      --color-background: {{ section.settings.color_background.red }}
-      , {{ section.settings.color_background.green }}
-      , {{ section.settings.color_background.blue }}
-      ;
-      --color-gradient: {% if section.settings.color_gradient != blank %}
-        {{ section.settings.color_gradient }}
-      {% else %}
-        {{ section.settings.color_background }}
-      {% endif %};
+      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
+      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+      --color-gradient: {% if section.settings.color_gradient != blank %}{{ section.settings.color_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
     }
   {%- endstyle -%}
 {%- endif -%}
@@ -63,35 +53,19 @@
 
   {%- for block in section.blocks -%}
     {%- style -%}
-      #AnnouncementBar-{{ forloop.index }}{
+      #AnnouncementBar-{{ forloop.index }} {
         --text-y-axis: center;
-        --text-x-axis: {% if block.settings.center_text %}
-          center{% else %}
-          start{% endif %};
+        --text-x-axis: {% if block.settings.center_text %}center{% else %}start{% endif %};
 
         {%- if block.settings.image != blank -%}
-          --overlay-opacity: {{ block.settings.overlay }}
-          %;
+          --overlay-opacity: {{ block.settings.overlay }}%;
         {%- endif -%}
 
         {%- if block.settings.custom_colors -%}
-          --color-foreground: {{ block.settings.color_foreground.red }}
-          , {{ block.settings.color_foreground.green }}
-          , {{ block.settings.color_foreground.blue }}
-          ;
-          --color-accent: {{ block.settings.color_accent.red }}
-          , {{ block.settings.color_accent.green }}
-          , {{ block.settings.color_accent.blue }}
-          ;
-          --color-background: {{ block.settings.color_background.red }}
-          , {{ block.settings.color_background.green }}
-          , {{ block.settings.color_background.blue }}
-          ;
-          --color-gradient: {% if block.settings.color_gradient != blank %}
-            {{ block.settings.color_gradient }}
-          {% else %}
-            {{ block.settings.color_background }}
-          {% endif %};
+          --color-foreground: {{ block.settings.color_foreground.red }}, {{ block.settings.color_foreground.green }}, {{ block.settings.color_foreground.blue }};
+          --color-accent: {{ block.settings.color_accent.red }}, {{ block.settings.color_accent.green }}, {{ block.settings.color_accent.blue }};
+          --color-background: {{ block.settings.color_background.red }}, {{ block.settings.color_background.green }}, {{ block.settings.color_background.blue }};
+          --color-gradient: {% if block.settings.color_gradient != blank %}{{ block.settings.color_gradient }}{% else %}{{ block.settings.color_background }}{% endif %};
         {%- endif -%}
       }
     {%- endstyle -%}
@@ -105,165 +79,154 @@
     {%- if block.settings.title != blank -%}
       {%- if is_link and section.settings.merge_utility_bar_large == false -%}
         <a href="{{ block.settings.link }}">
-        {%- endif -%}
+      {%- endif -%}
 
-        <div
-          id="AnnouncementBar-{{ forloop.index }}"
-          class="section block {% if block.settings.custom_colors %}color-custom{% else %}{% if block.settings.color_scheme != 'soft-background' %}color color-{{ block.settings.color_scheme }}{% else %}color-default{% endif %}{% endif %} color-gradient color-gradient--fixed"
-          {{ block.shopify_attributes }}>
+        <div id="AnnouncementBar-{{ forloop.index }}" class="section block {% if block.settings.custom_colors %}color-custom{% else %}{% if block.settings.color_scheme != 'soft-background' %}color color-{{ block.settings.color_scheme }}{% else %}color-default{% endif %}{% endif %} color-gradient color-gradient--fixed" {{ block.shopify_attributes }}>
           {%- if block.settings.color_scheme == 'soft-background' and block.settings.custom_colors == false -%}
             <div class="announcement-bar-soft-background">
-            {%- endif -%}
+          {%- endif -%}
 
-            <div class="announcement-bar {% if block.settings.enable_expandable_content == false %}announcement-bar--link{% endif %}">
-              <div class="container">
-                {%- if section.settings.merge_utility_bar_large -%}
-                  <div class="announcement-bar-merged {% if section.settings.utility_bar_layout == 'center' %}announcement-bar-merged--centered{% endif %}">
-                    <div class="hide-mobile-and-tablet">
-                      {%- if section.settings.utility_bar_layout == 'icons-right' -%}
-                        {%- if language_selector or country_selector -%}
-                          <div class="utility-bar__cross-border">
-                            {%- if language_selector -%}
-                              {% render 'language-selector', id: 'UtilityBarMerged', position: popup_position %}
-                            {%- endif -%}
-                            {%- if country_selector -%}
-                              {% render 'country-selector', id: 'UtilityBarMerged', position: popup_position %}
-                            {%- endif -%}
-                          </div>
-                        {%- endif -%}
-                      {%- else -%}
-                        {%- if section.settings.enable_social_icons -%}
-                          {% render 'social-media' %}
-                        {%- endif -%}
+          <div class="announcement-bar {% if block.settings.enable_expandable_content == false %}announcement-bar--link{% endif %}">
+            <div class="container">
+              {%- if section.settings.merge_utility_bar_large -%}
+                <div class="announcement-bar-merged {% if section.settings.utility_bar_layout == 'center' %}announcement-bar-merged--centered{% endif %}">
+                  <div class="hide-mobile-and-tablet">
+                    {%- if section.settings.utility_bar_layout == 'icons-right' -%}
+                      {%- if language_selector or country_selector -%}
+                        <div class="utility-bar__cross-border">
+                          {%- if language_selector -%}
+                            {% render 'language-selector', id: 'UtilityBarMerged', position: popup_position %}
+                          {%- endif -%}
+                          {%- if country_selector -%}
+                            {% render 'country-selector', id: 'UtilityBarMerged', position: popup_position %}
+                          {%- endif -%}
+                        </div>
                       {%- endif -%}
+                    {%- else -%}
+                      {%- if section.settings.enable_social_icons -%}
+                        {% render 'social-media' %}
+                      {%- endif -%}
+                    {%- endif -%}
+                  </div>
+              {%- endif -%}
+
+              {%- if block.settings.enable_expandable_content == false -%}
+                {%- if is_link and section.settings.merge_utility_bar_large -%}
+                  <a href="{{ block.settings.link }}" class="announcement-bar__link small-caption tap">
+                {%- else -%}
+                  <div class="announcement-bar__link small-caption">
+                {%- endif -%}
+                  {{ block.settings.title | escape }}
+
+                  {%- if is_link -%}
+                    <div class="button button--plain tap">
+                      {% render 'icon' with 'arrow-small' %}
                     </div>
                   {%- endif -%}
+                {%- if is_link and section.settings.merge_utility_bar_large -%}
+                  </a>
+                {%- else -%}
+                  </div>
+                {%- endif -%}
+              {%- else -%}
+                <div class="announcement-bar__text small-caption">
+                  {{ block.settings.title | escape }}
+                  <button is="loess-button" class="announcement-bar__button button button--x-small button--icon tap" aria-expanded="false" aria-controls="PromoBarPanel" aria-label="{{ 'sections.announcement_bar.open_label' | t }}">
+                    {%- if block.settings.button_label != blank -%}
+                      <span class="announcement-bar__button-text hide-mobile">{{ block.settings.button_label | escape }}</span>
+                    {%- endif -%}
+                    {% render 'icon' with 'caret' %}
+                  </button>
+                </div>
+              {%- endif -%}
 
-                  {%- if block.settings.enable_expandable_content == false -%}
-                    {%- if is_link and section.settings.merge_utility_bar_large -%}
-                      <a href="{{ block.settings.link }}" class="announcement-bar__link small-caption tap">
-                      {%- else -%}
-                        <div class="announcement-bar__link small-caption">
-                        {%- endif -%}
-                        {{ block.settings.title | escape }}
-
-                        {%- if is_link -%}
-                          <div class="button button--plain tap">
-                            {% render 'icon' with 'arrow-small' %}
-                          </div>
-                        {%- endif -%}
-                        {%- if is_link and section.settings.merge_utility_bar_large -%}
-                        </a>
-                    {%- else -%}
-                      </div>
+              {%- if section.settings.merge_utility_bar_large -%}
+                <div class="hide-mobile-and-tablet">
+                  {%- if section.settings.utility_bar_layout == 'icons-right' -%}
+                    {%- if section.settings.enable_social_icons -%}
+                      {% render 'social-media' %}
                     {%- endif -%}
                   {%- else -%}
-                    <div class="announcement-bar__text small-caption">
-                      {{ block.settings.title | escape }}
-                      <button
-                        is="loess-button"
-                        class="announcement-bar__button button button--x-small button--icon tap"
-                        aria-expanded="false"
-                        aria-controls="PromoBarPanel"
-                        aria-label="{{ 'sections.announcement_bar.open_label' | t }}">
-                        {%- if block.settings.button_label != blank -%}
-                          <span class="announcement-bar__button-text hide-mobile">{{ block.settings.button_label | escape }}</span>
+                    {%- if language_selector or country_selector -%}
+                      <div class="utility-bar__cross-border">
+                        {%- if language_selector -%}
+                          {% render 'language-selector', id: 'UtilityBarMerged', position: popup_position %}
                         {%- endif -%}
-                        {% render 'icon' with 'caret' %}
-                      </button>
-                    </div>
-                  {%- endif -%}
-
-                  {%- if section.settings.merge_utility_bar_large -%}
-                    <div class="hide-mobile-and-tablet">
-                      {%- if section.settings.utility_bar_layout == 'icons-right' -%}
-                        {%- if section.settings.enable_social_icons -%}
-                          {% render 'social-media' %}
+                        {%- if country_selector -%}
+                          {% render 'country-selector', id: 'UtilityBarMerged', position: popup_position %}
                         {%- endif -%}
-                      {%- else -%}
-                        {%- if language_selector or country_selector -%}
-                          <div class="utility-bar__cross-border">
-                            {%- if language_selector -%}
-                              {% render 'language-selector', id: 'UtilityBarMerged', position: popup_position %}
-                            {%- endif -%}
-                            {%- if country_selector -%}
-                              {% render 'country-selector', id: 'UtilityBarMerged', position: popup_position %}
-                            {%- endif -%}
-                          </div>
-                        {%- endif -%}
-                      {%- endif -%}
-                    </div>
-                  </div>
-                {%- endif -%}
-              </div>
-            </div>
-
-            {%- if block.settings.enable_expandable_content -%}
-              <loess-collapsible-panel id="PromoBarPanel" class="announcement-bar__panel {% if block.settings.image != blank %}announcement-bar__panel--has-image{% endif %} collapsible-panel">
-                {%- capture text -%}
-                  {%- if block.settings.subheading != blank -%}
-                    <div class="small-subtext color-accent rte">
-                      {{ block.settings.subheading }}
-                    </div>
+                      </div>
+                    {%- endif -%}
                   {%- endif -%}
-
-                  {%- if block.settings.heading != blank -%}
-                    <h2 class="{{ block.settings.heading_size }}">
-                      {{ block.settings.heading | escape }}
-                    </h2>
-                  {%- endif -%}
-
-                  {%- if block.settings.text != blank -%}
-                    <div class="{% if block.settings.description_size == 'large' %}large-body-text{% endif %}">
-                      {{ block.settings.text }}
-                    </div>
-                  {%- endif -%}
-
-                  {%- if block.settings.first_button_label != blank or block.settings.second_button_label != blank -%}
-                    <div class="button-group">
-                      {%- if block.settings.first_button_label != blank -%}
-                        <a href="{{ block.settings.first_button_link }}" class="button {% if block.settings.first_button_style %}button--secondary{% else %} button--primary{% endif %} tap">
-                          {{ block.settings.first_button_label | escape }}
-                        </a>
-                      {%- endif -%}
-                      {%- if block.settings.second_button_label != blank -%}
-                        <a href="{{ block.settings.second_button_link }}" class="button {% if block.settings.second_button_style %}button--secondary{% else %} button--primary{% endif %} tap">
-                          {{ block.settings.second_button_label | escape }}
-                        </a>
-                      {%- endif -%}
-                    </div>
-                  {%- endif -%}
-                {%- endcapture -%}
-
-                <div class="announcement-bar__panel-close-wrapper hide-mobile">
-                  <div class="announcement-bar__panel-close-button container">
-                    <button
-                      class="button button--plain button--icon tap"
-                      aria-label="{{ 'sections.announcement_bar.close_label' | t }}"
-                      close>
-                      {% render 'icon' with 'close' %}
-                    </button>
-                  </div>
                 </div>
+              </div>
+              {%- endif -%}
+            </div>
+          </div>
 
-                {%- if block.settings.image != blank -%}
-                  <div class="container container--capped vertical-spacer">
-                  {%- endif -%}
-
-                  {% render 'header-template', text: text, settings: block.settings, remove_background: true %}
-
-                  {%- if block.settings.image != blank -%}
+          {%- if block.settings.enable_expandable_content -%}
+            <loess-collapsible-panel id="PromoBarPanel" class="announcement-bar__panel {% if block.settings.image != blank %}announcement-bar__panel--has-image{% endif %} collapsible-panel">
+              {%- capture text -%}
+                {%- if block.settings.subheading != blank -%}
+                  <div class="small-subtext color-accent rte">
+                    {{ block.settings.subheading }}
                   </div>
                 {%- endif -%}
-              </loess-collapsible-panel>
-            {%- endif -%}
 
-            {%- if block.settings.color_scheme == 'soft-background' and block.settings.custom_colors == false -%}
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="{{ block.settings.heading_size }}">
+                    {{ block.settings.heading | escape }}
+                  </h2>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <div class="{% if block.settings.description_size == 'large' %}large-body-text{% endif %}">
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.first_button_label != blank or block.settings.second_button_label != blank -%}
+                  <div class="button-group">
+                    {%- if block.settings.first_button_label != blank -%}
+                      <a href="{{ block.settings.first_button_link }}" class="button {% if block.settings.first_button_style %}button--secondary{% else %} button--primary{% endif %} tap">
+                        {{ block.settings.first_button_label | escape }}
+                      </a>
+                    {%- endif -%}
+                    {%- if block.settings.second_button_label != blank -%}
+                      <a href="{{ block.settings.second_button_link }}" class="button {% if block.settings.second_button_style %}button--secondary{% else %} button--primary{% endif %} tap">
+                        {{ block.settings.second_button_label | escape }}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- endcapture -%}
+
+              <div class="announcement-bar__panel-close-wrapper hide-mobile">
+                <div class="announcement-bar__panel-close-button container">
+                  <button class="button button--plain button--icon tap" aria-label="{{ 'sections.announcement_bar.close_label' | t }}" close>
+                    {% render 'icon' with 'close' %}
+                  </button>
+                </div>
+              </div>
+
+              {%- if block.settings.image != blank -%}
+                <div class="container container--capped vertical-spacer">
+              {%- endif -%}
+
+              {% render 'header-template', text: text, settings: block.settings, remove_background: true %}
+
+              {%- if block.settings.image != blank -%}
+                </div>
+              {%- endif -%}
+            </loess-collapsible-panel>
+          {%- endif -%}
+
+          {%- if block.settings.color_scheme == 'soft-background' and block.settings.custom_colors == false -%}
             </div>
           {%- endif -%}
         </div>
 
-        {%- if is_link -%}
+      {%- if is_link -%}
         </a>
       {%- endif -%}
     {%- endif -%}
@@ -278,371 +241,422 @@
 </script>
 
 {% schema %}
-  {
-    "name": "Announcement bar",
-    "tag": "section",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "The settings below apply to the utility bar. To customize the announcement, navigate to the “Annoucement” block settings in the left sidebar. [Learn more](https://loess.ticksy.com/article/18608/)."
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_social_icons",
-        "label": "Enable social icons",
-        "default": true,
-        "info": "Update your social settings in theme settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_language_selector",
-        "label": "Enable language selector",
-        "default": true,
-        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_country_selector",
-        "label": "Enable country selector",
-        "default": true,
-        "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
-      }, {
-        "type": "select",
-        "id": "utility_bar_layout",
-        "label": "Utility bar layout",
-        "options": [
-          {
-            "value": "icons-left",
-            "label": "Icons left, selectors right"
-          }, {
-            "value": "icons-right",
-            "label": "Icons right, selectors left"
-          }, {
-            "value": "center",
-            "label": "Center"
-          }
-        ],
-        "default": "icons-left",
-        "info": "The utility bar is displayed in the sidebar menu on mobile"
-      }, {
-        "type": "select",
-        "id": "utility_bar_position",
-        "label": "Utility bar position",
-        "options": [
-          {
-            "value": "above",
-            "label": "Above announcement"
-          }, {
-            "value": "below",
-            "label": "Below announcement"
-          }
-        ],
-        "default": "above"
-      }, {
-        "type": "checkbox",
-        "id": "merge_utility_bar_large",
-        "label": "Merge utility bar with announcement",
-        "default": true,
-        "info": "Only applies to devices with large screens"
-      }, {
-        "type": "header",
-        "content": "Colors",
-        "info": "When “Merge utility bar with announcement” is enabled, color scheme defaults to the announcement block's color scheme."
-      }, {
-        "type": "select",
-        "id": "color_scheme",
-        "label": "Color scheme",
-        "options": [
-          {
-            "value": "soft-background",
-            "label": "Soft background"
-          },
-          {
-            "value": "default",
-            "label": "Default"
-          },
-          {
-            "value": "inverse",
-            "label": "Inverse"
-          },
-          {
-            "value": "accent-1",
-            "label": "Accent 1"
-          }, {
-            "value": "accent-2",
-            "label": "Accent 2"
-          }, {
-            "value": "accent-3",
-            "label": "Accent 3"
-          }
-        ],
-        "default": "soft-background"
-      }, {
-        "type": "checkbox",
-        "id": "custom_colors",
-        "label": "Override with custom colors",
-        "default": false
-      }, {
-        "type": "color",
-        "id": "color_foreground",
-        "label": "Custom foreground color",
-        "default": "#061C2F"
-      }, {
-        "type": "color",
-        "id": "color_background",
-        "label": "Custom background color",
-        "default": "#FFFFFF"
-      }, {
-        "type": "color_background",
-        "id": "color_gradient",
-        "label": "Custom background gradient",
-        "info": "Optional. Overrides “Custom background color”."
-      }
-    ],
-    "blocks": [
-      {
-        "type": "announcement",
-        "name": "Announcement",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Text",
-            "default": "Welcome to our store"
-          },
-          {
-            "type": "url",
-            "id": "link",
-            "label": "Link",
-            "info": "Not applicable when “expandable content” is enabled"
-          },
-          {
-            "type": "header",
-            "content": "Expandable content"
-          },
-          {
-            "type": "checkbox",
-            "id": "enable_expandable_content",
-            "label": "Enable expandable content",
-            "default": true
-          }, {
-            "type": "select",
-            "id": "height",
-            "label": "Section height",
-            "options": [
-              {
-                "value": "x-small",
-                "label": "Extra small"
-              }, {
-                "value": "small",
-                "label": "Small"
-              }, {
-                "value": "medium",
-                "label": "Medium"
-              }, {
-                "value": "large",
-                "label": "Large"
-              }
-            ],
-            "default": "x-small",
-            "info": "The section height may be overridden when the collection image is displayed and set to “Expand full height”"
-          }, {
-            "type": "text",
-            "id": "button_label",
-            "label": "Button label",
-            "default": "More"
-          }, {
-            "type": "text",
-            "id": "subheading",
-            "label": "Subheading",
-            "default": "Subheading"
-          }, {
-            "type": "text",
-            "id": "heading",
-            "label": "Heading",
-            "default": "Announcement"
-          }, {
-            "type": "richtext",
-            "id": "text",
-            "label": "Text",
-            "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
-          }, {
-            "type": "checkbox",
-            "id": "center_text",
-            "label": "Center text",
-            "default": true
-          }, {
-            "type": "select",
-            "id": "heading_size",
-            "label": "Heading size",
-            "options": [
-              {
-                "value": "h2",
-                "label": "Medium"
-              }, {
-                "value": "h1",
-                "label": "Large"
-              }, {
-                "value": "h0",
-                "label": "Extra large"
-              }
-            ],
-            "default": "h1"
-          }, {
-            "type": "select",
-            "id": "description_size",
-            "label": "Description text size",
-            "options": [
-              {
-                "value": "regular",
-                "label": "Regular"
-              }, {
-                "value": "large",
-                "label": "Large"
-              }
-            ],
-            "default": "regular"
-          }, {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Image"
-          }, {
-            "type": "select",
-            "id": "image_style",
-            "label": "Image style",
-            "options": [
-              {
-                "value": "fit",
-                "label": "Fit container"
-              }, {
-                "value": "fill",
-                "label": "Fill container"
-              }, {
-                "value": "expand",
-                "label": "Expand full height"
-              }, {
-                "value": "background",
-                "label": "Background"
-              }
-            ],
-            "default": "fill"
-          }, {
-            "type": "checkbox",
-            "id": "image_padding",
-            "label": "Enable image padding",
-            "default": false,
-            "info": "Not applicable when “Background” image style is enabled"
-          }, {
-            "type": "range",
-            "id": "overlay",
-            "min": 0,
-            "max": 100,
-            "step": 1,
-            "unit": "%",
-            "label": "Image overlay",
-            "default": 40,
-            "info": "Applicable when the image style is set to “Background”"
-          }, {
-            "type": "header",
-            "content": "Buttons"
-          }, {
-            "type": "text",
-            "id": "first_button_label",
-            "label": "First button label",
-            "default": "View more",
-            "info": "Leave the label blank to hide the button"
-          }, {
-            "type": "url",
-            "id": "first_button_link",
-            "label": "First button link"
-          }, {
-            "type": "checkbox",
-            "id": "first_button_style",
-            "label": "Use outline style",
-            "default": false
-          }, {
-            "type": "text",
-            "id": "second_button_label",
-            "label": "Second button label",
-            "info": "Leave the label blank to hide the button"
-          }, {
-            "type": "url",
-            "id": "second_button_link",
-            "label": "Second button link"
-          }, {
-            "type": "checkbox",
-            "id": "second_button_style",
-            "label": "Use outline style",
-            "default": true
-          }, {
-            "type": "header",
-            "content": "Colors"
-          }, {
-            "type": "select",
-            "id": "color_scheme",
-            "label": "Color scheme",
-            "options": [
-              {
-                "value": "soft-background",
-                "label": "Soft background"
-              },
-              {
-                "value": "default",
-                "label": "Default"
-              },
-              {
-                "value": "inverse",
-                "label": "Inverse"
-              },
-              {
-                "value": "accent-1",
-                "label": "Accent 1"
-              }, {
-                "value": "accent-2",
-                "label": "Accent 2"
-              }, {
-                "value": "accent-3",
-                "label": "Accent 3"
-              }
-            ],
-            "default": "accent-1",
-            "info": "Not applicable when “Background” image style is enabled"
-          }, {
-            "type": "checkbox",
-            "id": "custom_colors",
-            "label": "Override with custom colors",
-            "default": false
-          }, {
-            "type": "color",
-            "id": "color_foreground",
-            "label": "Custom foreground color",
-            "default": "#061C2F"
-          }, {
-            "type": "color",
-            "id": "color_accent",
-            "label": "Custom accent color",
-            "default": "#0D91BD"
-          }, {
-            "type": "color",
-            "id": "color_background",
-            "label": "Custom background color",
-            "default": "#FFFFFF"
-          }, {
-            "type": "color_background",
-            "id": "color_gradient",
-            "label": "Custom background gradient",
-            "info": "Optional. Overrides “Custom background color”."
-          }
-        ]
-      }
-    ],
-    "default": {
-      "blocks": [
+{
+  "name": "Announcement bar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "The settings below apply to the utility bar. To customize the announcement, navigate to the “Annoucement” block settings in the left sidebar. [Learn more](https://loess.ticksy.com/article/18608/)."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_social_icons",
+      "label": "Enable social icons",
+      "default": true,
+      "info": "Update your social settings in theme settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Enable language selector",
+      "default": true,
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Enable country selector",
+      "default": true,
+      "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "select",
+      "id": "utility_bar_layout",
+      "label": "Utility bar layout",
+      "options": [
         {
-          "type": "announcement"
+          "value": "icons-left",
+          "label": "Icons left, selectors right"
+        },
+        {
+          "value": "icons-right",
+          "label": "Icons right, selectors left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "icons-left",
+      "info": "The utility bar is displayed in the sidebar menu on mobile"
+    },
+    {
+      "type": "select",
+      "id": "utility_bar_position",
+      "label": "Utility bar position",
+      "options": [
+        {
+          "value": "above",
+          "label": "Above announcement"
+        },
+        {
+          "value": "below",
+          "label": "Below announcement"
+        }
+      ],
+      "default": "above"
+    },
+    {
+      "type": "checkbox",
+      "id": "merge_utility_bar_large",
+      "label": "Merge utility bar with announcement",
+      "default": true,
+      "info": "Only applies to devices with large screens"
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "When “Merge utility bar with announcement” is enabled, color scheme defaults to the announcement block's color scheme."
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "soft-background",
+          "label": "Soft background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "accent-3",
+          "label": "Accent 3"
+        }
+      ],
+      "default": "soft-background"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_colors",
+      "label": "Override with custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_foreground",
+      "label": "Custom foreground color",
+      "default": "#061C2F"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Custom background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "color_gradient",
+      "label": "Custom background gradient",
+      "info": "Optional. Overrides “Custom background color”."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Text",
+          "default": "Welcome to our store"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Not applicable when “expandable content” is enabled"
+        },
+        {
+          "type": "header",
+          "content": "Expandable content"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_expandable_content",
+          "label": "Enable expandable content",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "height",
+          "label": "Section height",
+          "options": [
+            {
+              "value": "x-small",
+              "label": "Extra small"
+            },
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "x-small",
+          "info": "The section height may be overridden when the collection image is displayed and set to “Expand full height”"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "More"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Announcement"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "center_text",
+          "label": "Center text",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "Medium"
+            },
+            {
+              "value": "h1",
+              "label": "Large"
+            },
+            {
+              "value": "h0",
+              "label": "Extra large"
+            }
+          ],
+          "default": "h1"
+        },
+        {
+          "type": "select",
+          "id": "description_size",
+          "label": "Description text size",
+          "options": [
+            {
+              "value": "regular",
+              "label": "Regular"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "regular"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_style",
+          "label": "Image style",
+          "options": [
+            {
+              "value": "fit",
+              "label": "Fit container"
+            },
+            {
+              "value": "fill",
+              "label": "Fill container"
+            },
+            {
+              "value": "expand",
+              "label": "Expand full height"
+            },
+            {
+              "value": "background",
+              "label": "Background"
+            }
+          ],
+          "default": "fill"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_padding",
+          "label": "Enable image padding",
+          "default": false,
+          "info": "Not applicable when “Background” image style is enabled"
+        },
+        {
+          "type": "range",
+          "id": "overlay",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Image overlay",
+          "default": 40,
+          "info": "Applicable when the image style is set to “Background”"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "first_button_label",
+          "label": "First button label",
+          "default": "View more",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "first_button_link",
+          "label": "First button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "first_button_style",
+          "label": "Use outline style",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "second_button_label",
+          "label": "Second button label",
+          "info": "Leave the label blank to hide the button"
+        },
+        {
+          "type": "url",
+          "id": "second_button_link",
+          "label": "Second button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "second_button_style",
+          "label": "Use outline style",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "select",
+          "id": "color_scheme",
+          "label": "Color scheme",
+          "options": [
+            {
+              "value": "soft-background",
+              "label": "Soft background"
+            },
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "inverse",
+              "label": "Inverse"
+            },
+            {
+              "value": "accent-1",
+              "label": "Accent 1"
+            },
+            {
+              "value": "accent-2",
+              "label": "Accent 2"
+            },
+            {
+              "value": "accent-3",
+              "label": "Accent 3"
+            }
+          ],
+          "default": "accent-1",
+          "info": "Not applicable when “Background” image style is enabled"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_colors",
+          "label": "Override with custom colors",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "color_foreground",
+          "label": "Custom foreground color",
+          "default": "#061C2F"
+        },
+        {
+          "type": "color",
+          "id": "color_accent",
+          "label": "Custom accent color",
+          "default": "#0D91BD"
+        },
+        {
+          "type": "color",
+          "id": "color_background",
+          "label": "Custom background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color_background",
+          "id": "color_gradient",
+          "label": "Custom background gradient",
+          "info": "Optional. Overrides “Custom background color”."
         }
       ]
     }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "announcement"
+      }
+    ]
   }
+}
 {% endschema %}

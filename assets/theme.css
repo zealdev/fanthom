@@ -852,7 +852,6 @@ button.shopify-payment-button__button--unbranded,
   flex-wrap: wrap;
   gap: 10px;
   justify-content: var(--text-x-axis, center);
-  
 }
 
 button.shopify-payment-button__button--unbranded {
@@ -9505,7 +9504,7 @@ input[type=radio].disabled + label {
     justify-items: var(--text-x-axis-mobile, var(--x-axis));
   }
 
-  .rich-text > .button-group:not(:only-child):last-child {
+    .rich-text > .button-group:not(:only-child):last-child {
     background-color: #000;
   }
 }
@@ -9887,19 +9886,4 @@ font-style: normal;
 
 .shopify-section--promotion > .section {
   overflow-x: hidden;
-}
-.scroll {
-  display: flex;
-  flex-direction: row;
-}
-.scroll-loop {
-  display: grid;
-  grid-template-columns: repeat(var(--columns), 1fr);
-  gap: calc(3 * var(--container-gap)) var(--container-gap);
-  padding: 20px 0;
-  margin: 0;
-}
-
-.price-font {
-  font-style: normal;
 }

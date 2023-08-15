@@ -1,15 +1,15 @@
 {% comment %}
-Renders a product's price
+  Renders a product's price
 
-Accepts:
-- product: {Object} Product Liquid object (optional)
-- use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
-- show_badges: {Boolean} Renders 'Sale' and 'Sold Out' tags if the product matches the condition (optional)
-- price_class: {String} Adds a price class to the price element (optional)
-- product_section: {Boolean} Indicates whether the section using this snippet is a product section (optional)
+  Accepts:
+  - product: {Object} Product Liquid object (optional)
+  - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
+  - show_badges: {Boolean} Renders 'Sale' and 'Sold Out' tags if the product matches the condition (optional)
+  - price_class: {String} Adds a price class to the price element (optional)
+  - product_section: {Boolean} Indicates whether the section using this snippet is a product section (optional)
 
-Usage:
-{% render 'price', product: product %}
+  Usage:
+  {% render 'price', product: product %}
 {% endcomment %}
 
 {%- liquid
@@ -34,25 +34,18 @@ Usage:
 -%}
 
 <div class='price-details {% if product_section %}{% elsif small_font %}small-caption{% else %}small-body-text{% endif %}'>
-  <div
-    class='
-    price
-    {%- if price_class %}
-      {{ price_class }}{% endif -%}
-    {%- if available == false %}
-      price--sold-out
-    {% endif -%}
-    {%- if compare_at_price > price %}
-      price--on-sale
-    {% endif -%}
-    {%- if product.price_varies == false and product.compare_at_price_varies %}
-      price--no-compare{% endif -%}
-    {%- if show_badges %}
-      price--show-badge{% endif -%}'>
+  <div class='
+      price
+      {%- if price_class %} {{ price_class }}{% endif -%}
+      {%- if available == false %} price--sold-out {% endif -%}
+      {%- if compare_at_price > price %} price--on-sale {% endif -%}
+      {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}
+      {%- if show_badges %} price--show-badge{% endif -%}
+    '>
     <div class='price__regular'>
       <span class='sr-only'>{{ 'products.product.price.regular_price' | t }}</span>
       <span class='price-item price-item--regular'>
-        {{ money_price }}
+        {{ money_price  }}
       </span>
     </div>
     <div class='price__sale'>
@@ -91,7 +84,8 @@ Usage:
                   | times: 100.0
                   | divided_by: product.compare_at_price
                   | round
-                  | append: '%' -%}
+                  | append: '%'
+                -%}
               {%- else -%}
                 {%- assign savings = product.compare_at_price | minus: product.price | money -%}
               {%- endif -%}

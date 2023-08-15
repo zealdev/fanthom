@@ -99,10 +99,10 @@
       "settings": {
         "layout": "full",
         "products": [
-          "tudor-submariner-date-blue-dial",
-          "rolex-explorer-ii-chicchi-di-mais-2",
-          "omega-speedmaster-ed-white-1",
-          "heuer-autavia-gmt"
+          "omega-speedmaster-soleil-dial",
+          "rolex-explorer-ii-cream-dial",
+          "rolex-gmt-master-root-beer",
+          "patek-phillippe-calendar-18k-white-gold"
         ],
         "slider_large": false,
         "slider_mobile": true,
@@ -254,6 +254,7 @@
     },
     "64bbe5d5-bc57-48db-aefe-4275d427e313": {
       "type": "rich-text",
+      "disabled": true,
       "blocks": {
         "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-0": {
           "type": "icon",
@@ -295,7 +296,6 @@
         "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-2",
         "template--17660417507634__64bbe5d5-bc57-48db-aefe-4275d427e313-16750912923e20f642-3"
       ],
-      "disabled": true,
       "settings": {
         "full_width": true,
         "text_position": "center start",

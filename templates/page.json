@@ -1,27 +1,16 @@
 {
   "sections": {
-    "84b3c54d-e490-4706-947d-cf34f54754d3": {
-      "type": "custom-liquid",
-      "settings": {
-        "liquid": "<!-- Calendly inline widget begin -->\n<div class=\"calendly-inline-widget\" data-url=\"https:\/\/calendly.com\/fathomwatches\/test\" style=\"min-width:320px;height:700px;\"><\/div>\n<script type=\"text\/javascript\" src=\"https:\/\/assets.calendly.com\/assets\/external\/widget.js\" async><\/script>\n<!-- Calendly inline widget end -->",
-        "layout": "full",
-        "padding_top": 1,
-        "padding_bottom": 1
-      }
-    },
     "4b61c44c-6cd0-4151-8722-816f7bf1e6c3": {
       "type": "hero",
       "blocks": {
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-0": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "image": "shopify:\/\/shop_images\/gettyimages-1229872783-1024x1024.jpg",
             "subheading": "",
             "title": "OUR STORY",
             "text": "",
             "text_size": "medium",
-            "text_color": "hero-color-black",
             "text_position_large": "center center",
             "text_position_mobile": "center",
             "first_button_label": "",
@@ -40,12 +29,12 @@
         },
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-1": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "subheading": "Subheading",
             "title": "Hero",
             "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "text_size": "medium",
-            "text_color": "hero-color-black",
             "text_position_large": "center start",
             "text_position_mobile": "start",
             "first_button_label": "",
@@ -67,7 +56,6 @@
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-0",
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-1"
       ],
-      "disabled": true,
       "settings": {
         "fixed_width": false,
         "soft_background": true,
@@ -111,7 +99,6 @@
       "blocks": {
         "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1": {
           "type": "block",
-          "disabled": true,
           "settings": {
             "large_layout": "image-first",
             "mobile_layout": "image-first",
@@ -139,7 +126,6 @@
       "block_order": [
         "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"
       ],
-      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -199,7 +185,6 @@
         "template--17660417704242__ca9ffd0d-38aa-4466-a95a-e214a7236ff3-1677084347eda76f2f-2",
         "template--17660417704242__ca9ffd0d-38aa-4466-a95a-e214a7236ff3-1677084347eda76f2f-3"
       ],
-      "disabled": true,
       "settings": {
         "full_width": true,
         "text_position": "center start",
@@ -224,7 +209,6 @@
       "blocks": {
         "template--17660417704242__7f17b5bd-6a8f-4a31-888a-54008bdf8d48-167708449443417491-0": {
           "type": "block",
-          "disabled": true,
           "settings": {
             "large_layout": "text-first",
             "mobile_layout": "text-first",
@@ -252,7 +236,6 @@
       "block_order": [
         "template--17660417704242__7f17b5bd-6a8f-4a31-888a-54008bdf8d48-167708449443417491-0"
       ],
-      "disabled": true,
       "settings": {
         "layout": "full",
         "height": "large",
@@ -273,7 +256,6 @@
       "blocks": {
         "template--17660417704242__4d79ec15-9c94-4374-a946-3e13ce9d1745-16770848644a296017-0": {
           "type": "block",
-          "disabled": true,
           "settings": {
             "large_layout": "image-first",
             "mobile_layout": "image-first",
@@ -301,7 +283,6 @@
       "block_order": [
         "template--17660417704242__4d79ec15-9c94-4374-a946-3e13ce9d1745-16770848644a296017-0"
       ],
-      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "medium",
@@ -344,7 +325,6 @@
     }
   },
   "order": [
-    "84b3c54d-e490-4706-947d-cf34f54754d3",
     "4b61c44c-6cd0-4151-8722-816f7bf1e6c3",
     "main",
     "95adb119-2130-4882-9863-49bf072c77b1",

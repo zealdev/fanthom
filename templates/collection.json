@@ -2,6 +2,7 @@
   "sections": {
     "promo-banner": {
       "type": "promo-banner",
+      "disabled": true,
       "blocks": {
         "text": {
           "type": "text",
@@ -26,7 +27,6 @@
         "text",
         "image"
       ],
-      "disabled": true,
       "settings": {
         "fixed_width": false,
         "link": "",

@@ -82,6 +82,7 @@
     },
     "05081bb5-c934-4f98-ad11-286aba4c0f12": {
       "type": "collapsible-content",
+      "disabled": true,
       "blocks": {
         "template--17672983806258__05081bb5-c934-4f98-ad11-286aba4c0f12-167422160083925e95-0": {
           "type": "category",
@@ -118,7 +119,6 @@
         "edb79b08-03b3-4cad-a73f-9e566211d8ac",
         "1f647255-2fe0-4068-9ef0-98fe4439196c"
       ],
-      "disabled": true,
       "settings": {
         "layout": "full",
         "row_style": "1st-open",
