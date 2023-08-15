@@ -1,1 +1,214 @@
-{"sections":{"634da63b-1af6-448e-ac54-d7aa8b801182":{"type":"hero","blocks":{"template--18093093880114__634da63b-1af6-448e-ac54-d7aa8b801182-1678789263627ba4e7-0":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/FINAL_SPACE_SHOT_b1cccb64-dfb4-45ca-9743-7eec256613d0.jpg","subheading":"","title":"THE SHOWROOM","text":"<p>There’s nothing quite like holding a vintage watch in your hands. So whether you have a watch in mind, or you simply want to explore our collection in person, come and visit our Showroom in St Paul’s, London, and discover a watch unlike any other. <\/p>","text_size":"medium","text_color":"t-color-white","text_position_large":"center start","text_position_mobile":"start","first_button_label":"BOOK AN APPOINTMENT","first_button_link":"shopify:\/\/pages\/contact-us","first_button_arrow_style":false,"second_button_label":"","second_button_link":"","second_button_arrow_style":true,"color_scheme":"inverse-with-accent-2","custom_colors":false,"color_foreground":"#061c2f","color_accent":"#0d91bd","color_background":"#ffffff","color_gradient":""}}},"block_order":["template--18093093880114__634da63b-1af6-448e-ac54-d7aa8b801182-1678789263627ba4e7-0"],"settings":{"fixed_width":false,"soft_background":false,"height_large":"medium","height_mobile":"medium","padding_top":1,"padding_bottom":1,"text_width":30,"text_below_image_mobile":true,"image_padding":false,"image_offset":false,"enable_parallax":false,"image_background":true,"overlay":30,"animation":"swipe","maintain_text_first_slide":true,"maintain_background_color_first_slide":false,"auto_play":false,"auto_play_delay":5}},"main":{"type":"main-page","disabled":true,"settings":{"layout":"full","width":"medium","padding_top":1,"padding_bottom":0.3,"show_heading":true,"color_scheme":"default-with-accent-1","custom_colors":true,"color_foreground":"#000000","color_accent":"#c99952","color_background":"#ffffff","color_gradient":""}},"95adb119-2130-4882-9863-49bf072c77b1":{"type":"media-with-text","blocks":{"template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1":{"type":"block","settings":{"large_layout":"text-first","mobile_layout":"text-first","image":"shopify:\/\/shop_images\/0SeJUkxQ.jpg","image_padding":false,"video":"","video_style":"image-play","enable_parallax":false,"text_width":70,"tab_label":"","subheading":"","title":"COME AND SEE US","text":"<p>At our St Paul's showroom, you can try our entire collection and we'll consult with you to find your perfect vintage watch.<br\/><br\/>So, whether you have a watch in mind, or you just want to explore, book an appointment to visit us.<\/p>","add_icons":false,"text_size":"medium","first_button_label":"BOOK AN APPOINTMENT","first_button_link":"shopify:\/\/pages\/contact-us","first_button_outline_style":false,"second_button_label":"","second_button_link":"","second_button_outline_style":true}}},"block_order":["template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"],"settings":{"layout":"fixed","height":"small","stack_blocks":true,"center_tabs":true,"padding_top":1,"padding_bottom":0.5,"color_scheme":"default","custom_colors":true,"color_foreground":"#000000","color_accent":"#000000","color_background":"#ffffff","color_gradient":""}},"756633b5-cf44-45c4-a776-eebf4a0c7063":{"type":"media-collage","blocks":{"template--18093093880114__756633b5-cf44-45c4-a776-eebf4a0c7063-16774974079610a145-0":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/Ze6X9qVE.jpg","enable_parallax":false}},"0bfb5737-4cef-4dd4-b4cf-741793c46e20":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/J5DxFkM3.jpg","enable_parallax":false}},"04e21d9a-2991-425b-aaba-4072adbb088c":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/0r295SqY.jpg","enable_parallax":false}}},"block_order":["template--18093093880114__756633b5-cf44-45c4-a776-eebf4a0c7063-16774974079610a145-0","0bfb5737-4cef-4dd4-b4cf-741793c46e20","04e21d9a-2991-425b-aaba-4072adbb088c"],"settings":{"layout":"full","height":"large","first_media_position_large":"left","content_position_large":"above","content_position_mobile":"above","overlay":0,"blur":0,"inverse_colors":false,"padding_top":0.5,"padding_bottom":1,"center_text":false,"title":"","text":"","text_size":"medium","button_label":"","button_link":"","button_style":false,"color_scheme":"default","custom_colors":true,"color_foreground":"#061c2f","color_background":"#ffffff","color_gradient":""}},"location-map":{"type":"section-location-map","settings":{}},"820800b0-d5d2-47b5-b78d-d94b78cbac33":{"type":"newsletter","settings":{"layout":"full","padding_top":1,"padding_bottom":1,"center_text":true,"icon":"icon-email","title":"","text":"<p>News and promotions straight to your mailbox.<\/p>","form_subtext":"Unsubscribe easily, whenever you like.","text_size":"medium","image_height_large":"small","image_height_mobile":"medium","text_position_large":"left","text_position_mobile":"top","enable_parallax":false,"color_scheme":"default-with-accent-1","custom_colors":true,"color_foreground":"#ffffff","color_accent":"#c99952","color_background":"#000000","color_gradient":""}}},"order":["634da63b-1af6-448e-ac54-d7aa8b801182","main","95adb119-2130-4882-9863-49bf072c77b1","756633b5-cf44-45c4-a776-eebf4a0c7063","location-map","820800b0-d5d2-47b5-b78d-d94b78cbac33"]}
+{
+  "sections": {
+    "634da63b-1af6-448e-ac54-d7aa8b801182": {
+      "type": "hero",
+      "blocks": {
+        "template--18093093880114__634da63b-1af6-448e-ac54-d7aa8b801182-1678789263627ba4e7-0": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/FINAL_SPACE_SHOT_b1cccb64-dfb4-45ca-9743-7eec256613d0.jpg",
+            "subheading": "",
+            "title": "THE SHOWROOM",
+            "text": "<p>There’s nothing quite like holding a vintage watch in your hands. So whether you have a watch in mind, or you simply want to explore our collection in person, come and visit our Showroom in St Paul’s, London, and discover a watch unlike any other. <\/p>",
+            "text_size": "medium",
+            "text_color": "t-color-white",
+            "text_position_large": "center start",
+            "text_position_mobile": "start",
+            "first_button_label": "BOOK AN APPOINTMENT",
+            "first_button_link": "shopify:\/\/pages\/contact-us",
+            "first_button_arrow_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_arrow_style": true,
+            "color_scheme": "inverse-with-accent-2",
+            "custom_colors": false,
+            "color_foreground": "#061c2f",
+            "color_accent": "#0d91bd",
+            "color_background": "#ffffff",
+            "color_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--18093093880114__634da63b-1af6-448e-ac54-d7aa8b801182-1678789263627ba4e7-0"
+      ],
+      "settings": {
+        "fixed_width": false,
+        "soft_background": false,
+        "height_large": "medium",
+        "height_mobile": "medium",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "text_width": 30,
+        "text_below_image_mobile": true,
+        "image_padding": false,
+        "image_offset": false,
+        "enable_parallax": false,
+        "image_background": true,
+        "overlay": 30,
+        "animation": "swipe",
+        "maintain_text_first_slide": true,
+        "maintain_background_color_first_slide": false,
+        "auto_play": false,
+        "auto_play_delay": 5
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "layout": "full",
+        "width": "medium",
+        "padding_top": 1,
+        "padding_bottom": 0.3,
+        "show_heading": true,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#c99952",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "95adb119-2130-4882-9863-49bf072c77b1": {
+      "type": "media-with-text",
+      "blocks": {
+        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1": {
+          "type": "block",
+          "settings": {
+            "large_layout": "text-first",
+            "mobile_layout": "text-first",
+            "image": "shopify:\/\/shop_images\/0SeJUkxQ.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 70,
+            "tab_label": "",
+            "subheading": "",
+            "title": "COME AND SEE US",
+            "text": "<p>At our St Paul's showroom, you can try our entire collection and we'll consult with you to find your perfect vintage watch.<br\/><br\/>So, whether you have a watch in mind, or you just want to explore, book an appointment to visit us.<\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "BOOK AN APPOINTMENT",
+            "first_button_link": "shopify:\/\/pages\/contact-us",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 1,
+        "padding_bottom": 0.5,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#000000",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "756633b5-cf44-45c4-a776-eebf4a0c7063": {
+      "type": "media-collage",
+      "blocks": {
+        "template--18093093880114__756633b5-cf44-45c4-a776-eebf4a0c7063-16774974079610a145-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Ze6X9qVE.jpg",
+            "enable_parallax": false
+          }
+        },
+        "0bfb5737-4cef-4dd4-b4cf-741793c46e20": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/J5DxFkM3.jpg",
+            "enable_parallax": false
+          }
+        },
+        "04e21d9a-2991-425b-aaba-4072adbb088c": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/0r295SqY.jpg",
+            "enable_parallax": false
+          }
+        }
+      },
+      "block_order": [
+        "template--18093093880114__756633b5-cf44-45c4-a776-eebf4a0c7063-16774974079610a145-0",
+        "0bfb5737-4cef-4dd4-b4cf-741793c46e20",
+        "04e21d9a-2991-425b-aaba-4072adbb088c"
+      ],
+      "settings": {
+        "layout": "full",
+        "height": "large",
+        "first_media_position_large": "left",
+        "content_position_large": "above",
+        "content_position_mobile": "above",
+        "overlay": 0,
+        "blur": 0,
+        "inverse_colors": false,
+        "padding_top": 0.5,
+        "padding_bottom": 1,
+        "center_text": false,
+        "title": "",
+        "text": "",
+        "text_size": "medium",
+        "button_label": "",
+        "button_link": "",
+        "button_style": false,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#061c2f",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "location-map": {
+      "type": "section-location-map",
+      "settings": {
+      }
+    },
+    "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
+      "type": "newsletter",
+      "settings": {
+        "layout": "full",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "center_text": true,
+        "icon": "icon-email",
+        "title": "",
+        "text": "<p>News and promotions straight to your mailbox.<\/p>",
+        "form_subtext": "Unsubscribe easily, whenever you like.",
+        "text_size": "medium",
+        "image_height_large": "small",
+        "image_height_mobile": "medium",
+        "text_position_large": "left",
+        "text_position_mobile": "top",
+        "enable_parallax": false,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#ffffff",
+        "color_accent": "#c99952",
+        "color_background": "#000000",
+        "color_gradient": ""
+      }
+    }
+  },
+  "order": [
+    "634da63b-1af6-448e-ac54-d7aa8b801182",
+    "main",
+    "95adb119-2130-4882-9863-49bf072c77b1",
+    "756633b5-cf44-45c4-a776-eebf4a0c7063",
+    "location-map",
+    "820800b0-d5d2-47b5-b78d-d94b78cbac33"
+  ]
+}
