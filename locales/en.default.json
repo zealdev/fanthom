@@ -178,7 +178,7 @@
     },
     "product": {
       "add_to_cart": "Add to cart",
-      "sold_out": "Sold",
+      "sold_out": "SOLD",
       "sale": "Sale",
       "unavailable": "Unavailable",
       "variant_sold_out_or_unavailable": "Variant sold out or unavailable",

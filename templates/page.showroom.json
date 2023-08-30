@@ -15,7 +15,7 @@
             "text_position_large": "center start",
             "text_position_mobile": "start",
             "first_button_label": "BOOK AN APPOINTMENT",
-            "first_button_link": "shopify:\/\/pages\/contact-us",
+            "first_button_link": "shopify:\/\/pages\/calendly",
             "first_button_arrow_style": false,
             "second_button_label": "",
             "second_button_link": "",
@@ -66,53 +66,6 @@
         "custom_colors": true,
         "color_foreground": "#000000",
         "color_accent": "#c99952",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "95adb119-2130-4882-9863-49bf072c77b1": {
-      "type": "media-with-text",
-      "blocks": {
-        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1": {
-          "type": "block",
-          "settings": {
-            "large_layout": "text-first",
-            "mobile_layout": "text-first",
-            "image": "shopify:\/\/shop_images\/0SeJUkxQ.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 70,
-            "tab_label": "",
-            "subheading": "",
-            "title": "COME AND SEE US",
-            "text": "<p>At our St Paul's showroom, you can try our entire collection and we'll consult with you to find your perfect vintage watch.<br\/><br\/>So, whether you have a watch in mind, or you just want to explore, book an appointment to visit us.<\/p>",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "BOOK AN APPOINTMENT",
-            "first_button_link": "shopify:\/\/pages\/contact-us",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"
-      ],
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 1,
-        "padding_bottom": 0.5,
-        "color_scheme": "default",
-        "custom_colors": true,
-        "color_foreground": "#000000",
-        "color_accent": "#000000",
         "color_background": "#ffffff",
         "color_gradient": ""
       }
@@ -172,6 +125,53 @@
         "color_gradient": ""
       }
     },
+    "95adb119-2130-4882-9863-49bf072c77b1": {
+      "type": "media-with-text",
+      "blocks": {
+        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1": {
+          "type": "block",
+          "settings": {
+            "large_layout": "text-first",
+            "mobile_layout": "text-first",
+            "image": "shopify:\/\/shop_images\/0SeJUkxQ.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 70,
+            "tab_label": "",
+            "subheading": "",
+            "title": "COME AND SEE US",
+            "text": "<p>At our St Paul's showroom, you can try our entire collection and we'll consult with you to find your perfect vintage watch.<br\/><br\/>So, whether you have a watch in mind, or you just want to explore, book an appointment to visit us.<\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "BOOK AN APPOINTMENT",
+            "first_button_link": "shopify:\/\/pages\/calendly",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 1,
+        "padding_bottom": 0.5,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#000000",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
     "location-map": {
       "type": "section-location-map",
       "settings": {
@@ -206,8 +206,8 @@
   "order": [
     "634da63b-1af6-448e-ac54-d7aa8b801182",
     "main",
-    "95adb119-2130-4882-9863-49bf072c77b1",
     "756633b5-cf44-45c4-a776-eebf4a0c7063",
+    "95adb119-2130-4882-9863-49bf072c77b1",
     "location-map",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]

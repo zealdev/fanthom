@@ -89,6 +89,7 @@
                 <div>
                   {%- if section.settings.filtering and collection.filters != empty and active_filters_count > 0 -%}
                     {% render 'active-filters', filters: collection.filters %}
+                    
                   {%- endif -%}
                 </div>
 
@@ -165,14 +166,21 @@
           </div>
           <div id="FilterProductGrid">
             {%- paginate collection.products by section.settings.products_per_page -%}
-              <ul class="product-grid columns" role="list">
+              <ul class="product-grid columns scroll" role="list">
+                <div id="Huratips-Loop" class="scroll-loop">
                   {%- for product in collection.products -%}
                     <li>
                       {% render 'product-card', product: product %}
                     </li>
                   {%- endfor -%}
+                </div>
+                <div id="Huratips-Pagination">
+                  {% if paginate.next %}
+                  <a href="{{ paginate.next.url }}">Loading More</a>
+                  {% endif %}  
+                </div>
               </ul>
-              {% render 'pagination', paginate: paginate, async: true %}
+              
             {%- endpaginate -%}
           </div>
         </div>
@@ -435,3 +443,12 @@
     ]
   }
 {% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var endlessScroll = new Ajaxinate({
+      container: '#Huratips-Loop',
+      pagination: '#Huratips-Pagination'
+    });
+  });
+</script>

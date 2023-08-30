@@ -1,0 +1,514 @@
+{
+  "sections": {
+    "4b61c44c-6cd0-4151-8722-816f7bf1e6c3": {
+      "type": "hero",
+      "blocks": {
+        "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-0": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/ZENITH.jpg",
+            "subheading": "",
+            "title": "the archive",
+            "text": "",
+            "text_size": "medium",
+            "text_color": "hero-color-white",
+            "text_position_large": "center center",
+            "text_position_mobile": "center",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_arrow_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_arrow_style": true,
+            "color_scheme": "default-with-accent-1",
+            "custom_colors": false,
+            "color_foreground": "#061c2f",
+            "color_accent": "#0d91bd",
+            "color_background": "#ffffff",
+            "color_gradient": ""
+          }
+        },
+        "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-1": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "subheading": "Subheading",
+            "title": "Hero",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text_size": "medium",
+            "text_color": "hero-color-black",
+            "text_position_large": "center start",
+            "text_position_mobile": "start",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_arrow_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_arrow_style": true,
+            "color_scheme": "default-with-accent-1",
+            "custom_colors": false,
+            "color_foreground": "#061c2f",
+            "color_accent": "#0d91bd",
+            "color_background": "#ffffff",
+            "color_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-0",
+        "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-1"
+      ],
+      "settings": {
+        "fixed_width": false,
+        "soft_background": true,
+        "height_large": "medium",
+        "height_mobile": "medium",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "text_width": 50,
+        "text_below_image_mobile": false,
+        "image_padding": false,
+        "image_offset": false,
+        "enable_parallax": false,
+        "image_background": true,
+        "overlay": 70,
+        "animation": "swipe",
+        "maintain_text_first_slide": true,
+        "maintain_background_color_first_slide": false,
+        "auto_play": false,
+        "auto_play_delay": 5
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "layout": "full",
+        "width": "medium",
+        "padding_top": 1,
+        "padding_bottom": 0.3,
+        "show_heading": true,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#c99952",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "95adb119-2130-4882-9863-49bf072c77b1": {
+      "type": "media-with-text",
+      "blocks": {
+        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1": {
+          "type": "block",
+          "settings": {
+            "large_layout": "image-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "CARTIER GHOST",
+            "text": "",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 1.5,
+        "padding_bottom": 0.5,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#c99952",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "aac9b7d6-6d5c-4f2e-a0f7-065dea151723": {
+      "type": "media-with-text",
+      "blocks": {
+        "c2523564-8452-42bf-bda2-a0e4b1701344": {
+          "type": "block",
+          "settings": {
+            "large_layout": "text-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/HEUER_DATO_2.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "HEUR DATO",
+            "text": "<p><\/p><p><\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "c2523564-8452-42bf-bda2-a0e4b1701344"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 0.5,
+        "padding_bottom": 0.5,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#c99952",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "4e6e82db-b2a1-4fa5-882a-96e9fd37b831": {
+      "type": "media-with-text",
+      "blocks": {
+        "085ef342-f249-4d40-a206-1df13529289b": {
+          "type": "block",
+          "settings": {
+            "large_layout": "image-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/HEUER_MONACO_1.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "HEUR MONACO",
+            "text": "<p>Watch description<\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "085ef342-f249-4d40-a206-1df13529289b"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 0.5,
+        "padding_bottom": 0.5,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#c99952",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "2d38ffc3-17a4-4ba2-bb88-51844d7e022a": {
+      "type": "media-with-text",
+      "blocks": {
+        "0bb0f779-4e2d-4e52-a244-eae6f7199df2": {
+          "type": "block",
+          "settings": {
+            "large_layout": "text-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/OMEGA_ALASKA_PROJECT_2.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "OMEGA ALASKA PROJECT",
+            "text": "<p>Watch description<\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "0bb0f779-4e2d-4e52-a244-eae6f7199df2"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 0.5,
+        "padding_bottom": 1.5,
+        "color_scheme": "default",
+        "custom_colors": true,
+        "color_foreground": "#000000",
+        "color_accent": "#c99952",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "00e64f10-e412-4a58-a070-5e36c6608511": {
+      "type": "media-with-text",
+      "blocks": {
+        "template--20591199158578__00e64f10-e412-4a58-a070-5e36c6608511-block-2": {
+          "type": "block",
+          "settings": {
+            "large_layout": "image-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/ROLEX_4500_2.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "ROLEX 4500",
+            "text": "",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--20591199158578__00e64f10-e412-4a58-a070-5e36c6608511-block-2"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#061c2f",
+        "color_accent": "#0d91bd",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "7f4e2223-6589-4adc-81f7-9bd7b6a70c18": {
+      "type": "media-with-text",
+      "blocks": {
+        "template--20591199158578__7f4e2223-6589-4adc-81f7-9bd7b6a70c18-block-1": {
+          "type": "block",
+          "settings": {
+            "large_layout": "text-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/ROLEX_ONYX_DIAL_2.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "ROLEX ONYX DIAL",
+            "text": "<p>Watch description<\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--20591199158578__7f4e2223-6589-4adc-81f7-9bd7b6a70c18-block-1"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#061c2f",
+        "color_accent": "#0d91bd",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "935d8478-d79e-4656-be95-9aa2685da8d3": {
+      "type": "media-with-text",
+      "blocks": {
+        "template--20591199158578__935d8478-d79e-4656-be95-9aa2685da8d3-block-1": {
+          "type": "block",
+          "settings": {
+            "large_layout": "image-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/ROLEX_STELLA_DIAL_1.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "ROLEX STELLA DIAL",
+            "text": "<p>Watch description<\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--20591199158578__935d8478-d79e-4656-be95-9aa2685da8d3-block-1"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#061c2f",
+        "color_accent": "#0d91bd",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "f9fe0e84-505b-4c2f-8b29-01f3f1537d69": {
+      "type": "media-with-text",
+      "blocks": {
+        "template--20591199158578__f9fe0e84-505b-4c2f-8b29-01f3f1537d69-block-1": {
+          "type": "block",
+          "settings": {
+            "large_layout": "text-first",
+            "mobile_layout": "image-first",
+            "image": "shopify:\/\/shop_images\/TUDOR_SNOWFLAKE_1.jpg",
+            "image_padding": false,
+            "video": "",
+            "video_style": "image-play",
+            "enable_parallax": false,
+            "text_width": 100,
+            "tab_label": "",
+            "subheading": "",
+            "title": "TUDOR SNOWFLAKE",
+            "text": "<p>Watch description<\/p>",
+            "add_icons": false,
+            "text_size": "medium",
+            "first_button_label": "",
+            "first_button_link": "",
+            "first_button_outline_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_outline_style": true
+          }
+        }
+      },
+      "block_order": [
+        "template--20591199158578__f9fe0e84-505b-4c2f-8b29-01f3f1537d69-block-1"
+      ],
+      "settings": {
+        "layout": "fixed",
+        "height": "small",
+        "stack_blocks": true,
+        "center_tabs": true,
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#061c2f",
+        "color_accent": "#0d91bd",
+        "color_background": "#ffffff",
+        "color_gradient": ""
+      }
+    },
+    "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
+      "type": "newsletter",
+      "settings": {
+        "layout": "full",
+        "padding_top": 1,
+        "padding_bottom": 1,
+        "center_text": true,
+        "icon": "icon-email",
+        "title": "",
+        "text": "<p>News and promotions straight to your mailbox.<\/p>",
+        "form_subtext": "Unsubscribe easily, whenever you like.",
+        "text_size": "medium",
+        "image_height_large": "small",
+        "image_height_mobile": "medium",
+        "text_position_large": "left",
+        "text_position_mobile": "top",
+        "enable_parallax": false,
+        "color_scheme": "default-with-accent-1",
+        "custom_colors": true,
+        "color_foreground": "#ffffff",
+        "color_accent": "#c99952",
+        "color_background": "#000000",
+        "color_gradient": ""
+      }
+    }
+  },
+  "order": [
+    "4b61c44c-6cd0-4151-8722-816f7bf1e6c3",
+    "main",
+    "95adb119-2130-4882-9863-49bf072c77b1",
+    "aac9b7d6-6d5c-4f2e-a0f7-065dea151723",
+    "4e6e82db-b2a1-4fa5-882a-96e9fd37b831",
+    "2d38ffc3-17a4-4ba2-bb88-51844d7e022a",
+    "00e64f10-e412-4a58-a070-5e36c6608511",
+    "7f4e2223-6589-4adc-81f7-9bd7b6a70c18",
+    "935d8478-d79e-4656-be95-9aa2685da8d3",
+    "f9fe0e84-505b-4c2f-8b29-01f3f1537d69",
+    "820800b0-d5d2-47b5-b78d-d94b78cbac33"
+  ]
+}

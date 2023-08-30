@@ -9848,6 +9848,19 @@ font-style: normal;
   width: 50%;
 }
 
+.scroll {
+  display: flex;
+  flex-direction: row;
+}
+
+.scroll-loop {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  gap: calc(3 * var(--container-gap)) var(--container-gap);
+  padding: 20px 0;
+  margin: 0;
+}
+
 @media (max-width: 750px) {
   .rich-text-width-10, .rich-text-width-20, .rich-text-width-30, .rich-text-width-40, .rich-text-width-50, .rich-text-width-60, .rich-text-width-70, .rich-text-width-80, .rich-text-width-90 {
    width: 100%;

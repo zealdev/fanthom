@@ -99,7 +99,12 @@
     </script>
 
     {{ content_for_header }}
+    {% if template contains 'collection' %}
+      {{ 'https://cdn.shopify.com/s/files/1/0382/4185/files/ajaxinate.js?937' | script_tag }}
+    {% endif %}
   </head>
+
+
 
   <body class='{% if settings.type_headings_capitalize %}capitalize-headings{% endif %} template-{{ template | replace: '.', '-' | replace: '/', '-' }}'>
     <a class='skip-to-content-link button button--primary button--large sr-only' href='#MainContent'>
