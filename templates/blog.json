@@ -159,7 +159,6 @@
     },
     "ec9b502a-25fa-45fa-8f0e-e7125cd029d9": {
       "type": "rich-text",
-      "disabled": true,
       "blocks": {
         "template--17660417573170__ec9b502a-25fa-45fa-8f0e-e7125cd029d9-167421757239be2dba-0": {
           "type": "icon",
@@ -210,6 +209,7 @@
         "template--17660417573170__ec9b502a-25fa-45fa-8f0e-e7125cd029d9-167421757239be2dba-3",
         "0ef9cb10-32ff-4b16-8ca8-0f4c79cd8374"
       ],
+      "disabled": true,
       "custom_css": [
         "div.rich-text--large-contained {max-width: calc(1 \/ 3 * 100%);}"
       ],

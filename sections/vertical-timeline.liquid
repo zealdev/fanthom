@@ -1,0 +1,62 @@
+<div>
+  <p>TEST</p>
+  <div class="container">
+    <div class="left-side">
+      <div class="sub-container-left">
+        <div class="circle">
+          <p>1982</p>
+        </div>
+        <div>
+          <p>CARTIER SANTOS GALBÉE 'GHOST DIAL'</p>
+          <img src="https://0a8w8xn0fo5grfao-69066490162.shopifypreview.com/cdn/shop/files/CARTIER_GHOST_1.jpg?v=1692621711&width=800" alt="watch vintage">
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="right-side">
+      <div class="sub-container-right">
+        <div class="circle">
+          <p>1962</p>
+        </div>
+        <div>
+          <p>HEUER CARRERA 12 DATO 'FIRST EXECUTION'</p>
+          <img src="https://0a8w8xn0fo5grfao-69066490162.shopifypreview.com/cdn/shop/files/HEUER_DATO_2.jpg?v=1692619408&width=800" alt="watch vintage">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Vertical timeline",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      }, {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Test image"
+      }, {
+        "type": "collection",
+        "id": "collection",
+        "label": "Test collection"
+      }, {
+        "type": "textarea",
+        "id": "text-area",
+        "label": "Text area"
+      }
+    ],
+    "templates": [
+      "index", "page", "product"
+    ],
+    "presets": [
+      {
+        "name": "Vertical timeline",
+        "category": "Vertical timeline testing"
+      }
+    ]
+  }
+{% endschema %}

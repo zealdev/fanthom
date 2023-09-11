@@ -9900,3 +9900,41 @@ font-style: normal;
 .shopify-section--promotion > .section {
   overflow-x: hidden;
 }
+
+.left-side {
+  background-color: pink;
+  grid-area: left;
+}
+
+.right-side {
+  background-color: yellow;
+  grid-area: right;
+}
+
+.line {
+  grid-area: line;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 20px 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  "left line right"
+
+  ;
+}
+.sub-container-left {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.sub-container-right {
+  display: flex;
+  flex-direction: row;
+}
+.circle {
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+  border-radius: 50%;
+}
