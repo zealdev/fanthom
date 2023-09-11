@@ -9915,26 +9915,50 @@ font-style: normal;
   grid-area: line;
 }
 
-.container {
+.container-test {
   display: grid;
   grid-template-columns: 1fr 20px 1fr;
   grid-template-rows: auto;
   grid-template-areas: 
   "left line right"
-
   ;
 }
 .sub-container-left {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
 }
 .sub-container-right {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .circle {
   border-style: solid;
   border-width: 3px;
   border-color: black;
-  border-radius: 50%;
+  /* border-radius: 50%; */
+  height: 35px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+
+}
+
+.circle p {
+  color: white;
+}
+.line {
+  border-right-style: solid;
+  border-right-width: 3px;
+  border-right-color: grey;
+  margin-right: 10px;
+}
+.info-bit-left {
+margin-left: 20px
+}
+.info-bit-right {
+  margin-right: 20px;
+}
+.sub-container-left .circle {
+  float: right;
 }

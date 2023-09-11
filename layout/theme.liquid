@@ -102,6 +102,8 @@
     {% if template contains 'collection' %}
       {{ 'https://cdn.shopify.com/s/files/1/0382/4185/files/ajaxinate.js?937' | script_tag }}
     {% endif %}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
   </head>
 
 
@@ -152,5 +154,10 @@
     <script src='{{ 'custom.js' | asset_url }}' defer></script>
     <script src="{{ 'seedgrow-whatsapp-init.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'seedgrow-whatsapp-lib.js' | asset_url }}" defer="defer"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
+
 </html>
