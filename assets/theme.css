@@ -9900,14 +9900,16 @@ font-style: normal;
 .shopify-section--promotion > .section {
   overflow-x: hidden;
 }
-
+.parent-test-container {
+  margin-bottom: 50px;
+}
 .left-side {
-  background-color: pink;
+  /* background-color: pink; */
   grid-area: left;
 }
 
 .right-side {
-  background-color: yellow;
+  /* background-color: yellow; */
   grid-area: right;
 }
 
@@ -9960,7 +9962,7 @@ font-style: normal;
 .line {
   border-right-style: solid;
   border-right-width: 3px;
-  border-right-color: grey;
+  border-right-color: lightgrey;
   margin-right: 10px;
 }
 .info-bit-left {
@@ -9976,7 +9978,6 @@ margin-left: 20px
 .sub-container-left {
   display: flex;
   justify-content: flex-end;
-  background-color: red;
 }
 img {
   width: 680px;
@@ -9987,6 +9988,6 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
