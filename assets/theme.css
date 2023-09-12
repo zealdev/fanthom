@@ -9991,3 +9991,25 @@ img {
   margin-top: 80px;
   margin-bottom: 80px;
 }
+
+@media screen and (max-width: 600px) {
+  .line {
+    display: none;
+  }
+  .container-test {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  .info-bit-left, .info-bit-right {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .circle-right {
+    margin-left: 10px;
+  }
+  .circle-left {
+    margin-left: 10px;
+    justify-content: flex-start;
+  }
+}
