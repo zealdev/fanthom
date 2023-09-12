@@ -9931,20 +9931,30 @@ font-style: normal;
   display: flex;
   flex-direction: column;
 }
-.circle {
-  border-style: solid;
-  border-width: 3px;
-  border-color: black;
+.circle-left {
+  height: 35px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.circle-right {
+  height: 35px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+.year {
+  background-color: #000;
   /* border-radius: 50%; */
   height: 35px;
   width: 70px;
-  display: flex;
-  justify-content: center;
-  background-color: #000;
-
+  text-align: center;
 }
 
-.circle p {
+.circle-left p {
+  color: white;
+}
+.circle-right p {
   color: white;
 }
 .line {
@@ -9956,11 +9966,17 @@ font-style: normal;
 .info-bit-left {
 margin-left: 20px
 }
+.info-bit-left p {
+  display: flex;
+  justify-content: flex-end;
+}
 .info-bit-right {
   margin-right: 20px;
 }
-.sub-container-left .circle {
-  float: right;
+.sub-container-left {
+  display: flex;
+  justify-content: flex-end;
+  background-color: red;
 }
 img {
   width: 680px;

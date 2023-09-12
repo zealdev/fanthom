@@ -339,6 +339,14 @@
         "color_background": "#000000",
         "color_gradient": ""
       }
+    },
+    "3bbc65e8-cd97-4515-bc91-6883729b3058": {
+      "type": "vertical-timeline",
+      "settings": {
+        "title": "",
+        "collection": "",
+        "text-area": ""
+      }
     }
   },
   "order": [
@@ -348,6 +356,7 @@
     "a9c9dda8-6ed3-4102-b402-3f6263f7d37c",
     "5d726844-28fc-45ef-98e6-d82345b42d95",
     "64bbe5d5-bc57-48db-aefe-4275d427e313",
-    "newsletter"
+    "newsletter",
+    "3bbc65e8-cd97-4515-bc91-6883729b3058"
   ]
 }
