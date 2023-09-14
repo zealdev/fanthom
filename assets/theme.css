@@ -9896,7 +9896,6 @@ font-style: normal;
 .c-google-map {
   height: 500px;
 }
-
 .shopify-section--promotion > .section {
   overflow-x: hidden;
 }
@@ -9904,19 +9903,16 @@ font-style: normal;
   margin-bottom: 50px;
 }
 .left-side {
-  background-color: pink;
+  /* background-color: pink; */
   grid-area: left;
 }
-
 .right-side {
-  background-color: yellow;
+  /* background-color: yellow; */
   grid-area: right;
 }
-
 .line {
   grid-area: line;
 }
-
 .container-test {
   display: grid;
   grid-template-columns: 1fr 20px 1fr;
@@ -9952,7 +9948,6 @@ font-style: normal;
   width: 70px;
   text-align: center;
 }
-
 .circle-left p {
   color: white;
 }
