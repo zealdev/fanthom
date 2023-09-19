@@ -9921,26 +9921,15 @@ font-style: normal;
   "left line right"
   ;
 }
-.sub-container-left {
-  display: flex;
-  flex-direction: column;
+.container-test-right {
+  display: grid;
+  grid-template-columns: 1fr 20px 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  "left line right"
+  ;
 }
-.sub-container-right {
-  display: flex;
-  flex-direction: column;
-}
-.circle-left {
-  height: 35px;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-.circle-right {
-  height: 35px;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-}
+
 .year {
   background-color: #000;
   /* border-radius: 50%; */
@@ -9948,50 +9937,21 @@ font-style: normal;
   width: 70px;
   text-align: center;
 }
-.circle-left p {
-  color: white;
-}
-.circle-right p {
-  color: white;
-}
+
+
 .line {
   border-right-style: solid;
   border-right-width: 3px;
   border-right-color: lightgrey;
   margin-right: 10px;
 }
-.info-bit-left {
-margin-left: 20px
-}
-.info-bit-left p {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.info-bit-right p {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.info-bit-right {
-  margin-right: 20px;
-}
-.sub-container-left {
-  display: flex;
-  justify-content: flex-end;
-}
+
 img {
   /* width: 680px; */
   height: 410px;
   object-fit: cover;
 }
-.info-title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 80px;
-  margin-bottom: 80px;
-}
+
 .title-year-right{
   display: flex;
   flex-direction: column;
@@ -10018,25 +9978,13 @@ img {
     flex-direction: column;
     margin-bottom: 30px;
   }
-  .info-bit-left, .info-bit-right {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .circle-right {
-    margin-left: 10px;
-  }
-  .circle-left {
-    margin-left: 10px;
-    justify-content: flex-start;
-  }
-  .info-bit-left p {
+  .title-year-left {
     display: flex;
-    justify-content: flex-start;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    align-items: flex-start;
   }
-  .info-bit-right p {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  .container-test-right {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 30px;
   }
 }
