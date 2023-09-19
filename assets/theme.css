@@ -9942,12 +9942,12 @@ font-style: normal;
 .line {
   border-right-style: solid;
   border-right-width: 3px;
-  border-right-color: lightgrey;
+  border-right-color: black;
   margin-right: 10px;
 }
 
 img {
-  /* width: 680px; */
+  width: 680px;
   height: 410px;
   object-fit: cover;
 }
@@ -9967,6 +9967,10 @@ img {
   height:100%;
   justify-content: flex-end;
   align-items: flex-end;
+}
+
+.color-text {
+  color : grey;
 }
 
 @media screen and (max-width: 600px) {
