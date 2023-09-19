@@ -6,7 +6,7 @@
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-0": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/ZENITH.jpg",
+            "image": "shopify:\/\/shop_images\/Artboard_1.jpg",
             "subheading": "",
             "title": "the archive",
             "text": "",
@@ -128,6 +128,7 @@
       "block_order": [
         "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -175,6 +176,7 @@
       "block_order": [
         "c2523564-8452-42bf-bda2-a0e4b1701344"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -222,6 +224,7 @@
       "block_order": [
         "085ef342-f249-4d40-a206-1df13529289b"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -269,6 +272,7 @@
       "block_order": [
         "0bb0f779-4e2d-4e52-a244-eae6f7199df2"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -316,6 +320,7 @@
       "block_order": [
         "template--20591199158578__00e64f10-e412-4a58-a070-5e36c6608511-block-2"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -363,6 +368,7 @@
       "block_order": [
         "template--20591199158578__7f4e2223-6589-4adc-81f7-9bd7b6a70c18-block-1"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -410,6 +416,7 @@
       "block_order": [
         "template--20591199158578__935d8478-d79e-4656-be95-9aa2685da8d3-block-1"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -457,6 +464,7 @@
       "block_order": [
         "template--20591199158578__f9fe0e84-505b-4c2f-8b29-01f3f1537d69-block-1"
       ],
+      "disabled": true,
       "settings": {
         "layout": "fixed",
         "height": "small",
@@ -470,6 +478,11 @@
         "color_accent": "#0d91bd",
         "color_background": "#ffffff",
         "color_gradient": ""
+      }
+    },
+    "4e092736-3572-4659-8bca-44d2f0bd1667": {
+      "type": "vertical-timeline",
+      "settings": {
       }
     },
     "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
@@ -509,6 +522,7 @@
     "7f4e2223-6589-4adc-81f7-9bd7b6a70c18",
     "935d8478-d79e-4656-be95-9aa2685da8d3",
     "f9fe0e84-505b-4c2f-8b29-01f3f1537d69",
+    "4e092736-3572-4659-8bca-44d2f0bd1667",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }

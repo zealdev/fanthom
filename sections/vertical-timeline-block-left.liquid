@@ -1,0 +1,52 @@
+<div class="container-test">
+  <div data-aos="fade-right" class="left-side">
+    <img src="{{section.settings.image | img_url : 'medium'}}" alt="watch vintage">
+  </div>
+  <div data-aos="fade-down" class="line"></div>
+  <div data-aos="fade-left">
+    <div class="title-year-right">
+      <p>{{ section.settings.year }}</p>
+      <p>{{ section.settings.title }}</p>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Timeline left",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "year",
+        "label": "Year"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Test image"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Test collection"
+      }, {
+        "type": "textarea",
+        "id": "text-area",
+        "label": "Text area"
+      }
+    ],
+    "templates": [
+      "index", "page", "product"
+    ],
+    "presets": [
+      {
+        "name": "Timeline left",
+        "category": "Timeline left section"
+      }
+    ]
+  }
+{% endschema %}

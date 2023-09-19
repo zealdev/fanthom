@@ -9992,6 +9992,22 @@ img {
   margin-top: 80px;
   margin-bottom: 80px;
 }
+.title-year-right{
+  display: flex;
+  flex-direction: column;
+  /* background-color: pink; */
+  height:100%;
+  justify-content: flex-end;
+}
+
+.title-year-left {
+  display: flex;
+  flex-direction: column;
+  /* background-color: pink; */
+  height:100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
 
 @media screen and (max-width: 600px) {
   .line {
