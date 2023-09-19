@@ -486,6 +486,16 @@
       "settings": {
       }
     },
+    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "CARTIER GHOST",
+        "year": "1971 CARTIER",
+        "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
     "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
       "type": "newsletter",
       "settings": {
@@ -511,12 +521,12 @@
         "color_gradient": ""
       }
     },
-    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2": {
-      "type": "vertical-timeline-block-left",
+    "dc505d12-8330-4f7f-adb4-691332527049": {
+      "type": "vertical-timeline-block-right",
       "settings": {
-        "title": "CARTIER GHOST",
-        "year": "1971 CARTIER",
-        "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
+        "title": "HEUR DATO",
+        "year": "HEUR 1986",
+        "image": "shopify:\/\/shop_images\/HEUER_DATO_2.jpg",
         "collection": "",
         "text-area": ""
       }
@@ -534,7 +544,8 @@
     "935d8478-d79e-4656-be95-9aa2685da8d3",
     "f9fe0e84-505b-4c2f-8b29-01f3f1537d69",
     "4e092736-3572-4659-8bca-44d2f0bd1667",
+    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33",
-    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2"
+    "dc505d12-8330-4f7f-adb4-691332527049"
   ]
 }
