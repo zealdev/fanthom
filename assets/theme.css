@@ -9905,6 +9905,8 @@ font-style: normal;
 .left-side {
   /* background-color: pink; */
   grid-area: left;
+  display: flex;
+  justify-content: end;
 }
 .right-side {
   /* background-color: yellow; */
