@@ -175,6 +175,16 @@
         "text-area": ""
       }
     },
+    "c9060a7c-bccb-43d7-b69d-4387da415b3a": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "\"ROLEX GMT MASTER ROOT BEER\"",
+        "year": "Sold July 2023",
+        "image": "shopify:\/\/shop_images\/ROLEX_4500_2.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
     "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
       "type": "newsletter",
       "settings": {
@@ -207,6 +217,7 @@
     "6402d675-786c-448b-8b33-54f913a03b54",
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "dc505d12-8330-4f7f-adb4-691332527049",
+    "c9060a7c-bccb-43d7-b69d-4387da415b3a",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }
