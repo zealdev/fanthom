@@ -506,6 +506,16 @@
         "text-area": ""
       }
     },
+    "7b303595-bd31-4f19-8128-f066e0f3e8d9": {
+      "type": "vertical-timeline-block-right",
+      "settings": {
+        "title": "44444444",
+        "year": "44444",
+        "image": "shopify:\/\/shop_images\/PRECISTA7.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
     "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
       "type": "newsletter",
       "settings": {
@@ -546,6 +556,7 @@
     "4e092736-3572-4659-8bca-44d2f0bd1667",
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "dc505d12-8330-4f7f-adb4-691332527049",
+    "7b303595-bd31-4f19-8128-f066e0f3e8d9",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }
