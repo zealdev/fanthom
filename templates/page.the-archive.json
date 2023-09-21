@@ -159,7 +159,7 @@
       "type": "vertical-timeline-block-right",
       "settings": {
         "title": "\"HEUR DATO 1986\"",
-        "year": "Sold June 2023",
+        "year": "Sold September 2023",
         "image": "shopify:\/\/shop_images\/HEUER_DATO_2.jpg",
         "collection": "",
         "text-area": ""
@@ -169,7 +169,7 @@
       "type": "vertical-timeline-block-left",
       "settings": {
         "title": "\"1971 CARTIER GHOST\"",
-        "year": "Sold May 2023",
+        "year": "Sold August 2023",
         "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
         "collection": "",
         "text-area": ""
@@ -191,6 +191,25 @@
         "title": "1981 CARTIER \"LEMON DIAL\"",
         "year": "Sold August 2023",
         "image": "shopify:\/\/shop_images\/LEMONDIAL22.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
+    "34a5479f-0343-42a0-a1cd-b4dc543e75bb": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "test",
+        "year": "September 2023",
+        "image": "shopify:\/\/shop_images\/PRECISTA7.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
+    "a2e0e753-1563-43c6-9e91-e34393d4cf84": {
+      "type": "vertical-timeline-block-right",
+      "settings": {
+        "title": "",
+        "year": "",
         "collection": "",
         "text-area": ""
       }
@@ -219,16 +238,6 @@
         "color_background": "#000000",
         "color_gradient": ""
       }
-    },
-    "34a5479f-0343-42a0-a1cd-b4dc543e75bb": {
-      "type": "vertical-timeline-block-left",
-      "settings": {
-        "title": "test",
-        "year": "September 2023",
-        "image": "shopify:\/\/shop_images\/PRECISTA7.jpg",
-        "collection": "",
-        "text-area": ""
-      }
     }
   },
   "order": [
@@ -239,7 +248,8 @@
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "c9060a7c-bccb-43d7-b69d-4387da415b3a",
     "55672907-992f-4144-8a68-564296a0fa6d",
-    "820800b0-d5d2-47b5-b78d-d94b78cbac33",
-    "34a5479f-0343-42a0-a1cd-b4dc543e75bb"
+    "34a5479f-0343-42a0-a1cd-b4dc543e75bb",
+    "a2e0e753-1563-43c6-9e91-e34393d4cf84",
+    "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }
