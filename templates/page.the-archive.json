@@ -175,21 +175,11 @@
         "text-area": ""
       }
     },
-    "c9060a7c-bccb-43d7-b69d-4387da415b3a": {
-      "type": "vertical-timeline-block-left",
-      "settings": {
-        "title": "\"1982 ROLEX GMT MASTER ROOT BEER\"",
-        "year": "Sold July 2023",
-        "image": "shopify:\/\/shop_images\/ROLEX_4500_2.jpg",
-        "collection": "",
-        "text-area": ""
-      }
-    },
     "55672907-992f-4144-8a68-564296a0fa6d": {
       "type": "vertical-timeline-block-right",
       "settings": {
         "title": "1981 CARTIER \"LEMON DIAL\"",
-        "year": "Sold August 2023",
+        "year": "Sold July 2023",
         "image": "shopify:\/\/shop_images\/LEMONDIAL22.jpg",
         "collection": "",
         "text-area": ""
@@ -246,7 +236,6 @@
     "6402d675-786c-448b-8b33-54f913a03b54",
     "dc505d12-8330-4f7f-adb4-691332527049",
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
-    "c9060a7c-bccb-43d7-b69d-4387da415b3a",
     "55672907-992f-4144-8a68-564296a0fa6d",
     "34a5479f-0343-42a0-a1cd-b4dc543e75bb",
     "a2e0e753-1563-43c6-9e91-e34393d4cf84",
