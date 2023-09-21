@@ -189,17 +189,8 @@
       "type": "vertical-timeline-block-left",
       "settings": {
         "title": "test",
-        "year": "September 2023",
+        "year": "June 2023",
         "image": "shopify:\/\/shop_images\/PRECISTA7.jpg",
-        "collection": "",
-        "text-area": ""
-      }
-    },
-    "a2e0e753-1563-43c6-9e91-e34393d4cf84": {
-      "type": "vertical-timeline-block-right",
-      "settings": {
-        "title": "",
-        "year": "",
         "collection": "",
         "text-area": ""
       }
@@ -238,7 +229,6 @@
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "55672907-992f-4144-8a68-564296a0fa6d",
     "34a5479f-0343-42a0-a1cd-b4dc543e75bb",
-    "a2e0e753-1563-43c6-9e91-e34393d4cf84",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }
