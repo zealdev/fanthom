@@ -8,7 +8,7 @@
           "settings": {
             "image": "shopify:\/\/shop_images\/Artboard_1.jpg",
             "subheading": "",
-            "title": "the archive",
+            "title": "",
             "text": "",
             "text_size": "medium",
             "text_color": "hero-color-white",
@@ -149,20 +149,10 @@
         "soft_background": false,
         "color_scheme": "default-with-accent-1",
         "custom_colors": false,
-        "color_foreground": "#061C2F",
-        "color_accent": "#0D91BD",
-        "color_background": "#FFFFFF",
+        "color_foreground": "#061c2f",
+        "color_accent": "#0d91bd",
+        "color_background": "#ffffff",
         "color_gradient": ""
-      }
-    },
-    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2": {
-      "type": "vertical-timeline-block-left",
-      "settings": {
-        "title": "\"1971 CARTIER GHOST\"",
-        "year": "Sold May 2023",
-        "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
-        "collection": "",
-        "text-area": ""
       }
     },
     "dc505d12-8330-4f7f-adb4-691332527049": {
@@ -171,6 +161,16 @@
         "title": "\"HEUR DATO 1986\"",
         "year": "Sold June 2023",
         "image": "shopify:\/\/shop_images\/HEUER_DATO_2.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
+    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "\"1971 CARTIER GHOST\"",
+        "year": "Sold May 2023",
+        "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
         "collection": "",
         "text-area": ""
       }
@@ -219,16 +219,27 @@
         "color_background": "#000000",
         "color_gradient": ""
       }
+    },
+    "34a5479f-0343-42a0-a1cd-b4dc543e75bb": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "test",
+        "year": "September 2023",
+        "image": "shopify:\/\/shop_images\/PRECISTA7.jpg",
+        "collection": "",
+        "text-area": ""
+      }
     }
   },
   "order": [
     "4b61c44c-6cd0-4151-8722-816f7bf1e6c3",
     "main",
     "6402d675-786c-448b-8b33-54f913a03b54",
-    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "dc505d12-8330-4f7f-adb4-691332527049",
+    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "c9060a7c-bccb-43d7-b69d-4387da415b3a",
     "55672907-992f-4144-8a68-564296a0fa6d",
-    "820800b0-d5d2-47b5-b78d-d94b78cbac33"
+    "820800b0-d5d2-47b5-b78d-d94b78cbac33",
+    "34a5479f-0343-42a0-a1cd-b4dc543e75bb"
   ]
 }
