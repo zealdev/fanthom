@@ -1,0 +1,14 @@
+{%- if settings.cart_flow == 'drawer' and request.page_type != 'envelope' -%}
+  <button
+    is='loess-button'
+    class='button button--plain tap'
+    aria-controls='CartDrawer'
+    aria-expanded='false'
+    aria-label='{{ 'sections.contact.contact' | t }}'>
+    {% render 'icon' with 'envelope' %}
+  </button>
+{%- else -%}
+  <a href='{{ routes.pages_contact-us_url }}' class='tap'>
+    {% render 'icon' with 'envelope' %}
+  </a>
+{%- endif -%}

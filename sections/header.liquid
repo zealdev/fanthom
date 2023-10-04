@@ -1,39 +1,67 @@
 {%- style -%}
-  :root {
-    --enable-sticky-header: {% if section.settings.enable_sticky %}1{% else %}0{% endif %};
-    --enable-transparent-header: {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}1{% else %}0{% endif %};
-    --enable-separator-line: {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}1{% else %}0{% endif %};
+  :root  {
+    --enable-sticky-header: {% if section.settings.enable_sticky %}
+      1{% else %}
+      0{% endif %};
+    --enable-transparent-header: {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}
+      1{% else %}
+      0{% endif %};
+    --enable-separator-line: {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}
+      1{% else %}
+      0{% endif %};
     --header-color-foreground: var(--color-default-text);
   }
 
-  #shopify-section-{{ section.id }} {
-    --padding-percentage: {{ section.settings.padding }};
+  #shopify-section-{{ section.id }}{
+    --padding-percentage: {{ section.settings.padding }}
+    ;
 
     {%- if section.settings.enable_sticky -%}
       position: sticky;
-      top: 0px;
+      top: 0;
     {%- else -%}
       position: relative;
     {%- endif -%}
 
     {%- if section.settings.header_style == 'transparent' and request.page_type == 'index' -%}
-      --transparent-color-foreground: {{ section.settings.transparent_header_color.red }}, {{ section.settings.transparent_header_color.green }}, {{ section.settings.transparent_header_color.blue }};
+      --transparent-color-foreground: {{ section.settings.transparent_header_color.red }}
+      , {{ section.settings.transparent_header_color.green }}
+      , {{ section.settings.transparent_header_color.blue }}
+      ;
       margin-bottom: calc(-1 * var(--header-height));
     {%- endif -%}
 
     {%- if section.settings.custom_colors -%}
-      --color-foreground: {{ section.settings.color_foreground.red }}, {{ section.settings.color_foreground.green }}, {{ section.settings.color_foreground.blue }};
-      --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
-      --color-accent: {{ section.settings.color_accent.red }}, {{ section.settings.color_accent.green }}, {{ section.settings.color_accent.blue }};
+      --color-foreground: {{ section.settings.color_foreground.red }}
+      , {{ section.settings.color_foreground.green }}
+      , {{ section.settings.color_foreground.blue }}
+      ;
+      --color-background: {{ section.settings.color_background.red }}
+      , {{ section.settings.color_background.green }}
+      , {{ section.settings.color_background.blue }}
+      ;
+      --color-accent: {{ section.settings.color_accent.red }}
+      , {{ section.settings.color_accent.green }}
+      , {{ section.settings.color_accent.blue }}
+      ;
     {%- endif -%}
   }
 {%- endstyle -%}
 
-<loess-header {% if section.settings.enable_sticky %}sticky{% endif %} {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}transparent{% endif %} class="section header {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}header--transparent{% endif %} block {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %}" role="banner">
+<loess-header
+  {% if section.settings.enable_sticky %}sticky{% endif %}
+  {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}transparent{% endif %}
+  class="section header {% if section.settings.header_style == 'transparent' and request.page_type == 'index' %}header--transparent{% endif %} block {% if section.settings.custom_colors %}color-custom{% else %}color color-{{ section.settings.color_scheme }}{% endif %}"
+  role="banner">
   <div class="container">
     <div class="header-wrapper {% if section.settings.collapse_navigation_on_tablet %}header-wrapper--collapse-menu-on-tablet{% endif %}">
       <div class="header-top header-top--{{ section.settings.layout }}">
-        <button is="loess-button" class="header-top__burger tap button button--plain" aria-label="{{ 'sections.header.menu' | t }}" aria-expanded="false" aria-controls="SideBarMenu">
+        <button
+          is="loess-button"
+          class="header-top__burger tap button button--plain"
+          aria-label="{{ 'sections.header.menu' | t }}"
+          aria-expanded="false"
+          aria-controls="SideBarMenu">
           {% render 'icon' with 'burger' %}
         </button>
 
@@ -41,11 +69,20 @@
           <div class="header-icons__optional">
             {%- if section.settings.enable_search %}
               {%- if settings.search_enable_predictive_search -%}
-                <button is="loess-button" class="button button--plain tap" aria-label="{{ 'general.search' | t }}" aria-expanded="false" aria-controls="HeaderSearch" target-focus="HeaderSearchInput">
+                <button
+                  is="loess-button"
+                  class="button button--plain tap"
+                  aria-label="{{ 'general.search' | t }}"
+                  aria-expanded="false"
+                  aria-controls="HeaderSearch"
+                  target-focus="HeaderSearchInput">
                   {% render 'icon' with 'search' -%}
                 </button>
               {%- else -%}
-                <a href="{{ routes.search_url }}" class="button button--plain tap" aria-label="{{ 'general.search' | t }}">
+                <a
+                  href="{{ routes.search_url }}"
+                  class="button button--plain tap"
+                  aria-label="{{ 'general.search' | t }}">
                   {% render 'icon' with 'search' -%}
                 </a>
               {%- endif -%}
@@ -56,31 +93,31 @@
         <div class="header-logo {% if section.settings.logo != blank %}header-logo--image{% endif %} {% if section.settings.layout == 'center-hidden' or section.settings.layout == 'center-inline' or section.settings.layout == 'center-below' %}header-logo--centered{% endif %}">
           {%- if request.page_type == 'index' -%}
             <h1 class="h3">
-          {%- endif -%}
+            {%- endif -%}
             <a href="{{ routes.root_url }}" class="h3">
               {%- if section.settings.logo != blank -%}
                 {%- assign logo_size = section.settings.logo_width | append: 'x' %}
-                <img srcset="{{ section.settings.logo | img_url: logo_size }} 1x, {{ section.settings.logo | img_url: logo_size, scale: 2 }} 2x"
+                <img
+                  srcset="{{ section.settings.logo | img_url: logo_size }} 1x, {{ section.settings.logo | img_url: logo_size, scale: 2 }} 2x"
                   src="{{ section.settings.logo | img_url: logo_size }}"
                   class="header-logo__image"
                   width="{{ section.settings.logo.width }}"
                   height="{{ section.settings.logo.height }}"
-                  alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
-                >
+                  alt="{{ section.settings.logo.alt | default: shop.name | escape }}">
                 {%- if request.page_type == 'index' and section.settings.header_style == 'transparent' and section.settings.alternate_logo != blank -%}
-                  <img srcset="{{ section.settings.alternate_logo | img_url: logo_size }} 1x, {{ section.settings.alternate_logo | img_url: logo_size, scale: 2 }} 2x"
+                  <img
+                    srcset="{{ section.settings.alternate_logo | img_url: logo_size }} 1x, {{ section.settings.alternate_logo | img_url: logo_size, scale: 2 }} 2x"
                     src="{{ section.settings.alternate_logo | img_url: logo_size }}"
                     class="header-logo__image header-logo__image--alternate"
                     width="{{ section.settings.alternate_logo.width }}"
                     height="{{ section.settings.alternate_logo.height }}"
-                    alt="{{ section.settings.alternate_logo.alt | default: shop.name | escape }}"
-                  >
+                    alt="{{ section.settings.alternate_logo.alt | default: shop.name | escape }}">
                 {%- endif -%}
               {%- else -%}
                 {{ shop.name | escape }}
               {%- endif -%}
             </a>
-          {%- if request.page_type == 'index' -%}
+            {%- if request.page_type == 'index' -%}
             </h1>
           {%- endif -%}
         </div>
@@ -90,21 +127,44 @@
         {%- endif -%}
 
         <div class="header-icons">
-          <button is="loess-button" class="button button--plain tap hide-mobile" aria-label="{{ 'sections.header.email_popup' | t }}" aria-expanded="false" aria-controls="PopupIconToggle" data-popup-icon="email">
+          <button
+            is="loess-button"
+            class="button button--plain tap hide-mobile"
+            aria-label="{{ 'sections.header.email_popup' | t }}"
+            aria-expanded="false"
+            aria-controls="PopupIconToggle"
+            data-popup-icon="email">
             {% render 'icon' with 'email' -%}
           </button>
 
-          <button is="loess-button" class="button button--plain tap hide-mobile" aria-label="{{ 'sections.header.notice_popup' | t }}" aria-expanded="false" aria-controls="PopupIconToggle" data-popup-icon="notice">
+          <button
+            is="loess-button"
+            class="button button--plain tap hide-mobile"
+            aria-label="{{ 'sections.header.notice_popup' | t }}"
+            aria-expanded="false"
+            aria-controls="PopupIconToggle"
+            data-popup-icon="notice">
             {% render 'icon' with 'notice' -%}
           </button>
-
+          <div class="header-cart-icon">
+            {% render 'header-envelope-icon' %}
+          </div>
           {%- if section.settings.enable_search %}
             {%- if settings.search_enable_predictive_search -%}
-              <button is="loess-button" class="header-icons__search {% if section.settings.layout == 'center-below' and section.settings.collapse_navigation_on_tablet == false %}hide-tablet-and-up{% endif %} button button--plain tap" aria-label="{{ 'general.search' | t }}" aria-expanded="false" aria-controls="HeaderSearch" target-focus="HeaderSearchInput">
+              <button
+                is="loess-button"
+                class="header-icons__search {% if section.settings.layout == 'center-below' and section.settings.collapse_navigation_on_tablet == false %}hide-tablet-and-up{% endif %} button button--plain tap"
+                aria-label="{{ 'general.search' | t }}"
+                aria-expanded="false"
+                aria-controls="HeaderSearch"
+                target-focus="HeaderSearchInput">
                 {% render 'icon' with 'search' -%}
               </button>
             {%- else -%}
-              <a href="{{ routes.search_url }}" class="header-icons__search {% if section.settings.layout == 'center-below' and section.settings.collapse_navigation_on_tablet == false %}hide-tablet-and-up{% endif %} button button--plain tap" aria-label="{{ 'general.search' | t }}">
+              <a
+                href="{{ routes.search_url }}"
+                class="header-icons__search {% if section.settings.layout == 'center-below' and section.settings.collapse_navigation_on_tablet == false %}hide-tablet-and-up{% endif %} button button--plain tap"
+                aria-label="{{ 'general.search' | t }}">
                 {% render 'icon' with 'search' -%}
               </button>
             {%- endif -%}
@@ -144,13 +204,26 @@
 </loess-header>
 
 {%- if settings.search_enable_predictive_search -%}
-  <loess-collapsible-panel id="HeaderSearch" class="header-search collapsible-panel border-bottom" overlay dismissable>
+  <loess-collapsible-panel
+    id="HeaderSearch"
+    class="header-search collapsible-panel border-bottom"
+    overlay
+    dismissable>
     <loess-predictive-search fetch-url="{{ routes.predictive_search_url }}" {% if settings.search_predictive_search_results != 'none' %}resources="{{ settings.search_predictive_search_results }}"{% endif %}>
       <div class="container">
-        <form action="{{ routes.search_url }}" method="get" role="search" id="PredictiveSearchForm" class="header-search__form">
+        <form
+          action="{{ routes.search_url }}"
+          method="get"
+          role="search"
+          id="PredictiveSearchForm"
+          class="header-search__form">
           <div class="header-search__top">
             <label for="HeaderSearchInput" class="caption hide-mobile">Search</label>
-            <button type="button" class="header-search__close-button button button--plain button--icon tap" aria-label="{{ 'sections.header.close_search' | t }}" close>
+            <button
+              type="button"
+              class="header-search__close-button button button--plain button--icon tap"
+              aria-label="{{ 'sections.header.close_search' | t }}"
+              close>
               {% render 'icon' with 'close' %}
             </button>
           </div>
@@ -171,13 +244,18 @@
               autocorrect="off"
               autocomplete="off"
               autocapitalize="off"
-              spellcheck="false"
-            >
+              spellcheck="false">
 
             <label for="HeaderSearchInput" class="input__label hide-tablet-and-up">Search</label>
-            <input name="options[prefix]" type="hidden" value="last">
+            <input
+              name="options[prefix]"
+              type="hidden"
+              value="last">
 
-            <button type="submit" class="header-search__search-button button button--plain input__button" aria-label="{{ 'sections.header.search_products_and_articles' | t }}">
+            <button
+              type="submit"
+              class="header-search__search-button button button--plain input__button"
+              aria-label="{{ 'sections.header.search_products_and_articles' | t }}">
               {% render 'icon' with 'search' %}
             </button>
           </div>
@@ -187,7 +265,11 @@
       <loess-predictive-search-results class="predictive-search-results" hidden>
         <div class="predictive-search-results__spinner">
           <svg class="spinner" viewBox="0 0 24 24">
-            <circle class="spinner__value" cx="12" cy="12" r="10" />
+            <circle
+              class="spinner__value"
+              cx="12"
+              cy="12"
+              r="10" />
           </svg>
         </div>
 
@@ -208,25 +290,25 @@
 
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
-    "@type": "Organization",
-    "name": {{ shop.name | json }},
-    {% if section.settings.logo %}
-      "logo": {{ section.settings.logo | image_url: width: section.settings.logo.width | prepend: "https:" | json }},
-    {% endif %}
-    "sameAs": [
-      {{ settings.social_twitter_link | json }},
-      {{ settings.social_facebook_link | json }},
-      {{ settings.social_pinterest_link | json }},
-      {{ settings.social_instagram_link | json }},
-      {{ settings.social_linkedin_link | json }},
-      {{ settings.social_tiktok_link | json }},
-      {{ settings.social_tumblr_link | json }},
-      {{ settings.social_snapchat_link | json }},
-      {{ settings.social_youtube_link | json }},
-      {{ settings.social_vimeo_link | json }}
-    ],
-    "url": {{ request.origin | append: page.url | json }}
+  "@context": "http://schema.org",
+                          "@type": "Organization",
+                          "name": {{ shop.name | json }},
+  {% if section.settings.logo %}
+    "logo": {{ section.settings.logo | image_url: width: section.settings.logo.width | prepend: "https:" | json }},
+  {% endif %}
+  "sameAs": [
+  {{ settings.social_twitter_link | json }},
+  {{ settings.social_facebook_link | json }},
+  {{ settings.social_pinterest_link | json }},
+  {{ settings.social_instagram_link | json }},
+  {{ settings.social_linkedin_link | json }},
+  {{ settings.social_tiktok_link | json }},
+  {{ settings.social_tumblr_link | json }},
+  {{ settings.social_snapchat_link | json }},
+  {{ settings.social_youtube_link | json }},
+  {{ settings.social_vimeo_link | json }}
+  ],
+  "url": {{ request.origin | append: page.url | json }}
   }
 </script>
 
@@ -234,303 +316,273 @@
   {% assign potential_action_target = request.origin | append: routes.search_url | append: '?q={search_term_string}' %}
   <script type="application/ld+json">
     {
-      "@context": "http://schema.org",
-      "@type": "WebSite",
-      "name": {{ shop.name | json }},
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {{ potential_action_target | json }},
-        "query-input": "required name=search_term_string"
-      },
-      "url": {{ request.origin | append: page.url | json }}
+    "@context": "http://schema.org",
+                                                  "@type": "WebSite",
+                                                  "name": {{ shop.name | json }},
+    "potentialAction": {
+                                                    "@type": "SearchAction",
+                                                    "target": {{ potential_action_target | json }},
+    "query-input": "required name=search_term_string"
+                                                  },
+                                                  "url": {{ request.origin | append: page.url | json }}
     }
   </script>
 {%- endif -%}
 
 {% schema %}
-{
-  "name": "Header",
-  "tag": "header",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Menu",
-      "default": "main-menu"
-    },
-    {
-      "type": "link_list",
-      "id": "sidebar_menu",
-      "label": "Sidebar menu",
-      "info": "Optional. Defaults to “Menu” when left blank."
-    },
-    {
-      "type": "text",
-      "id": "mega_menu_list",
-      "label": "Enable mega menu(s)",
-      "info": "To enable mega menus, they must be associated to menu items at the 1st level and separated with commas (e.g. Footwear, Shirts, Accessories). Only applicable when “Layout” is not set to “Sidebar menu”. This setting must be enabled for image blocks to be displayed on large screens"
-    },
-    {
-      "type": "header",
-      "content": "Logos"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Logo"
-    },
-    {
-      "type": "image_picker",
-      "id": "alternate_logo",
-      "label": "Alternate logo",
-      "info": "Used when transparent header is enabled"
-    },
-    {
-      "type": "range",
-      "id": "logo_width",
-      "min": 20,
-      "max": 250,
-      "step": 10,
-      "unit": "px",
-      "label": "Logo width",
-      "default": 120
-    },
-    {
-      "type": "header",
-      "content": "Settings"
-    },
-    {
-      "type": "select",
-      "id": "layout",
-      "options": [
-        {
-          "value": "left-hidden",
-          "label": "Logo left, sidebar menu"
-        },
-        {
-          "value": "center-hidden",
-          "label": "Logo center, sidebar menu"
-        },
-        {
-          "value": "left-inline",
-          "label": "Logo left, menu inline"
-        },
-        {
-          "value": "left-center",
-          "label": "Logo left, menu center"
-        },
-        {
-          "value": "left-below",
-          "label": "Logo left, menu below"
-        },
-        {
-          "value": "center-inline",
-          "label": "Logo center, menu inline"
-        },
-        {
-          "value": "center-below",
-          "label": "Logo center, menu below"
-        }
-      ],
-      "label": "Layout",
-      "info": "Only applies to devices with large screens",
-      "default": "left-inline"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky",
-      "label": "Enable sticky header",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "header_style",
-      "options": [
-        {
-          "value": "opaque",
-          "label": "Opaque"
-        },
-        {
-          "value": "transparent",
-          "label": "Transparent"
-        }
-      ],
-      "label": "Header style",
-      "info": "Only applies to home page. Defaults to opaque on other pages.",
-      "default": "opaque"
-    },
-    {
-      "type": "color",
-      "id": "transparent_header_color",
-      "label": "Transparent header color",
-      "default": "#FFFFFF",
-      "info": "Only applicable when “Header style” is not set to “Opaque”"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_search",
-      "label": "Enable search",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_separator_line",
-      "label": "Show separator line",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "collapse_navigation_on_tablet",
-      "label": "Collapse navigation on tablet",
-      "info": "Useful when there are many menu items at the 1st level",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "padding",
-      "min": -100,
-      "max": 100,
-      "step": 50,
-      "unit": "%",
-      "label": "Padding top and bottom",
-      "default": 0
-    },
-    {
-      "type": "select",
-      "id": "sidebar_color",
-      "label": "Sidebar menu color scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "Default"
-        },
-        {
-          "value": "inverse",
-          "label": "Inverse"
-        },
-        {
-          "value": "accent-1",
-          "label": "Accent 1"
-        },
-        {
-          "value": "accent-2",
-          "label": "Accent 2"
-        },
-        {
-          "value": "accent-3",
-          "label": "Accent 3"
-        }
-      ],
-      "default": "default"
-    },
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "select",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "Default"
-        },
-        {
-          "value": "default-with-accent-1",
-          "label": "Default with accent 1"
-        },
-        {
-          "value": "inverse",
-          "label": "Inverse"
-        },
-        {
-          "value": "inverse-with-accent-2",
-          "label": "Inverse with accent 2"
-        },
-        {
-          "value": "accent-1",
-          "label": "Accent 1"
-        },
-        {
-          "value": "accent-2",
-          "label": "Accent 2"
-        },
-        {
-          "value": "accent-3",
-          "label": "Accent 3"
-        }
-      ],
-      "default": "default-with-accent-1"
-    },
-    {
-      "type": "checkbox",
-      "id": "custom_colors",
-      "label": "Override with custom colors",
-      "default": false
-    },
-    {
-      "type": "color",
-      "id": "color_foreground",
-      "label": "Custom foreground color",
-      "default": "#061C2F"
-    },
-    {
-      "type": "color",
-      "id": "color_accent",
-      "label": "Custom accent color",
-      "default": "#0D91BD"
-    },
-    {
-      "type": "color",
-      "id": "color_background",
-      "label": "Custom background color",
-      "default": "#FFFFFF"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "image",
-      "name": "Image",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "“Enable mega menu(s)” must be updated in the header settings for the image blocks to be displayed"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "menu_item",
-          "label": "Menu item",
-          "info": "Images must be associated to menu items at the 1st and 2nd levels (e.g. Living room > Tables) [Learn more](https://loess.ticksy.com/article/18607/)"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_in_sidebar_menu",
-          "label": "Show in sidebar menu",
-          "default": false
-        },
-        {
-          "type": "header",
-          "content": "Content",
-          "info": "Heading and link are not applicable when the “Menu item” is a 2nd level"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Heading"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link"
-        }
-      ]
-    }
-  ]
-}
+  {
+    "name": "Header",
+    "tag": "header",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "link_list",
+        "id": "sidebar_menu",
+        "label": "Sidebar menu",
+        "info": "Optional. Defaults to “Menu” when left blank."
+      },
+      {
+        "type": "text",
+        "id": "mega_menu_list",
+        "label": "Enable mega menu(s)",
+        "info": "To enable mega menus, they must be associated to menu items at the 1st level and separated with commas (e.g. Footwear, Shirts, Accessories). Only applicable when “Layout” is not set to “Sidebar menu”. This setting must be enabled for image blocks to be displayed on large screens"
+      },
+      {
+        "type": "header",
+        "content": "Logos"
+      }, {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      }, {
+        "type": "image_picker",
+        "id": "alternate_logo",
+        "label": "Alternate logo",
+        "info": "Used when transparent header is enabled"
+      }, {
+        "type": "range",
+        "id": "logo_width",
+        "min": 20,
+        "max": 250,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 120
+      }, {
+        "type": "header",
+        "content": "Settings"
+      }, {
+        "type": "select",
+        "id": "layout",
+        "options": [
+          {
+            "value": "left-hidden",
+            "label": "Logo left, sidebar menu"
+          },
+          {
+            "value": "center-hidden",
+            "label": "Logo center, sidebar menu"
+          },
+          {
+            "value": "left-inline",
+            "label": "Logo left, menu inline"
+          },
+          {
+            "value": "left-center",
+            "label": "Logo left, menu center"
+          }, {
+            "value": "left-below",
+            "label": "Logo left, menu below"
+          }, {
+            "value": "center-inline",
+            "label": "Logo center, menu inline"
+          }, {
+            "value": "center-below",
+            "label": "Logo center, menu below"
+          }
+        ],
+        "label": "Layout",
+        "info": "Only applies to devices with large screens",
+        "default": "left-inline"
+      }, {
+        "type": "checkbox",
+        "id": "enable_sticky",
+        "label": "Enable sticky header",
+        "default": false
+      }, {
+        "type": "select",
+        "id": "header_style",
+        "options": [
+          {
+            "value": "opaque",
+            "label": "Opaque"
+          }, {
+            "value": "transparent",
+            "label": "Transparent"
+          }
+        ],
+        "label": "Header style",
+        "info": "Only applies to home page. Defaults to opaque on other pages.",
+        "default": "opaque"
+      }, {
+        "type": "color",
+        "id": "transparent_header_color",
+        "label": "Transparent header color",
+        "default": "#FFFFFF",
+        "info": "Only applicable when “Header style” is not set to “Opaque”"
+      }, {
+        "type": "checkbox",
+        "id": "enable_search",
+        "label": "Enable search",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_separator_line",
+        "label": "Show separator line",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "collapse_navigation_on_tablet",
+        "label": "Collapse navigation on tablet",
+        "info": "Useful when there are many menu items at the 1st level",
+        "default": true
+      }, {
+        "type": "range",
+        "id": "padding",
+        "min": -100,
+        "max": 100,
+        "step": 50,
+        "unit": "%",
+        "label": "Padding top and bottom",
+        "default": 0
+      }, {
+        "type": "select",
+        "id": "sidebar_color",
+        "label": "Sidebar menu color scheme",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "inverse",
+            "label": "Inverse"
+          },
+          {
+            "value": "accent-1",
+            "label": "Accent 1"
+          },
+          {
+            "value": "accent-2",
+            "label": "Accent 2"
+          }, {
+            "value": "accent-3",
+            "label": "Accent 3"
+          }
+        ],
+        "default": "default"
+      }, {
+        "type": "header",
+        "content": "Colors"
+      }, {
+        "type": "select",
+        "id": "color_scheme",
+        "label": "Color scheme",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "default-with-accent-1",
+            "label": "Default with accent 1"
+          },
+          {
+            "value": "inverse",
+            "label": "Inverse"
+          },
+          {
+            "value": "inverse-with-accent-2",
+            "label": "Inverse with accent 2"
+          }, {
+            "value": "accent-1",
+            "label": "Accent 1"
+          }, {
+            "value": "accent-2",
+            "label": "Accent 2"
+          }, {
+            "value": "accent-3",
+            "label": "Accent 3"
+          }
+        ],
+        "default": "default-with-accent-1"
+      }, {
+        "type": "checkbox",
+        "id": "custom_colors",
+        "label": "Override with custom colors",
+        "default": false
+      }, {
+        "type": "color",
+        "id": "color_foreground",
+        "label": "Custom foreground color",
+        "default": "#061C2F"
+      }, {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Custom accent color",
+        "default": "#0D91BD"
+      }, {
+        "type": "color",
+        "id": "color_background",
+        "label": "Custom background color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "“Enable mega menu(s)” must be updated in the header settings for the image blocks to be displayed"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "menu_item",
+            "label": "Menu item",
+            "info": "Images must be associated to menu items at the 1st and 2nd levels (e.g. Living room > Tables) [Learn more](https://loess.ticksy.com/article/18607/)"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_in_sidebar_menu",
+            "label": "Show in sidebar menu",
+            "default": false
+          }, {
+            "type": "header",
+            "content": "Content",
+            "info": "Heading and link are not applicable when the “Menu item” is a 2nd level"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          }
+        ]
+      }
+    ]
+  }
 {% endschema %}

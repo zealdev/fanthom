@@ -6,9 +6,9 @@
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-0": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Artboard_1.jpg",
+            "image": "shopify:\/\/shop_images\/NAAFI5.jpg",
             "subheading": "",
-            "title": "the archive",
+            "title": "",
             "text": "",
             "text_size": "medium",
             "text_color": "hero-color-white",
@@ -30,7 +30,6 @@
         },
         "template--17660417704242__4b61c44c-6cd0-4151-8722-816f7bf1e6c3-167708349331c997a8-1": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "subheading": "Subheading",
             "title": "Hero",
@@ -96,412 +95,102 @@
         "color_gradient": ""
       }
     },
-    "95adb119-2130-4882-9863-49bf072c77b1": {
-      "type": "media-with-text",
+    "6402d675-786c-448b-8b33-54f913a03b54": {
+      "type": "rich-text",
       "blocks": {
-        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1": {
-          "type": "block",
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-icon-1": {
+          "type": "icon",
           "settings": {
-            "large_layout": "image-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "CARTIER GHOST",
-            "text": "",
-            "add_icons": false,
-            "text_size": "medium",
+            "icon": "icon-box",
+            "reveal": true
+          }
+        },
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-heading-1": {
+          "type": "heading",
+          "settings": {
+            "title": "The Archive",
+            "size": "h2"
+          }
+        },
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>(HERE'S SOME WE SOLD EARLIER)<\/p>",
+            "style": "large-subtext"
+          }
+        },
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-buttons-1": {
+          "type": "buttons",
+          "settings": {
             "first_button_label": "",
             "first_button_link": "",
-            "first_button_outline_style": false,
+            "first_button_style": false,
             "second_button_label": "",
             "second_button_link": "",
-            "second_button_outline_style": true
+            "second_button_style": true
           }
         }
       },
       "block_order": [
-        "template--17440688800050__95adb119-2130-4882-9863-49bf072c77b1-1673010418f2fe7745-1"
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-icon-1",
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-heading-1",
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-text-1",
+        "template--20822122135858__6402d675-786c-448b-8b33-54f913a03b54-buttons-1"
       ],
-      "disabled": true,
       "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 1.5,
-        "padding_bottom": 0.5,
-        "color_scheme": "default",
-        "custom_colors": true,
-        "color_foreground": "#000000",
-        "color_accent": "#c99952",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "aac9b7d6-6d5c-4f2e-a0f7-065dea151723": {
-      "type": "media-with-text",
-      "blocks": {
-        "c2523564-8452-42bf-bda2-a0e4b1701344": {
-          "type": "block",
-          "settings": {
-            "large_layout": "text-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/HEUER_DATO_2.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "HEUR DATO",
-            "text": "<p><\/p><p><\/p>",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "",
-            "first_button_link": "",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "c2523564-8452-42bf-bda2-a0e4b1701344"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 0.5,
-        "padding_bottom": 0.5,
-        "color_scheme": "default",
-        "custom_colors": true,
-        "color_foreground": "#000000",
-        "color_accent": "#c99952",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "4e6e82db-b2a1-4fa5-882a-96e9fd37b831": {
-      "type": "media-with-text",
-      "blocks": {
-        "085ef342-f249-4d40-a206-1df13529289b": {
-          "type": "block",
-          "settings": {
-            "large_layout": "image-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/HEUER_MONACO_1.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "HEUR MONACO",
-            "text": "<p>Watch description<\/p>",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "",
-            "first_button_link": "",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "085ef342-f249-4d40-a206-1df13529289b"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 0.5,
-        "padding_bottom": 0.5,
-        "color_scheme": "default",
-        "custom_colors": true,
-        "color_foreground": "#000000",
-        "color_accent": "#c99952",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "2d38ffc3-17a4-4ba2-bb88-51844d7e022a": {
-      "type": "media-with-text",
-      "blocks": {
-        "0bb0f779-4e2d-4e52-a244-eae6f7199df2": {
-          "type": "block",
-          "settings": {
-            "large_layout": "text-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/OMEGA_ALASKA_PROJECT_2.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "OMEGA ALASKA PROJECT",
-            "text": "<p>Watch description<\/p>",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "",
-            "first_button_link": "",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "0bb0f779-4e2d-4e52-a244-eae6f7199df2"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 0.5,
-        "padding_bottom": 1.5,
-        "color_scheme": "default",
-        "custom_colors": true,
-        "color_foreground": "#000000",
-        "color_accent": "#c99952",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "00e64f10-e412-4a58-a070-5e36c6608511": {
-      "type": "media-with-text",
-      "blocks": {
-        "template--20591199158578__00e64f10-e412-4a58-a070-5e36c6608511-block-2": {
-          "type": "block",
-          "settings": {
-            "large_layout": "image-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/ROLEX_4500_2.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "ROLEX 4500",
-            "text": "",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "",
-            "first_button_link": "",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "template--20591199158578__00e64f10-e412-4a58-a070-5e36c6608511-block-2"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
+        "full_width": true,
+        "text_position": "center center",
+        "overlay": 30,
+        "image_height_large": "medium",
+        "image_height_mobile": "medium",
+        "enable_parallax": false,
         "padding_top": 1,
         "padding_bottom": 1,
+        "soft_background": false,
         "color_scheme": "default-with-accent-1",
-        "custom_colors": true,
+        "custom_colors": false,
         "color_foreground": "#061c2f",
         "color_accent": "#0d91bd",
         "color_background": "#ffffff",
         "color_gradient": ""
-      }
-    },
-    "7f4e2223-6589-4adc-81f7-9bd7b6a70c18": {
-      "type": "media-with-text",
-      "blocks": {
-        "template--20591199158578__7f4e2223-6589-4adc-81f7-9bd7b6a70c18-block-1": {
-          "type": "block",
-          "settings": {
-            "large_layout": "text-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/ROLEX_ONYX_DIAL_2.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "ROLEX ONYX DIAL",
-            "text": "<p>Watch description<\/p>",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "",
-            "first_button_link": "",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "template--20591199158578__7f4e2223-6589-4adc-81f7-9bd7b6a70c18-block-1"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 1,
-        "padding_bottom": 1,
-        "color_scheme": "default-with-accent-1",
-        "custom_colors": true,
-        "color_foreground": "#061c2f",
-        "color_accent": "#0d91bd",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "935d8478-d79e-4656-be95-9aa2685da8d3": {
-      "type": "media-with-text",
-      "blocks": {
-        "template--20591199158578__935d8478-d79e-4656-be95-9aa2685da8d3-block-1": {
-          "type": "block",
-          "settings": {
-            "large_layout": "image-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/ROLEX_STELLA_DIAL_1.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "ROLEX STELLA DIAL",
-            "text": "<p>Watch description<\/p>",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "",
-            "first_button_link": "",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "template--20591199158578__935d8478-d79e-4656-be95-9aa2685da8d3-block-1"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 1,
-        "padding_bottom": 1,
-        "color_scheme": "default-with-accent-1",
-        "custom_colors": true,
-        "color_foreground": "#061c2f",
-        "color_accent": "#0d91bd",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "f9fe0e84-505b-4c2f-8b29-01f3f1537d69": {
-      "type": "media-with-text",
-      "blocks": {
-        "template--20591199158578__f9fe0e84-505b-4c2f-8b29-01f3f1537d69-block-1": {
-          "type": "block",
-          "settings": {
-            "large_layout": "text-first",
-            "mobile_layout": "image-first",
-            "image": "shopify:\/\/shop_images\/TUDOR_SNOWFLAKE_1.jpg",
-            "image_padding": false,
-            "video": "",
-            "video_style": "image-play",
-            "enable_parallax": false,
-            "text_width": 100,
-            "tab_label": "",
-            "subheading": "",
-            "title": "TUDOR SNOWFLAKE",
-            "text": "<p>Watch description<\/p>",
-            "add_icons": false,
-            "text_size": "medium",
-            "first_button_label": "",
-            "first_button_link": "",
-            "first_button_outline_style": false,
-            "second_button_label": "",
-            "second_button_link": "",
-            "second_button_outline_style": true
-          }
-        }
-      },
-      "block_order": [
-        "template--20591199158578__f9fe0e84-505b-4c2f-8b29-01f3f1537d69-block-1"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "fixed",
-        "height": "small",
-        "stack_blocks": true,
-        "center_tabs": true,
-        "padding_top": 1,
-        "padding_bottom": 1,
-        "color_scheme": "default-with-accent-1",
-        "custom_colors": true,
-        "color_foreground": "#061c2f",
-        "color_accent": "#0d91bd",
-        "color_background": "#ffffff",
-        "color_gradient": ""
-      }
-    },
-    "4e092736-3572-4659-8bca-44d2f0bd1667": {
-      "type": "vertical-timeline",
-      "disabled": true,
-      "settings": {
-      }
-    },
-    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2": {
-      "type": "vertical-timeline-block-left",
-      "settings": {
-        "title": "CARTIER GHOST",
-        "year": "1971 CARTIER",
-        "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
-        "collection": "",
-        "text-area": ""
       }
     },
     "dc505d12-8330-4f7f-adb4-691332527049": {
       "type": "vertical-timeline-block-right",
       "settings": {
-        "title": "HEUR DATO",
-        "year": "HEUR 1986",
+        "title": "\"HEUR DATO 1986\"",
+        "year": "Sold September 2023",
         "image": "shopify:\/\/shop_images\/HEUER_DATO_2.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
+    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "\"1971 CARTIER GHOST\"",
+        "year": "Sold August 2023",
+        "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
+    "55672907-992f-4144-8a68-564296a0fa6d": {
+      "type": "vertical-timeline-block-right",
+      "settings": {
+        "title": "1981 CARTIER \"LEMON DIAL\"",
+        "year": "Sold July 2023",
+        "image": "shopify:\/\/shop_images\/LEMONDIAL22.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
+    "34a5479f-0343-42a0-a1cd-b4dc543e75bb": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "test",
+        "year": "June 2023",
+        "image": "shopify:\/\/shop_images\/PRECISTA7.jpg",
         "collection": "",
         "text-area": ""
       }
@@ -535,17 +224,11 @@
   "order": [
     "4b61c44c-6cd0-4151-8722-816f7bf1e6c3",
     "main",
-    "95adb119-2130-4882-9863-49bf072c77b1",
-    "aac9b7d6-6d5c-4f2e-a0f7-065dea151723",
-    "4e6e82db-b2a1-4fa5-882a-96e9fd37b831",
-    "2d38ffc3-17a4-4ba2-bb88-51844d7e022a",
-    "00e64f10-e412-4a58-a070-5e36c6608511",
-    "7f4e2223-6589-4adc-81f7-9bd7b6a70c18",
-    "935d8478-d79e-4656-be95-9aa2685da8d3",
-    "f9fe0e84-505b-4c2f-8b29-01f3f1537d69",
-    "4e092736-3572-4659-8bca-44d2f0bd1667",
-    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
+    "6402d675-786c-448b-8b33-54f913a03b54",
     "dc505d12-8330-4f7f-adb4-691332527049",
+    "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
+    "55672907-992f-4144-8a68-564296a0fa6d",
+    "34a5479f-0343-42a0-a1cd-b4dc543e75bb",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }
