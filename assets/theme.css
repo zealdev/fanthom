@@ -9943,7 +9943,7 @@ font-style: normal;
 
 .line {
   border-right-style: solid;
-  border-right-width: 3px;
+  border-right-width: 2px;
   border-right-color: black;
   margin-right: 10px;
 }
@@ -9976,7 +9976,7 @@ img {
 }
 
 @media screen and (max-width: 600px) {
-  .line {
+  /* .line {
     display: none;
   }
   .container-test {
@@ -9996,11 +9996,24 @@ img {
     display: flex;
     flex-direction: column-reverse;
     margin-bottom: 30px;
-  }
+  } */
 
   img {
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 410px;
+    /* padding-left: 20px;
+    padding-right: 20px; */
+    height: 210px;
+  }
+  .year-settings {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .container-test {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .container-test-right {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }

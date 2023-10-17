@@ -195,6 +195,16 @@
         "text-area": ""
       }
     },
+    "ecba1148-0606-4f6d-ba45-86f52580876e": {
+      "type": "vertical-timeline-block-left",
+      "settings": {
+        "title": "Test",
+        "year": "2023 BLALALA",
+        "image": "shopify:\/\/shop_images\/PANNADATEJUST7.jpg",
+        "collection": "",
+        "text-area": ""
+      }
+    },
     "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
       "type": "newsletter",
       "settings": {
@@ -229,6 +239,7 @@
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "55672907-992f-4144-8a68-564296a0fa6d",
     "34a5479f-0343-42a0-a1cd-b4dc543e75bb",
+    "ecba1148-0606-4f6d-ba45-86f52580876e",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }

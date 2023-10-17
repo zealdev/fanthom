@@ -6,7 +6,8 @@
   <div data-aos="fade-left">
     <div class="title-year-right">
       <p>{{ section.settings.year }}</p>
-      <p class="color-text">{{ section.settings.title }}</p>
+      <p>{{ section.settings.title }}</p>
+      <p class="color-text">{{ section.settings.name }}</p>
     </div>
   </div>
 </div>
@@ -25,18 +26,14 @@
         "label": "Year"
       },
       {
+        "type": "text",
+        "id": "name",
+        "label": "Model"
+      },
+      {
         "type": "image_picker",
         "id": "image",
         "label": "Test image"
-      },
-      {
-        "type": "collection",
-        "id": "collection",
-        "label": "Test collection"
-      }, {
-        "type": "textarea",
-        "id": "text-area",
-        "label": "Text area"
       }
     ],
     "templates": [

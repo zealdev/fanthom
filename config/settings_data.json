@@ -156,6 +156,9 @@
       },
       "header": {
         "type": "header",
+        "custom_css": [
+          ".header-cart-icon .icon--envelope {width: 24px;}"
+        ],
         "settings": {
           "menu": "main-menu",
           "sidebar_menu": "",

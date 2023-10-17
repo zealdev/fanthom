@@ -1,8 +1,9 @@
 <div class="container-test-right">
   <div data-aos="fade-right">
     <div class="title-year-left">
-      <p>{{ section.settings.year }}</p>
-      <p class="color-text">{{ section.settings.title }}</p>
+      <p class="year-settings">{{ section.settings.year }}</p>
+      <p>{{ section.settings.title }}</p>
+      <p class="color-text">{{ section.settings.name }}</p>
     </div>
   </div>
   <div data-aos="fade-down" class="line"></div>
@@ -17,7 +18,7 @@
       {
         "type": "text",
         "id": "title",
-        "label": "Title"
+        "label": "Brand"
       },
       {
         "type": "text",
@@ -25,18 +26,14 @@
         "label": "Year"
       },
       {
+        "type": "text",
+        "id": "name",
+        "label": "Model"
+      },
+      {
         "type": "image_picker",
         "id": "image",
         "label": "Test image"
-      },
-      {
-        "type": "collection",
-        "id": "collection",
-        "label": "Test collection"
-      }, {
-        "type": "textarea",
-        "id": "text-area",
-        "label": "Text area"
       }
     ],
     "templates": [
