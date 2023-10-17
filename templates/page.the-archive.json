@@ -191,6 +191,19 @@
         "image": "shopify:\/\/shop_images\/PRECISTA7.jpg"
       }
     },
+    "b9c29457-ec1c-4217-860d-771958b1ad52": {
+      "type": "custom-liquid",
+      "custom_css": [
+        ".parent {width: 100%; display: flex; justify-content: center;}",
+        ".button-custom {background-color: black; color: white; padding: 5px;}"
+      ],
+      "settings": {
+        "liquid": "<div class=\"parent\">\n<a href=\"https:\/\/fathom-watches.com\/pages\/sell\" >\n<button class=\"button-custom\">\nSELL WITH US\n<\/button>\n<\/a>\n<\/div>",
+        "layout": "full",
+        "padding_top": 1,
+        "padding_bottom": 1
+      }
+    },
     "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
       "type": "newsletter",
       "settings": {
@@ -225,6 +238,7 @@
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "55672907-992f-4144-8a68-564296a0fa6d",
     "34a5479f-0343-42a0-a1cd-b4dc543e75bb",
+    "b9c29457-ec1c-4217-860d-771958b1ad52",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }
