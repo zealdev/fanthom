@@ -158,8 +158,9 @@
     "dc505d12-8330-4f7f-adb4-691332527049": {
       "type": "vertical-timeline-block-right",
       "settings": {
-        "title": "\"HEUR DATO 1986\"",
-        "year": "Sold September 2023",
+        "title": "1986 ROLEX",
+        "year": "",
+        "name": "\"HEUR DATO\"",
         "image": "shopify:\/\/shop_images\/HEUER_DATO_2.jpg"
       }
     },
@@ -168,6 +169,7 @@
       "settings": {
         "title": "\"1971 CARTIER GHOST\"",
         "year": "Sold August 2023",
+        "name": "",
         "image": "shopify:\/\/shop_images\/CARTIER_GHOST_1.jpg"
       }
     },
@@ -176,6 +178,7 @@
       "settings": {
         "title": "1981 CARTIER \"LEMON DIAL\"",
         "year": "Sold July 2023",
+        "name": "",
         "image": "shopify:\/\/shop_images\/LEMONDIAL22.jpg"
       }
     },
@@ -184,15 +187,8 @@
       "settings": {
         "title": "test",
         "year": "June 2023",
+        "name": "",
         "image": "shopify:\/\/shop_images\/PRECISTA7.jpg"
-      }
-    },
-    "ecba1148-0606-4f6d-ba45-86f52580876e": {
-      "type": "vertical-timeline-block-left",
-      "settings": {
-        "title": "Test",
-        "year": "2023 BLALALA",
-        "image": "shopify:\/\/shop_images\/PANNADATEJUST7.jpg"
       }
     },
     "820800b0-d5d2-47b5-b78d-d94b78cbac33": {
@@ -229,7 +225,6 @@
     "8c3cea74-dac3-49d3-aa70-3d0539fdf7c2",
     "55672907-992f-4144-8a68-564296a0fa6d",
     "34a5479f-0343-42a0-a1cd-b4dc543e75bb",
-    "ecba1148-0606-4f6d-ba45-86f52580876e",
     "820800b0-d5d2-47b5-b78d-d94b78cbac33"
   ]
 }
