@@ -195,7 +195,7 @@
       "type": "custom-liquid",
       "custom_css": [
         ".parent {width: 100%; display: flex; justify-content: center;}",
-        ".button-custom {background-color: black; color: white; padding: 5px;}"
+        ".button-custom {background-color: black; color: white; padding: 5px; padding-left: 15px; padding-right: 15px;}"
       ],
       "settings": {
         "liquid": "<div class=\"parent\">\n<a href=\"https:\/\/fathom-watches.com\/pages\/sell\" >\n<button class=\"button-custom\">\nSELL WITH US\n<\/button>\n<\/a>\n<\/div>",
