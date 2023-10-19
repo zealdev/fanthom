@@ -9944,7 +9944,7 @@ font-style: normal;
 .line {
   border-right-style: solid;
   border-right-width: 2px;
-  border-right-color: black;
+  border-right-color: grey;
   margin-right: 10px;
 }
 
@@ -9952,6 +9952,8 @@ img {
   width: 410px;
   height: 680px;
   object-fit: cover;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .title-year-right{
@@ -9972,7 +9974,11 @@ img {
 }
 
 .color-text {
-  color : grey;
+  font-weight: normal;
+}
+
+.text-style {
+  font-weight: bold;
 }
 
 @media screen and (max-width: 600px) {
@@ -10002,10 +10008,16 @@ img {
     /* padding-left: 20px;
     padding-right: 20px; */
     height: 210px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .year-settings {
     justify-content: flex-end;
     flex-wrap: wrap;
+    font-weight: bold;
+  }
+  .text-style {
+    font-weight: bold;
   }
   .container-test {
     padding-left: 15px;
@@ -10015,5 +10027,12 @@ img {
   .container-test-right {
     padding-left: 15px;
     padding-right: 15px;
+  }
+
+  .title-year-left p {
+    font-size: 12px;
+  }
+  .title-year-right p {
+    font-size: 12px;
   }
 }
